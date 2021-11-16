@@ -1,0 +1,16 @@
+{
+    "name": "MarblesTD.Core",
+    "rootNamespace": "",
+    "references": [
+        "GUID:d85aa8a8e758b4246a20affa42d33a82"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
