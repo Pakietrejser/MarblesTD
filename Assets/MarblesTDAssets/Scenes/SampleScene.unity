@@ -659,7 +659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marblesSpeed: 3
-  marblesHealth: 10
+  marblesHealth: 1
   marblesAmount: 10
   spawnDelay: 0.2
   marblePrefab: {fileID: 6641361829304697839, guid: a43b7553118863042b8826a4c9b10c0b, type: 3}
@@ -1848,8 +1848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9687c47f6f409c93ac5016154991f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
-  attackSpeed: 1
+  globalTowerSettings: {fileID: 0}
   towerPrefab: {fileID: 6641361829304697839, guid: afebbed50879bc448966f56aacc5797f, type: 3}
   canvas: {fileID: 1298647871}
   zDistance: 10
@@ -3160,8 +3159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9687c47f6f409c93ac5016154991f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
-  attackSpeed: 2
+  globalTowerSettings: {fileID: 0}
   towerPrefab: {fileID: 6641361829304697839, guid: 0a91824c7015a0a4cab25d1ee88fcb33, type: 3}
   canvas: {fileID: 1298647871}
   zDistance: 10
@@ -5019,8 +5017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9687c47f6f409c93ac5016154991f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
-  attackSpeed: 1
+  globalTowerSettings: {fileID: 11400000, guid: 983042e1529d90549bf573e20d6412c6, type: 2}
   towerPrefab: {fileID: 6641361829304697839, guid: afebbed50879bc448966f56aacc5797f, type: 3}
   canvas: {fileID: 1298647871}
   zDistance: 10
@@ -11510,8 +11507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a9687c47f6f409c93ac5016154991f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 20
-  attackSpeed: 4
+  globalTowerSettings: {fileID: 0}
   towerPrefab: {fileID: 6641361829304697839, guid: 99ec2a712c69d9e44899c4869761642a, type: 3}
   canvas: {fileID: 1298647871}
   zDistance: 10

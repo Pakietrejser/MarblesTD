@@ -17,3 +17,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e327f9a6713e4543bb0d2b8d6544d4a, type: 2}
   - {fileID: 11400000, guid: a17cb4a40bdce3d41be27ddf07e9d416, type: 2}
   - {fileID: 11400000, guid: ac6b1f3185888a24f8227c1034211f37, type: 2}
+  quickFoxSettings:
+    Damage: 1
+    Pierce: 2
+    AttackSpeed: 0.95
+    Range: 32
+    ProjectileDistance: 10
+    ProjectileSpeed: 20

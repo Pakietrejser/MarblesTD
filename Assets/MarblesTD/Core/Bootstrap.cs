@@ -10,7 +10,7 @@ public class Bootstrap : MonoBehaviour
     public Transform EndPosition;
     public PlayerView PlayerView;
 
-    public List<Tower> Towers = new List<Tower>();
+    public List<AbstractTower> Towers = new List<AbstractTower>();
     public List<Marble> Marbles = new List<Marble>();
     public List<Projectile> Projectiles = new List<Projectile>();
 

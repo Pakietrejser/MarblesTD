@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using MarblesTD.Towers;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace MarblesTD.Core.Settings
 {
@@ -6,14 +8,13 @@ namespace MarblesTD.Core.Settings
     public class GlobalTowerSettings : ScriptableObject
     {
         [SerializeField] TowerSetSettings[] towerSets;
-    }
+        [FormerlySerializedAs("QuickFoxSettings")]
+        [Space] 
+        [SerializeField] QuickFox.Settings quickFoxSettings;
 
-    public enum TowerSet
-    {
-        NULL = 0,
-        WildAnimals = 1,
-        NobleAnimals = 2,
-        EvilAnimals = 3,
-        HeroAnimals = 4,
+        public TTower Create<TTower>(ITowerView towerView, Vector3 spawnPosition) where TTower : AbstractTower
+        {
+            return new QuickFox(quickFoxSettings, towerView, spawnPosition) as TTower;
+        }
     }
 }

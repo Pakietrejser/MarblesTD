@@ -1,4 +1,5 @@
-﻿using MarblesTD.Towers;
+﻿using MarblesTD.Core.Settings;
+using MarblesTD.Towers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,9 +9,7 @@ namespace MarblesTD.Core
     [RequireComponent(typeof(Button))]
     public class PlaceTowerButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [SerializeField] private float range = 5f;
-        [SerializeField] private float attackSpeed = 1f;
-        [Space]
+        [SerializeField] GlobalTowerSettings globalTowerSettings;
         [SerializeField] private GameObject towerPrefab;
         [SerializeField] private RectTransform canvas;
         [SerializeField] private float zDistance;
@@ -59,7 +58,8 @@ namespace MarblesTD.Core
                 currentTower.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
                 
                 var view = currentTower.GetComponent<ITowerView>();
-                Bootstrap.Instance.Towers.Add(new Tower(view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z), attackSpeed, range));
+                
+                Bootstrap.Instance.Towers.Add(globalTowerSettings.Create<QuickFox>(view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z)));
             }
             else
             {

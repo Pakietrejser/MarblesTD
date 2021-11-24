@@ -1,34 +1,37 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MarblesTD.Towers
 {
-    public class Tower
+    public abstract class AbstractTower
     {
-        private readonly ITowerView _view;
-        private readonly Vector2 _position;
-        private readonly float _attackSpeed;
-        private readonly float _range;
+        public abstract int Damage { get; }
+        public abstract int Pierce { get; }
+        public abstract float AttackSpeed { get; }
+        public abstract int Range { get; }
+        public abstract float ProjectileDistance { get; }
+        public abstract float ProjectileSpeed { get; }
 
-        private float _timeUntilNextAttack;
+        readonly ITowerView view;
+        readonly Vector2 position;
 
-        public Tower(ITowerView view, Vector3 position, float attackSpeed, float range)
+        float timeUntilNextAttack;
+
+        protected AbstractTower(ITowerView towerView, Vector3 spawnPosition)
         {
-            _view = view;
-            _position = position;
-            _attackSpeed = attackSpeed;
-            _range = range;
-            _timeUntilNextAttack = attackSpeed;
+            view = towerView;
+            position = spawnPosition;
 
-            Debug.Log($"Creating {GetType()} at position {_position}");
+            Debug.Log($"Creating {GetType()} at position {this.position}");
         }
 
         public void Update(IEnumerable<MarblePlacement> marblePlacements, float delta)
         {
-            _timeUntilNextAttack -= delta;
-            if (_timeUntilNextAttack <= 0)
+            timeUntilNextAttack -= delta;
+            if (timeUntilNextAttack <= 0)
             {
-                _timeUntilNextAttack = _attackSpeed;
+                timeUntilNextAttack = AttackSpeed;
             }
             else
             {
@@ -37,19 +40,19 @@ namespace MarblesTD.Towers
             
             if (!SeekClosestMarble(marblePlacements, out var closestMarble)) return;
 
-            var projectileConfig = new ProjectileConfig(10, 2, 10, 10, closestMarble);
-            _view.SpawnProjectile(projectileConfig);
+            var projectileConfig = new ProjectileConfig(Damage, Pierce, ProjectileDistance, ProjectileSpeed, closestMarble);
+            view.SpawnProjectile(projectileConfig);
         }
 
-        private bool SeekClosestMarble(IEnumerable<MarblePlacement> marblePlacements, out Marble closestMarble)
+        bool SeekClosestMarble(IEnumerable<MarblePlacement> marblePlacements, out Marble closestMarble)
         {
             float minDistance = float.MaxValue;
             closestMarble = null;
             
             foreach (var marblePlacement in marblePlacements)
             {
-                float distance = Vector2.Distance(_position, marblePlacement.Position);
-                if (distance > _range) continue;
+                float distance = Vector2.Distance(position, marblePlacement.Position);
+                if (distance > Range) continue;
                 if (!(distance < minDistance)) continue;
                 
                 closestMarble = marblePlacement.Marble;
