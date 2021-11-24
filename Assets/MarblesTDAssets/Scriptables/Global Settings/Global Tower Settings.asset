@@ -21,6 +21,7 @@ MonoBehaviour:
     Damage: 1
     Pierce: 2
     AttackSpeed: 0.95
-    Range: 32
+    Range: 6
     ProjectileDistance: 10
     ProjectileSpeed: 20
+  qfSettings: {fileID: 11400000, guid: 3d21c048ee015af44b3e88bd66ba13c6, type: 2}

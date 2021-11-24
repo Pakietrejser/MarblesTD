@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using MarblesTD.Core;
+using MarblesTD.Core.Settings;
 using MarblesTD.Towers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Bootstrap : MonoBehaviour
 {
     public Transform StartingPosition;
     public Transform EndPosition;
     public PlayerView PlayerView;
+    public Transform PlaceTowerButtonsParent;
+    public GameObject PlaceTowerButtonPrefab;
+    public GlobalTowerSettings GlobalTowerSettings;
 
     public List<AbstractTower> Towers = new List<AbstractTower>();
     public List<Marble> Marbles = new List<Marble>();
@@ -20,9 +25,16 @@ public class Bootstrap : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        
+        //do player
         Player = new Player(PlayerView);
         Player.AddLives(100);
         StartCoroutine(AddLivesAfterDelay());
+        
+        //do towers
+        var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
+        var placeTowerButton = go.GetComponent<PlaceTowerButton>();
+        placeTowerButton.Init(GlobalTowerSettings);
     }
 
     IEnumerator AddLivesAfterDelay()

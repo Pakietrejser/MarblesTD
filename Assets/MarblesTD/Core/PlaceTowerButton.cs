@@ -1,5 +1,6 @@
 ﻿using MarblesTD.Core.Settings;
 using MarblesTD.Towers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,7 +10,10 @@ namespace MarblesTD.Core
     [RequireComponent(typeof(Button))]
     public class PlaceTowerButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [SerializeField] GlobalTowerSettings globalTowerSettings;
+        [SerializeField] Image towerImage;
+        [SerializeField] TMP_Text costText;
+        [SerializeField] Image towerSetColor;
+        [Space]
         [SerializeField] private GameObject towerPrefab;
         [SerializeField] private RectTransform canvas;
         [SerializeField] private float zDistance;
@@ -20,10 +24,22 @@ namespace MarblesTD.Core
         private Button towerButton;
         
         private GameObject currentTower;
+        GlobalTowerSettings settings;
 
         private void Awake()
         {
             towerButton = GetComponent<Button>();
+        }
+
+        public void Init(GlobalTowerSettings globalTowerSettings)
+        {
+            settings = globalTowerSettings;
+            var x = globalTowerSettings.QfSettings;
+
+            towerImage.sprite = x.towerIcon;
+            costText.text = $"${x.towerCost}";
+            towerSetColor.color = globalTowerSettings.Get(x.towerSet).color;
+
         }
         
         public void OnBeginDrag(PointerEventData data)
@@ -59,7 +75,8 @@ namespace MarblesTD.Core
                 
                 var view = currentTower.GetComponent<ITowerView>();
                 
-                Bootstrap.Instance.Towers.Add(globalTowerSettings.Create<QuickFox>(view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z)));
+                Bootstrap.Instance.Towers.Add(settings.Create<QuickFox>(view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z)));
+                Bootstrap.Instance.Player.RemoveMoney(settings.QfSettings.towerCost);
             }
             else
             {
