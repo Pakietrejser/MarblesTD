@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8a854e933174e58819e0e80e0b2e2e4, type: 3}
+  m_Name: Global Tower Settings
+  m_EditorClassIdentifier: 
+  towerSets:
+  - {fileID: 11400000, guid: b8d80bc5a443dd94fba5fd2aa221aa85, type: 2}
+  - {fileID: 11400000, guid: 5e327f9a6713e4543bb0d2b8d6544d4a, type: 2}
+  - {fileID: 11400000, guid: a17cb4a40bdce3d41be27ddf07e9d416, type: 2}
+  - {fileID: 11400000, guid: ac6b1f3185888a24f8227c1034211f37, type: 2}
