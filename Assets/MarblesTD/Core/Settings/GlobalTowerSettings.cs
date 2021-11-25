@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MarblesTD.Towers;
+using MarblesTD.Towers.Upgrades;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,6 +15,8 @@ namespace MarblesTD.Core.Settings
         [Space] 
         [SerializeField] QuickFox.Settings quickFoxSettings;
         [SerializeField] QuickFoxSettings qfSettings;
+        [Space]
+        [SerializeField] RuleOfThree.Settings ruleOfThreeSettings;
 
         public QuickFoxSettings QfSettings => qfSettings;
 

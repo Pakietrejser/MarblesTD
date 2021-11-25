@@ -25,3 +25,9 @@ MonoBehaviour:
     ProjectileDistance: 10
     ProjectileSpeed: 20
   qfSettings: {fileID: 11400000, guid: 3d21c048ee015af44b3e88bd66ba13c6, type: 2}
+  ruleOfThreeSettings:
+    Name: 
+    Description: 
+    Cost: 0
+    Damage: 0
+    Range: 0

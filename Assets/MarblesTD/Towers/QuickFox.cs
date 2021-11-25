@@ -5,7 +5,12 @@ namespace MarblesTD.Towers
 {
     public class QuickFox : Tower
     {
-        public override int Damage => settings.Damage;
+        public override int Damage
+        {
+            get => settings.Damage;
+            set => settings.Damage = value;
+        }
+
         public override int Pierce => settings.Pierce;
         public override float AttackSpeed => settings.AttackSpeed;
         public override int Range => settings.Range;

@@ -1,12 +1,13 @@
-using System;
 using System.Collections.Generic;
+using MarblesTD.Towers.Upgrades;
 using UnityEngine;
 
 namespace MarblesTD.Towers
 {
+
     public abstract class Tower
     {
-        public abstract int Damage { get; }
+        public abstract int Damage { get; set; }
         public abstract int Pierce { get; }
         public abstract float AttackSpeed { get; }
         public abstract int Range { get; }
@@ -18,6 +19,7 @@ namespace MarblesTD.Towers
 
         float timeUntilNextAttack;
 
+
         protected Tower(ITowerView towerView, Vector3 spawnPosition)
         {
             view = towerView;
@@ -25,6 +27,21 @@ namespace MarblesTD.Towers
 
             Debug.Log($"Creating {GetType()} at position {this.position}");
         }
+        
+        // Dictionary<Path, IUpgrade[]> Upgrades;
+        
+        //public void AddUpgrade(Path, Upgrade<>){}
+
+        // void ApplyUpgrade(IUpgrade upgrade)
+        // {
+        //     upgrade.Apply(this);
+        // }
+        //
+        // void ApplyUpgrade(Upgrade<Ttest> upgrade)
+        // {
+        //     upgrade.Apply(this);
+        // }
+        
 
         public void Update(IEnumerable<MarblePlacement> marblePlacements, float delta)
         {

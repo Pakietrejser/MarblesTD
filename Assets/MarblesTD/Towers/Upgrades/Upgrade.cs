@@ -1,93 +1,77 @@
-﻿// namespace MarblesTD.Towers.Upgrades
-// {
-//     public abstract class Upgrade
-//     {
-//         public abstract string Name { get; }
-//         public abstract string Description { get; }
-//         
-//         public abstract int Priority { get; }
-//         public abstract int Cost { get; }
-//
-//         // path, tier
-//
-//         public abstract void Apply(TTower tower);
-//     }
-//
-//     public abstract class Upgrade<TTower> : Upgrade
-//     {
-//         public override Tower Tower => GetType();
-//     }
-//     
-//     public enum Path
-//     {
-//         NULL,
-//         Left,
-//         Middle,
-//         Right,
-//     }
-//
-//     public class RuleOfThree : Upgrade<QuickFox>
-//     {
-//         public override string Name { get; }
-//         public override string Description { get; }
-//         
-//         public override int Priority { get; }
-//         public override int Cost { get; }
-//         public override void Apply(QuickFox tower)
-//         {
-//             throw new System.NotImplementedException();
-//         }
-//     }
-//
-//
-//     public static class TowerExtensions
-//     {
-//         public static int UpgradeTier(this Tower tower)
-//         {
-//             tower.Upgrades
-//         }
-//         
-//         public static Path UpgradePath(this Tower tower)
-//         {
-//             
-//         }
-//     }
-//     
-//
-//     public abstract class Tower
-//     {
-//         public abstract string Name { get; }
-//         public abstract string Description { get; }
-//         
-//         public abstract int Cost { get; }
-//         
-//         
-//         public readonly Upgrade[,] Upgrades;
-//
-//         public Tower(Upgrade[,] upgrades)
-//         {
-//             this.Upgrades = upgrades;
-//         }
-//     }
-// }
+﻿using System;
 
-//TODO: s
-// internal interface ICommandHandler
-// {
-//     Type CommandType { get; }
-//     Action<ICommand> Execute { get; }
-//     bool CanUndo { get; }
-//     Action<ICommand> Undo { get; }
-// }
-//
-// public abstract class CommandHandler<TCommand> : ICommandHandler where TCommand : ICommand
-// {
-//     public Type CommandType => typeof(TCommand);
-//     public virtual bool CanUndo => false;
-//         
-//     public Action<ICommand> Execute => command => ExplicitExecute((TCommand) command);
-//     public Action<ICommand> Undo => command => ExplicitUndo((TCommand) command);
-//
-//     protected abstract void ExplicitExecute(TCommand command);
-//     protected virtual void ExplicitUndo(TCommand command) => throw new InvalidOperationException();
-// }
+namespace MarblesTD.Towers.Upgrades
+ {
+     public interface IUpgrade
+     {
+         string Name { get; }
+         string Description { get; }
+         int Cost { get; }
+     
+         void Apply(Tower tower);
+     }
+     
+     public abstract class Upgrade<TTower, TSettings> : IUpgrade where TTower : Tower where TSettings : Upgrade<TTower,TSettings>.Settings
+     {
+         protected abstract TSettings Setting { get; }
+         
+         public virtual string Name => Setting.Name;
+         public virtual string Description => Setting.Description;
+         public virtual int Cost => Setting.Cost;
+
+         public void Apply(Tower tower) { ExplicitApply((TTower) tower); }
+         protected abstract void ExplicitApply(TTower tower);
+         
+         [Serializable]
+         public class Settings
+         {
+             public string Name;
+             public string Description;
+             public int Cost;
+         }
+     }
+
+     public class RuleOfThree : Upgrade<QuickFox, RuleOfThree.Settings>
+     {
+         public int Damage => Setting.Damage;
+         public int Range => Setting.Range;
+         
+         protected override Settings Setting { get; }
+         public RuleOfThree(Settings setting) { Setting = setting; }
+
+         protected override void ExplicitApply(QuickFox tower)
+         {
+             tower.Damage += Damage * Range;
+         }
+         
+         [Serializable]
+         public new class Settings : Upgrade<QuickFox, Settings>.Settings
+         {
+             public int Damage;
+             public int Range;
+         }
+     }
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+public enum Path
+{
+    None,
+    Left,
+    Middle,
+    Right,
+}
