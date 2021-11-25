@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MarblesTD.Core.Settings
+namespace MarblesTD.UnityCore.Settings
 {
     [CreateAssetMenu(menuName = "Scriptables/Settings/new Tower Set Settings", fileName = "Tower Set Settings")]
     public class TowerSetSettings : ScriptableObject

@@ -1,8 +1,7 @@
-﻿using System;
-using MarblesTD.Towers;
+﻿using MarblesTD.Towers;
 using UnityEngine;
 
-namespace MarblesTD.Core
+namespace MarblesTD.UnityCore
 {
     public class TowerView : MonoBehaviour, ITowerView
     {

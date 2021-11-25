@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace MarblesTD.Core
+namespace MarblesTD.UnityCore
 {
     [RequireComponent(typeof(Button))]
     public class PlaceMarbleButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler

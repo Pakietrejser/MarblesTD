@@ -2,50 +2,73 @@
 
 namespace MarblesTD.Towers.Upgrades
  {
-     public interface IUpgrade
+     public abstract class Upgrade
      {
-         string Name { get; }
-         string Description { get; }
-         int Cost { get; }
-     
-         void Apply(Tower tower);
-     }
-     
-     public abstract class Upgrade<TTower, TSettings> : IUpgrade where TTower : Tower where TSettings : Upgrade<TTower,TSettings>.Settings
-     {
-         protected abstract TSettings Setting { get; }
-         
-         public virtual string Name => Setting.Name;
-         public virtual string Description => Setting.Description;
-         public virtual int Cost => Setting.Cost;
+         public string Name;
+         public string Description;
+         public int Cost;
 
-         public void Apply(Tower tower) { ExplicitApply((TTower) tower); }
-         protected abstract void ExplicitApply(TTower tower);
+         public virtual void UpdateSettings(SettingsBase settingsBase)
+         {
+             Name = settingsBase.Name;
+             Description = settingsBase.Description;
+             Cost = settingsBase.Cost;
+         }
+
+         public abstract void Apply(Tower tower);
          
          [Serializable]
-         public class Settings
+         public class SettingsBase
          {
              public string Name;
              public string Description;
              public int Cost;
          }
      }
+     
+     public abstract class Upgrade<TTower, TSettings> : Upgrade where TTower : Tower where TSettings : Upgrade.SettingsBase
+     {
+         protected Upgrade(TSettings settings)
+         {
+             UpdateSettings(settings);
+         }
+
+         protected abstract void ExplicitApply(TTower tower);
+         public sealed override void Apply(Tower tower)
+         {
+             if (!(tower is TTower newTower)) throw new ArgumentException();
+             ExplicitApply(newTower);
+         }
+
+         protected abstract void ExplicitUpdateSettings(TSettings settings);
+         public sealed override void UpdateSettings(SettingsBase settingsBase)
+         {
+             if (!(settingsBase is TSettings newSettings)) throw new ArgumentException();
+             base.UpdateSettings(newSettings);
+             ExplicitUpdateSettings(newSettings);
+         }
+     }
 
      public class RuleOfThree : Upgrade<QuickFox, RuleOfThree.Settings>
      {
-         public int Damage => Setting.Damage;
-         public int Range => Setting.Range;
+         public int Damage;
+         public int Range;
          
-         protected override Settings Setting { get; }
-         public RuleOfThree(Settings setting) { Setting = setting; }
+         public RuleOfThree(Settings settings) : base(settings) { }
 
          protected override void ExplicitApply(QuickFox tower)
          {
              tower.Damage += Damage * Range;
          }
-         
+
+         protected override void ExplicitUpdateSettings(Settings settings)
+         {
+             Damage = settings.Damage;
+             Range = settings.Range;
+         }
+
          [Serializable]
-         public new class Settings : Upgrade<QuickFox, Settings>.Settings
+         public class Settings : SettingsBase
          {
              public int Damage;
              public int Range;

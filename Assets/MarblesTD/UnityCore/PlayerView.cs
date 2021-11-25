@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace MarblesTD.Core
+namespace MarblesTD.UnityCore
 {
     public class PlayerView : MonoBehaviour, IPlayerView
     {

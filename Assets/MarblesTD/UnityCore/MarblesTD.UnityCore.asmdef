@@ -1,5 +1,5 @@
 {
-    "name": "MarblesTD.Core",
+    "name": "MarblesTD.UnityCore",
     "rootNamespace": "",
     "references": [
         "GUID:d85aa8a8e758b4246a20affa42d33a82",

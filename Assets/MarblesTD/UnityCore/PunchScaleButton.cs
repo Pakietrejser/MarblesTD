@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MarblesTD.Core
+namespace MarblesTD.UnityCore
 {
     [RequireComponent(typeof(Button))]
     public class PunchScaleButton : MonoBehaviour

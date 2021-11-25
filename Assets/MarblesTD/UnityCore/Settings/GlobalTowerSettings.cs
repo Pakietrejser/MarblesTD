@@ -5,7 +5,7 @@ using MarblesTD.Towers.Upgrades;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace MarblesTD.Core.Settings
+namespace MarblesTD.UnityCore.Settings
 {
     [CreateAssetMenu(menuName = "Scriptables/Global Settings/new Tower Settings", fileName = "Global Tower Settings")]
     public class GlobalTowerSettings : ScriptableObject

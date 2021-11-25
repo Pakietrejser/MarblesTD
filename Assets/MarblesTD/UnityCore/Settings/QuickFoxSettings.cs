@@ -1,7 +1,7 @@
 ﻿using MarblesTD.Towers;
 using UnityEngine;
 
-namespace MarblesTD.Core.Settings
+namespace MarblesTD.UnityCore.Settings
 {
     [CreateAssetMenu(menuName = "Scriptables/Settings/Quick Fox", fileName = "Quick Fox Settings")]
     public class QuickFoxSettings : ScriptableObject

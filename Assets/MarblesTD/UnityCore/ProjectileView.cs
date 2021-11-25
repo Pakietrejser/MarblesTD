@@ -2,7 +2,7 @@
 using MarblesTD.Towers;
 using UnityEngine;
 
-namespace MarblesTD.Core
+namespace MarblesTD.UnityCore
 {
     public class ProjectileView : MonoBehaviour, IProjectileView
     {
