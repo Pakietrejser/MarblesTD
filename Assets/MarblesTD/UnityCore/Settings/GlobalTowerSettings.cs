@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using MarblesTD.Core.Towers;
 using MarblesTD.Towers;
-using MarblesTD.Towers.Upgrades;
+using MarblesTD.Towers.QuickFoxImpl;
+using MarblesTD.Towers.QuickFoxImpl.LeftPathUpgrades;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,25 +13,43 @@ namespace MarblesTD.UnityCore.Settings
     [CreateAssetMenu(menuName = "Scriptables/Global Settings/new Tower Settings", fileName = "Global Tower Settings")]
     public class GlobalTowerSettings : ScriptableObject
     {
-        [SerializeField] TowerSetSettings[] towerSets;
-        [FormerlySerializedAs("QuickFoxSettings")]
-        [Space] 
-        [SerializeField] QuickFox.Settings quickFoxSettings;
-        [SerializeField] QuickFoxSettings qfSettings;
-        [Space]
-        [SerializeField] RuleOfThree.Settings ruleOfThreeSettings;
+        [Header("Global Settings")]
+        [SerializeField] TowerTypeSettings[] towerSets;
+        [SerializeField] GameObject towerPrefab;
 
-        public QuickFoxSettings QfSettings => qfSettings;
+        [Header("Tower Settings")]
+        public QuickFox.Settings QuickFoxSettings;
 
-        public TowerSetSettings Get(TowerSet towerSet)
+        public TowerTypeSettings GetTowerTypeSettings(TowerType towerType)
         {
-            var found = towerSets.FirstOrDefault(x => x.towerSet == towerSet);
+            var found = towerSets.FirstOrDefault(x => x.TowerType == towerType);
             return found ? found : throw new ArgumentException();
         }
         
-        public TTower Create<TTower>(ITowerView towerView, Vector3 spawnPosition) where TTower : Tower
+        //temp, to factory
+        public Tower CreateTower(Tower.SettingsBase settings, ITowerView towerView, Vector3 spawnPosition)
         {
-            return new QuickFox(quickFoxSettings, towerView, spawnPosition) as TTower;
+            var tower = new QuickFox(QuickFoxSettings, towerView, spawnPosition);
+            activeTowers.Add(tower);
+            return tower;
+        }
+
+        List<Tower> activeTowers = new List<Tower>();
+        public void Init()
+        {
+            activeTowers = new List<Tower>();
+            SettingsChanged = null;
+        }
+        
+        public event Action SettingsChanged;
+        void OnValidate()
+        {
+            foreach (var tower in activeTowers)
+            {
+                tower.UpdateSettings(QuickFoxSettings);
+            }
+            
+            SettingsChanged?.Invoke();
         }
     }
 }

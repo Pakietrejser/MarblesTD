@@ -1,4 +1,4 @@
-﻿namespace MarblesTD.Towers
+﻿namespace MarblesTD.Core.Player
 {
     public class Player
     {

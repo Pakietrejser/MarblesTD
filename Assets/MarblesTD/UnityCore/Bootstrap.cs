@@ -1,5 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using MarblesTD.Core.Marbles;
+using MarblesTD.Core.Player;
+using MarblesTD.Core.Projectiles;
+using MarblesTD.Core.Towers;
 using MarblesTD.Towers;
 using MarblesTD.UnityCore.Settings;
 using UnityEngine;
@@ -30,11 +34,23 @@ namespace MarblesTD.UnityCore
             Player = new Player(PlayerView);
             Player.AddLives(100);
             StartCoroutine(AddLivesAfterDelay());
-        
+            
+            GlobalTowerSettings.Init();
+            
+            GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
+            
             //do towers
             var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
-            var placeTowerButton = go.GetComponent<PlaceTowerButton>();
-            placeTowerButton.Init(GlobalTowerSettings);
+            placeTowerButton = go.GetComponent<PlaceTowerButton>();
+            placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
+            
+        }
+
+        PlaceTowerButton placeTowerButton;
+
+        void GlobalTowerSettingsOnSettingsChanged()
+        {
+            placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
         }
 
         IEnumerator AddLivesAfterDelay()

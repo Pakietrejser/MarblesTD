@@ -1,4 +1,5 @@
-﻿using MarblesTD.Towers;
+﻿using MarblesTD.Core.Player;
+using MarblesTD.Towers;
 using TMPro;
 using UnityEngine;
 

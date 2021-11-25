@@ -1,4 +1,4 @@
-﻿using MarblesTD.Towers;
+﻿using MarblesTD.Core.Towers;
 using MarblesTD.UnityCore.Settings;
 using TMPro;
 using UnityEngine;
@@ -20,26 +20,26 @@ namespace MarblesTD.UnityCore
         [Space]
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float yPlacingHeight;
-        
-        private Button towerButton;
-        
-        private GameObject currentTower;
-        GlobalTowerSettings settings;
+
+        Button towerButton;
+        GameObject currentTower;
+
+        Tower.SettingsBase settings;
+        GlobalTowerSettings global;
 
         private void Awake()
         {
             towerButton = GetComponent<Button>();
         }
 
-        public void Init(GlobalTowerSettings globalTowerSettings)
+        public void Init(Tower.SettingsBase settingsBase, GlobalTowerSettings globalTowerSettings)
         {
-            settings = globalTowerSettings;
-            var x = globalTowerSettings.QfSettings;
-
-            towerImage.sprite = x.towerIcon;
-            costText.text = $"${x.towerCost}";
-            towerSetColor.color = globalTowerSettings.Get(x.towerSet).color;
-
+            settings = settingsBase;
+            global = globalTowerSettings;
+            
+            towerImage.sprite = settingsBase.Icon;
+            costText.text = $"${settingsBase.Cost}";
+            towerSetColor.color = globalTowerSettings.GetTowerTypeSettings(settingsBase.TowerType).Color;
         }
         
         public void OnBeginDrag(PointerEventData data)
@@ -75,8 +75,8 @@ namespace MarblesTD.UnityCore
                 
                 var view = currentTower.GetComponent<ITowerView>();
                 
-                Bootstrap.Instance.Towers.Add(settings.Create<QuickFox>(view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z)));
-                Bootstrap.Instance.Player.RemoveMoney(settings.QfSettings.towerCost);
+                Bootstrap.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z)));
+                Bootstrap.Instance.Player.RemoveMoney(settings.Cost);
             }
             else
             {

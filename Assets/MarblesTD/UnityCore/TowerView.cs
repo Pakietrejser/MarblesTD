@@ -1,4 +1,6 @@
-﻿using MarblesTD.Towers;
+﻿using MarblesTD.Core.Projectiles;
+using MarblesTD.Core.Towers;
+using MarblesTD.Towers;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore

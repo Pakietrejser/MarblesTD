@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace MarblesTD.Towers
+namespace MarblesTD.Core.Marbles
 {
     public class Marble
     {

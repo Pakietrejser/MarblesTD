@@ -2,9 +2,10 @@
     "name": "MarblesTD.UnityCore",
     "rootNamespace": "",
     "references": [
-        "GUID:d85aa8a8e758b4246a20affa42d33a82",
         "GUID:311b45a70008ee24db25f25f5efd3b2b",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:9234e2bbde6e41a4da8f4330f481a2be",
+        "GUID:d85aa8a8e758b4246a20affa42d33a82"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

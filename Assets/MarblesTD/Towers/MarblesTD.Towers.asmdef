@@ -1,3 +1,16 @@
 {
-	"name": "MarblesTD.Towers"
+    "name": "MarblesTD.Towers",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9234e2bbde6e41a4da8f4330f481a2be"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

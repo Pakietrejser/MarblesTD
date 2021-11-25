@@ -1,18 +1,22 @@
 ﻿using System;
+using MarblesTD.Core.Towers;
+using UnityEngine;
 
-namespace MarblesTD.Towers.Upgrades
+namespace MarblesTD.Core.Upgrades
  {
      public abstract class Upgrade
      {
          public string Name;
          public string Description;
          public int Cost;
+         public Sprite Icon;
 
          public virtual void UpdateSettings(SettingsBase settingsBase)
          {
              Name = settingsBase.Name;
              Description = settingsBase.Description;
              Cost = settingsBase.Cost;
+             Icon = settingsBase.Icon;
          }
 
          public abstract void Apply(Tower tower);
@@ -23,6 +27,7 @@ namespace MarblesTD.Towers.Upgrades
              public string Name;
              public string Description;
              public int Cost;
+             public Sprite Icon;
          }
      }
      
@@ -44,57 +49,8 @@ namespace MarblesTD.Towers.Upgrades
          public sealed override void UpdateSettings(SettingsBase settingsBase)
          {
              if (!(settingsBase is TSettings newSettings)) throw new ArgumentException();
-             base.UpdateSettings(newSettings);
              ExplicitUpdateSettings(newSettings);
-         }
-     }
-
-     public class RuleOfThree : Upgrade<QuickFox, RuleOfThree.Settings>
-     {
-         public int Damage;
-         public int Range;
-         
-         public RuleOfThree(Settings settings) : base(settings) { }
-
-         protected override void ExplicitApply(QuickFox tower)
-         {
-             tower.Damage += Damage * Range;
-         }
-
-         protected override void ExplicitUpdateSettings(Settings settings)
-         {
-             Damage = settings.Damage;
-             Range = settings.Range;
-         }
-
-         [Serializable]
-         public class Settings : SettingsBase
-         {
-             public int Damage;
-             public int Range;
+             base.UpdateSettings(newSettings);
          }
      }
  }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-public enum Path
-{
-    None,
-    Left,
-    Middle,
-    Right,
-}

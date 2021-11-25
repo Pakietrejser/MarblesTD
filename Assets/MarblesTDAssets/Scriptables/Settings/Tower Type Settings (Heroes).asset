@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55f35278d08f4195bdb7ba737aa3b767, type: 3}
-  m_Name: Tower Set Settings (Wild Animals)
+  m_Name: Tower Type Settings (Heroes)
   m_EditorClassIdentifier: 
-  displayName: Wild Animals
-  towerSet: 1
-  color: {r: 0.62352943, g: 0.8941177, b: 0.5058824, a: 1}
+  DisplayName: Heroes
+  TowerType: 4
+  Color: {r: 0.96470594, g: 0.9058824, b: 0.52156866, a: 1}
