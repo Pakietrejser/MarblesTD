@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MarblesTD.Towers
 {
-    public abstract class AbstractTower
+    public abstract class Tower
     {
         public abstract int Damage { get; }
         public abstract int Pierce { get; }
@@ -18,7 +18,7 @@ namespace MarblesTD.Towers
 
         float timeUntilNextAttack;
 
-        protected AbstractTower(ITowerView towerView, Vector3 spawnPosition)
+        protected Tower(ITowerView towerView, Vector3 spawnPosition)
         {
             view = towerView;
             position = spawnPosition;

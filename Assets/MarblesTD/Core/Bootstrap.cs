@@ -15,7 +15,7 @@ public class Bootstrap : MonoBehaviour
     public GameObject PlaceTowerButtonPrefab;
     public GlobalTowerSettings GlobalTowerSettings;
 
-    public List<AbstractTower> Towers = new List<AbstractTower>();
+    public List<Tower> Towers = new List<Tower>();
     public List<Marble> Marbles = new List<Marble>();
     public List<Projectile> Projectiles = new List<Projectile>();
 

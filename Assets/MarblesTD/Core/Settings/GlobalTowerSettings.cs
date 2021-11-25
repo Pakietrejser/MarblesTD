@@ -23,7 +23,7 @@ namespace MarblesTD.Core.Settings
             return found ? found : throw new ArgumentException();
         }
         
-        public TTower Create<TTower>(ITowerView towerView, Vector3 spawnPosition) where TTower : AbstractTower
+        public TTower Create<TTower>(ITowerView towerView, Vector3 spawnPosition) where TTower : Tower
         {
             return new QuickFox(quickFoxSettings, towerView, spawnPosition) as TTower;
         }

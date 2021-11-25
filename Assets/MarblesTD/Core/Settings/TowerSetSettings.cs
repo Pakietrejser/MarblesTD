@@ -11,7 +11,7 @@ namespace MarblesTD.Core.Settings
         public Color color = Color.white;
     }
     
-    public enum TowerSet
+    public enum TowerSet //INTO COLLECTION THAT CONTAINS ACTUAL TOWERS
     {
         NULL = 0,
         WildAnimals = 1,

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MarblesTD.Towers
 {
-    public class QuickFox : AbstractTower
+    public class QuickFox : Tower
     {
         public override int Damage => settings.Damage;
         public override int Pierce => settings.Pierce;
