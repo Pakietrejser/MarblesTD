@@ -31,6 +31,7 @@ namespace MarblesTD.UnityCore.Settings
         {
             var tower = new QuickFox(QuickFoxSettings, towerView, spawnPosition);
             activeTowers.Add(tower);
+            tower.Selected += () => Bootstrap.Instance.SelectTower(tower);
             return tower;
         }
 

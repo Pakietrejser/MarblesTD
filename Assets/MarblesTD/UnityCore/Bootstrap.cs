@@ -18,6 +18,8 @@ namespace MarblesTD.UnityCore
         public Transform PlaceTowerButtonsParent;
         public GameObject PlaceTowerButtonPrefab;
         public GlobalTowerSettings GlobalTowerSettings;
+        public GameObject BottomPanel;
+        public LayerMask TowersMask;
 
         public List<Tower> Towers = new List<Tower>();
         public List<Marble> Marbles = new List<Marble>();
@@ -25,10 +27,26 @@ namespace MarblesTD.UnityCore
 
         public Player Player { get; private set; }
 
+        Tower selectedTower;
+        public void SelectTower(Tower tower)
+        {
+            if (selectedTower == tower)
+            {
+                BottomPanel.SetActive(false);
+                selectedTower = null;
+            }
+            else
+            {
+                BottomPanel.SetActive(true);
+                selectedTower = tower;
+            }
+        }
+
         public static Bootstrap Instance;
         private void Awake()
         {
             Instance = this;
+            BottomPanel.SetActive(false);
         
             //do player
             Player = new Player(PlayerView);
@@ -77,6 +95,16 @@ namespace MarblesTD.UnityCore
             for (int i = Marbles.Count - 1; i >= 0; i--)
             {
                 Marbles[i].Update(EndPosition, Time.deltaTime);
+            }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, TowersMask))
+                {
+                    BottomPanel.SetActive(false);
+                    selectedTower = null;
+                }
             }
         }
 

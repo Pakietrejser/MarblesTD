@@ -8,6 +8,8 @@ namespace MarblesTD.Core.Towers
 {
     public abstract class Tower
     {
+        public event Action Selected;
+        
         public string Name;
         public string Description;
         public int Cost;
@@ -23,8 +25,15 @@ namespace MarblesTD.Core.Towers
             View = view;
             Position = position;
             activeUpgrades = new Dictionary<Path, Upgrade[]>();
+            
+            View.Clicked += SelectTower;
         }
-        
+
+        void SelectTower()
+        {
+            Selected?.Invoke();
+        }
+
         public virtual void UpdateSettings(SettingsBase settingsBase)
         {
             Name = settingsBase.Name;
