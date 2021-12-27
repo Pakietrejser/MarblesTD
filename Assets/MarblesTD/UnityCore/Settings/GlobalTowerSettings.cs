@@ -15,7 +15,6 @@ namespace MarblesTD.UnityCore.Settings
     {
         [Header("Global Settings")]
         [SerializeField] TowerTypeSettings[] towerSets;
-        [SerializeField] GameObject towerPrefab;
 
         [Header("Tower Settings")]
         public QuickFox.Settings QuickFoxSettings;

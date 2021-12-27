@@ -12,6 +12,8 @@ namespace MarblesTD.Core.Marbles
         private Vector2 _position;
         private int _health;
         private int _speed;
+        
+        public bool IsDestroyed { get; private set; }
 
         public Marble(IMarbleView view, Vector2 position, int health, int speed)
         {
@@ -29,7 +31,7 @@ namespace MarblesTD.Core.Marbles
             _health -= damage;
             if (_health <= 0)
             {
-                _view.DestroySelf();
+                Destroy();
             }
         }
 
@@ -40,8 +42,14 @@ namespace MarblesTD.Core.Marbles
 
             if (_position == new Vector2(endPosition.position.x, endPosition.position.z))
             {
-                _view.DestroySelf();
+                Destroy();
             }
+        }
+
+        void Destroy()
+        {
+            _view.DestroySelf();
+            IsDestroyed = true;
         }
     }
 

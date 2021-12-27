@@ -10,7 +10,6 @@ namespace MarblesTD.UnityCore
         
         public void DestroySelf()
         {
-            Bootstrap.Instance.Marbles.Remove(Marble);
             Destroy(gameObject);
         }
         

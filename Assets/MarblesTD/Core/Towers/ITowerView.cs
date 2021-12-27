@@ -8,5 +8,6 @@ namespace MarblesTD.Core.Towers
         event Action Clicked;
         
         Projectile SpawnProjectile(ProjectileConfig config);
+        void DestroySelf();
     }
 }

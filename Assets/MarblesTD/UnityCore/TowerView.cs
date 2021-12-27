@@ -26,5 +26,7 @@ namespace MarblesTD.UnityCore
             Debug.Log("Click");
             Clicked?.Invoke();
         }
+        
+        public void DestroySelf() => Destroy(gameObject);
     }
 }

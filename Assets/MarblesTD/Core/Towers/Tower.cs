@@ -16,6 +16,10 @@ namespace MarblesTD.Core.Towers
         public TowerType TowerType;
         public Sprite Icon;
         
+        public bool IsDestroyed { get; private set; }
+        public int SellValue => Convert.ToInt32(Cost * .75f);
+        public int KIllCount;
+        
         protected ITowerView View;
         protected Vector2 Position;
         readonly Dictionary<Path, Upgrade[]> activeUpgrades;
@@ -25,6 +29,7 @@ namespace MarblesTD.Core.Towers
             View = view;
             Position = position;
             activeUpgrades = new Dictionary<Path, Upgrade[]>();
+            KIllCount = 0;
             
             View.Clicked += SelectTower;
         }
@@ -70,6 +75,11 @@ namespace MarblesTD.Core.Towers
             return highestTier;
         }
 
+        public void Destroy()
+        {
+            View.DestroySelf();
+            IsDestroyed = true;
+        }
 
         [Serializable]
         public class SettingsBase

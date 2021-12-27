@@ -70,7 +70,7 @@ namespace MarblesTD.Core.Towers
             
             if (!SeekClosestMarble(marblePlacements, out var closestMarble)) return;
             
-            var projectileConfig = new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble);
+            var projectileConfig = new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble, this);
             View.SpawnProjectile(projectileConfig);
         }
         

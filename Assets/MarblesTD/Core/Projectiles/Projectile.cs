@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MarblesTD.Core.Marbles;
+using MarblesTD.Core.Towers;
 using UnityEngine;
 
 namespace MarblesTD.Core.Projectiles
@@ -46,6 +47,11 @@ namespace MarblesTD.Core.Projectiles
             marble.TakeDamage(_config.Damage);
             _remainingHits--;
 
+            if (marble.IsDestroyed)
+            {
+                _config.Owner.KIllCount++;
+            }
+
             if (_remainingHits == 0)
             {
                 _view.DestroySelf();
@@ -71,14 +77,16 @@ namespace MarblesTD.Core.Projectiles
         public readonly float MaxDistance;
         public readonly float Speed;
         public readonly Marble Target;
+        public readonly Tower Owner;
 
-        public ProjectileConfig(int damage, int pierce, float maxDistance,  float speed, Marble target)
+        public ProjectileConfig(int damage, int pierce, float maxDistance,  float speed, Marble target, Tower owner)
         {
             Damage = damage;
             Pierce = pierce;
             MaxDistance = maxDistance;
             Speed = speed;
             Target = target;
+            Owner = owner;
         }
     }
 

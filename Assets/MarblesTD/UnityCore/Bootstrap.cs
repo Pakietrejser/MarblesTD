@@ -4,9 +4,9 @@ using MarblesTD.Core.Marbles;
 using MarblesTD.Core.Player;
 using MarblesTD.Core.Projectiles;
 using MarblesTD.Core.Towers;
-using MarblesTD.Towers;
 using MarblesTD.UnityCore.Settings;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace MarblesTD.UnityCore
 {
@@ -18,7 +18,7 @@ namespace MarblesTD.UnityCore
         public Transform PlaceTowerButtonsParent;
         public GameObject PlaceTowerButtonPrefab;
         public GlobalTowerSettings GlobalTowerSettings;
-        public GameObject BottomPanel;
+        public TowerPanelView TowerPanelView;
         public LayerMask TowersMask;
 
         public List<Tower> Towers = new List<Tower>();
@@ -26,27 +26,17 @@ namespace MarblesTD.UnityCore
         public List<Projectile> Projectiles = new List<Projectile>();
 
         public Player Player { get; private set; }
-
-        Tower selectedTower;
+        
         public void SelectTower(Tower tower)
         {
-            if (selectedTower == tower)
-            {
-                BottomPanel.SetActive(false);
-                selectedTower = null;
-            }
-            else
-            {
-                BottomPanel.SetActive(true);
-                selectedTower = tower;
-            }
+            TowerPanelView.ShowPanel(tower);
         }
 
         public static Bootstrap Instance;
         private void Awake()
         {
             Instance = this;
-            BottomPanel.SetActive(false);
+            TowerPanelView.HidePanel();
         
             //do player
             Player = new Player(PlayerView);
@@ -54,6 +44,7 @@ namespace MarblesTD.UnityCore
             StartCoroutine(AddLivesAfterDelay());
             
             GlobalTowerSettings.Init();
+            TowerPanelView.Init(Player);
             
             GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
             
@@ -84,6 +75,12 @@ namespace MarblesTD.UnityCore
         {
             for (int i = Towers.Count - 1; i >= 0; i--)
             {
+                if (Towers[i].IsDestroyed)
+                {
+                    Towers.Remove(Towers[i]);
+                    continue;
+                }
+                
                 Towers[i].Update(GetMarblePlacements(), Time.deltaTime);
             }
 
@@ -94,18 +91,25 @@ namespace MarblesTD.UnityCore
         
             for (int i = Marbles.Count - 1; i >= 0; i--)
             {
+                if (Marbles[i].IsDestroyed)
+                {
+                    Marbles.Remove(Marbles[i]);
+                    continue;
+                }
+                
                 Marbles[i].Update(EndPosition, Time.deltaTime);
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, TowersMask))
                 {
-                    BottomPanel.SetActive(false);
-                    selectedTower = null;
+                    TowerPanelView.HidePanel();
                 }
             }
+            
+            TowerPanelView.UpdatePanel();
         }
 
         private IEnumerable<MarblePlacement> GetMarblePlacements()
