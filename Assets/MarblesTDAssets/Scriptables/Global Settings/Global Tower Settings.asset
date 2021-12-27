@@ -17,11 +17,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e327f9a6713e4543bb0d2b8d6544d4a, type: 2}
   - {fileID: 11400000, guid: a17cb4a40bdce3d41be27ddf07e9d416, type: 2}
   - {fileID: 11400000, guid: ac6b1f3185888a24f8227c1034211f37, type: 2}
-  towerPrefab: {fileID: 0}
   QuickFoxSettings:
     Name: Quick Fox
     Description: UwU
-    Cost: 556
+    Cost: 500
     TowerType: 1
     Icon: {fileID: 21300000, guid: bc035781f6f88904ba66404ef2fa8b67, type: 3}
     Damage: 1
