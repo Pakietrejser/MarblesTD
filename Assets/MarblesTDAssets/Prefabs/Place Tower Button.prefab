@@ -139,12 +139,10 @@ MonoBehaviour:
   costText: {fileID: 417565936460388478}
   towerSetColor: {fileID: 417565935655696997}
   towerPrefab: {fileID: 8422161118259489185, guid: 6a404af46c74fd142b153b55204c953f, type: 3}
-  canvas: {fileID: 0}
-  zDistance: 10
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  yPlacingHeight: 0.5
+  yPlacingHeight: -0.1
 --- !u!1 &417565936460388476
 GameObject:
   m_ObjectHideFlags: 0

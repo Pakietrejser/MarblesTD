@@ -22,6 +22,8 @@ namespace MarblesTD.Core.Marbles
             _position = position;
             _health = health;
             _speed = speed;
+            
+            _view.UpdateMarble(_health);
 
             Debug.Log($"Creating {GetType()} at position {_position} w {_health}HP");
         }
@@ -32,7 +34,9 @@ namespace MarblesTD.Core.Marbles
             if (_health <= 0)
             {
                 Destroy();
+                return;
             }
+            _view.UpdateMarble(_health);
         }
 
         public void Update(Transform endPosition, float deltaTime)
@@ -58,5 +62,6 @@ namespace MarblesTD.Core.Marbles
         Marble Marble { get; set; }
         void DestroySelf();
         void UpdatePosition(Vector2 vector2);
+        void UpdateMarble(int health);
     }
 }

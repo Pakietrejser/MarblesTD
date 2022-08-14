@@ -22,14 +22,21 @@ namespace MarblesTD.UnityCore
             float x = target.x - current.x;
             float y = target.y - current.z;
             var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
+
             if (rotation < 0)
             {
-                rotation = Math.Abs(rotation) + 180;
+                rotation = Math.Abs(rotation) + 90;
+            }
+            else if (rotation > 90 )
+            {
+                rotation = 270 + Math.Abs(rotation - 180);
+            }
+            else
+            {
+                rotation = Math.Abs(rotation - 90);
             }
             
-            Debug.Log($"[{x}, {y}] = {rotation}");
-            transform.Rotate(0, rotation, 0);
-            // transform.rotation = Quaternion.Euler(0, rotation, 0);
+            transform.rotation = Quaternion.Euler(0, rotation + 90, 0);
         }
 
         public void DestroySelf()
@@ -39,7 +46,7 @@ namespace MarblesTD.UnityCore
             Destroy(gameObject);
         }
 
-        private void OnCollisionEnter(Collision col)
+        void OnCollisionEnter(Collision col)
         {
             if (!col.gameObject.TryGetComponent(out IMarbleView view)) return;
             

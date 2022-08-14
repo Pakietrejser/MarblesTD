@@ -52,12 +52,10 @@ namespace MarblesTD.UnityCore
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 1000.0f,groundMask))
             {
-                Debug.Log("target");
                 currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;
             }
             else
             {
-                Debug.Log("des");
                 Destroy(currentTower);
                 currentTower = null;
             }
