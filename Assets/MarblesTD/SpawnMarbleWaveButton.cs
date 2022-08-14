@@ -33,7 +33,7 @@ namespace MarblesTD
                 var spawnPosition = Bootstrap.Instance.StartingPosition;
                 var go = Instantiate(marblePrefab, spawnPosition);
 
-                go.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
+                // go.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
 
                 var view = go.GetComponent<IMarbleView>();
                 Bootstrap.Instance.Marbles.Add(new Marble(view,
