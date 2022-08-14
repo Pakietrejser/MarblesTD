@@ -138,7 +138,6 @@ MonoBehaviour:
   towerImage: {fileID: 417565936585085725}
   costText: {fileID: 417565936460388478}
   towerSetColor: {fileID: 417565935655696997}
-  globalTowerSettings: {fileID: 11400000, guid: 983042e1529d90549bf573e20d6412c6, type: 2}
   towerPrefab: {fileID: 6641361829304697839, guid: afebbed50879bc448966f56aacc5797f, type: 3}
   canvas: {fileID: 0}
   zDistance: 10
