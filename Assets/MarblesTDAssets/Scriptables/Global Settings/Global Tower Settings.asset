@@ -20,7 +20,7 @@ MonoBehaviour:
   QuickFoxSettings:
     Name: Quick Fox
     Description: UwU
-    Cost: 400
+    Cost: 10
     TowerType: 1
     Icon: {fileID: 21300000, guid: bc035781f6f88904ba66404ef2fa8b67, type: 3}
     Damage: 1
@@ -32,7 +32,7 @@ MonoBehaviour:
     RuleOfThree:
       Name: Rule of Three
       Description: wow
-      Cost: 300
+      Cost: 20
       Icon: {fileID: 21300000, guid: bc035781f6f88904ba66404ef2fa8b67, type: 3}
       Damage: 10
       Range: 10

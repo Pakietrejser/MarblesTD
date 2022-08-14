@@ -25,7 +25,7 @@ namespace MarblesTD.Core.Projectiles
             _hitMarbles = new List<Marble>();
 
             _remainingHits = config.Pierce;
-            _view.FacePosition(config.Target.Position);
+            _view.UpdateRotation(config.Target.Position);
             _view.HitMarble += OnMarbleHit;
 
             var targetPos = config.Target.Position;
@@ -35,8 +35,8 @@ namespace MarblesTD.Core.Projectiles
                 position.x +(targetPos.x - position.x) * distanceToAdjust,
                 position.y +(targetPos.y - position.y) * distanceToAdjust
                 );
-
-            Debug.Log($"Creating {GetType()} at position {_position}, target position {_targetPosition}");
+            
+            // Debug.Log($"Creating {GetType()} at position {_position}, target position {_targetPosition}");
         }
 
         private void OnMarbleHit(Marble marble)
@@ -94,8 +94,8 @@ namespace MarblesTD.Core.Projectiles
     {
         Projectile Projectile { get; set; }
         event Action<Marble> HitMarble;
-        void UpdatePosition(Vector2 newPosition);
-        void FacePosition(Vector2 facePosition);
+        void UpdatePosition(Vector2 targetPosition);
+        void UpdateRotation(Vector2 target);
         void DestroySelf();
     }
 }

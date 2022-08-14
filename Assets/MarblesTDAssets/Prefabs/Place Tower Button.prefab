@@ -138,7 +138,7 @@ MonoBehaviour:
   towerImage: {fileID: 417565936585085725}
   costText: {fileID: 417565936460388478}
   towerSetColor: {fileID: 417565935655696997}
-  towerPrefab: {fileID: 6641361829304697839, guid: afebbed50879bc448966f56aacc5797f, type: 3}
+  towerPrefab: {fileID: 8422161118259489185, guid: 6a404af46c74fd142b153b55204c953f, type: 3}
   canvas: {fileID: 0}
   zDistance: 10
   groundMask:

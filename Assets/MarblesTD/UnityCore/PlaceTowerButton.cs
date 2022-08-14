@@ -15,8 +15,6 @@ namespace MarblesTD.UnityCore
         [SerializeField] Image towerSetColor;
         [Space]
         [SerializeField] private GameObject towerPrefab;
-        [SerializeField] private RectTransform canvas;
-        [SerializeField] private float zDistance;
         [Space]
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float yPlacingHeight;
@@ -54,10 +52,12 @@ namespace MarblesTD.UnityCore
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 1000.0f,groundMask))
             {
+                Debug.Log("target");
                 currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;
             }
             else
             {
+                Debug.Log("des");
                 Destroy(currentTower);
                 currentTower = null;
             }
@@ -70,8 +70,9 @@ namespace MarblesTD.UnityCore
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit, 1000.0f,groundMask))
             {
+                Debug.Log("Placed Tower.");
                 currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;
-                currentTower.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
+                // currentTower.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
                 
                 var view = currentTower.GetComponent<ITowerView>();
                 
@@ -80,6 +81,7 @@ namespace MarblesTD.UnityCore
             }
             else
             {
+                Debug.Log("Didn't place anything.");
                 Destroy(currentTower);
                 currentTower = null;
             }

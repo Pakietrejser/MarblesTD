@@ -11,14 +11,25 @@ namespace MarblesTD.UnityCore
         public Projectile Projectile { get; set; }
         public event Action<Marble> HitMarble;
         
-        public void UpdatePosition(Vector2 newPosition)
+        public void UpdatePosition(Vector2 targetPosition)
         {
-            transform.position = new Vector3(newPosition.x, transform.position.y, newPosition.y);
+            transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.y);
         }
-
-        public void FacePosition(Vector2 facePosition)
+        
+        public void UpdateRotation(Vector2 target)
         {
-            transform.LookAt(facePosition);
+            var current = transform.position;
+            float x = target.x - current.x;
+            float y = target.y - current.z;
+            var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
+            if (rotation < 0)
+            {
+                rotation = Math.Abs(rotation) + 180;
+            }
+            
+            Debug.Log($"[{x}, {y}] = {rotation}");
+            transform.Rotate(0, rotation, 0);
+            // transform.rotation = Quaternion.Euler(0, rotation, 0);
         }
 
         public void DestroySelf()
