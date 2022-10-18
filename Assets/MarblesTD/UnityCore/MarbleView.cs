@@ -1,6 +1,5 @@
 ﻿using System;
 using MarblesTD.Core.Marbles;
-using MarblesTD.Towers;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore
@@ -9,12 +8,10 @@ namespace MarblesTD.UnityCore
     {
         [Header("Renderer")] 
         [SerializeField] SpriteRenderer marbleRenderer;
-        [SerializeField] Color[] marbleColors;
 
         [Header("Animations")]
         [SerializeField] Animator animator;
-        [SerializeField] string marbleAnimation;
-        [SerializeField] string jawbreakerAnimation;
+        [SerializeField] string[] animationStrings;
 
         string _currentAnimation;
         
@@ -27,30 +24,48 @@ namespace MarblesTD.UnityCore
         
         public void UpdatePosition(Vector2 newPosition)
         {
+            UpdateRotation(newPosition);
             transform.position = new Vector3(newPosition.x, transform.position.y, newPosition.y);
         }
 
         public void UpdateMarble(int health)
         {
-            string newAnimation = health > 6 ? jawbreakerAnimation : marbleAnimation;
+            string newAnimation = health > 6 ? animationStrings[6] : animationStrings[health - 1];
             if (_currentAnimation != newAnimation)
             {
                 _currentAnimation = newAnimation;
                 animator.Play(_currentAnimation);
             }
+        }
+        
+        void UpdateRotation(Vector2 target)
+        {
+            var current = transform.position;
+            float x = target.x - current.x;
+            float y = target.y - current.z;
+            var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
 
-            if (_currentAnimation == marbleAnimation)
+            if (rotation < 0)
             {
-                marbleRenderer.color = marbleColors[health - 1];
+                rotation = Math.Abs(rotation) + 90;
             }
+            else if (rotation > 90 )
+            {
+                rotation = 270 + Math.Abs(rotation - 180);
+            }
+            else
+            {
+                rotation = Math.Abs(rotation - 90);
+            }
+            
+            marbleRenderer.transform.rotation = Quaternion.Euler(90, rotation + 180, 0);
         }
 
-        private void OnCollisionEnter(Collision col)
+        void OnCollisionEnter(Collision col)
         {
             if (!col.gameObject.TryGetComponent(out MarbleView view)) return;
             
             Physics.IgnoreCollision(col.collider, GetComponent<Collider>());
         }
-        
     }
 }
