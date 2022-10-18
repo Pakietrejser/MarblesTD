@@ -5,6 +5,7 @@ using MarblesTD.Core.Player;
 using MarblesTD.Core.Projectiles;
 using MarblesTD.Core.Towers;
 using MarblesTD.UnityCore.Settings;
+using PathCreation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,8 +13,11 @@ namespace MarblesTD.UnityCore
 {
     public class Bootstrap : MonoBehaviour
     {
-        public Transform StartingPosition;
-        public Transform EndPosition;
+        [SerializeField] PathCreator pathCreator;
+
+        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0);
+        public Vector3 EndPosition => pathCreator.path.GetPointAtTime(1);
+        
         public PlayerView PlayerView;
         public Transform PlaceTowerButtonsParent;
         public GameObject PlaceTowerButtonPrefab;
@@ -96,8 +100,11 @@ namespace MarblesTD.UnityCore
                     Marbles.Remove(Marbles[i]);
                     continue;
                 }
-                
-                Marbles[i].Update(EndPosition, Time.deltaTime);
+
+                float distanceTravelled = Marbles[i].DistanceTravelled + Marbles[i].Speed * 20 * Time.deltaTime;
+                var position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                var rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                Marbles[i].Update(distanceTravelled, position, rotation, position == EndPosition);
             }
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())

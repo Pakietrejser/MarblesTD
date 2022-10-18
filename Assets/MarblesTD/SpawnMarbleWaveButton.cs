@@ -31,13 +31,13 @@ namespace MarblesTD
             for (int i = 0; i < marblesAmount; i++)
             {
                 var spawnPosition = Bootstrap.Instance.StartingPosition;
-                var go = Instantiate(marblePrefab, spawnPosition);
+                var go = Instantiate(marblePrefab);
 
                 // go.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
 
                 var view = go.GetComponent<IMarbleView>();
                 Bootstrap.Instance.Marbles.Add(new Marble(view,
-                    new Vector2(spawnPosition.transform.position.x, spawnPosition.transform.position.z), marblesHealth,
+                    new Vector2(spawnPosition.x, spawnPosition.z), marblesHealth,
                     marblesSpeed));
 
                 yield return new WaitForSeconds(spawnDelay);

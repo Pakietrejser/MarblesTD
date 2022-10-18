@@ -24,8 +24,13 @@ namespace MarblesTD.UnityCore
         
         public void UpdatePosition(Vector2 newPosition)
         {
-            UpdateRotation(newPosition);
+            // UpdateRotation(newPosition);
             transform.position = new Vector3(newPosition.x, transform.position.y, newPosition.y);
+        }
+
+        public void UpdateRotation(Quaternion rotation)
+        {
+            marbleRenderer.transform.rotation = Quaternion.Euler(90, rotation.eulerAngles.y + 180, 0);
         }
 
         public void UpdateMarble(int health)
@@ -38,28 +43,28 @@ namespace MarblesTD.UnityCore
             }
         }
         
-        void UpdateRotation(Vector2 target)
-        {
-            var current = transform.position;
-            float x = target.x - current.x;
-            float y = target.y - current.z;
-            var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
-
-            if (rotation < 0)
-            {
-                rotation = Math.Abs(rotation) + 90;
-            }
-            else if (rotation > 90 )
-            {
-                rotation = 270 + Math.Abs(rotation - 180);
-            }
-            else
-            {
-                rotation = Math.Abs(rotation - 90);
-            }
-            
-            marbleRenderer.transform.rotation = Quaternion.Euler(90, rotation + 180, 0);
-        }
+        // void UpdateRotation(Vector2 target)
+        // {
+        //     var current = transform.position;
+        //     float x = target.x - current.x;
+        //     float y = target.y - current.z;
+        //     var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
+        //
+        //     if (rotation < 0)
+        //     {
+        //         rotation = Math.Abs(rotation) + 90;
+        //     }
+        //     else if (rotation > 90 )
+        //     {
+        //         rotation = 270 + Math.Abs(rotation - 180);
+        //     }
+        //     else
+        //     {
+        //         rotation = Math.Abs(rotation - 90);
+        //     }
+        //     
+        //     marbleRenderer.transform.rotation = Quaternion.Euler(90, rotation + 180, 0);
+        // }
 
         void OnCollisionEnter(Collision col)
         {
