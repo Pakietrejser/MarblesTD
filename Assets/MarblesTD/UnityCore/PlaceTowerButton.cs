@@ -66,7 +66,7 @@ namespace MarblesTD.UnityCore
             if (currentTower == null) return;
             
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit, 1000.0f,groundMask))
+            if (Physics.Raycast(ray, out var hit, 1000.0f,groundMask) && Bootstrap.Instance.Player.Money >= settings.Cost)
             {
                 Debug.Log("Placed Tower.");
                 currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;

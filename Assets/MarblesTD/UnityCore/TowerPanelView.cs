@@ -1,5 +1,6 @@
 ﻿using MarblesTD.Core.Player;
 using MarblesTD.Core.Towers;
+using MarblesTD.Core.Upgrades;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,26 @@ namespace MarblesTD.UnityCore
         [Header("Right Box")] 
         [SerializeField] TMP_Text towerNameText;
         [SerializeField] Image towerIconImage;
+        [Space] 
+        [SerializeField] UpgradePathPanel leftPath;
+        [SerializeField] UpgradePathPanel middlePath;
+        [SerializeField] UpgradePathPanel rightPath;
 
         [Header("Middle Box")] 
         [SerializeField] TMP_Text killCountText;
-        
-        Tower activeTower;
+
+        Tower _activeTower;
+
+        Tower ActiveTower
+        {
+            get => _activeTower;
+            set
+            {
+                _activeTower?.Unselect();
+                _activeTower = value;
+                _activeTower?.Select();
+            }
+        }
         Player activePlayer;
 
         void Awake()
@@ -29,8 +45,8 @@ namespace MarblesTD.UnityCore
 
         void SellTower()
         {
-            activePlayer.AddMoney(activeTower.SellValue);
-            activeTower.Destroy();
+            activePlayer.AddMoney(ActiveTower.SellValue);
+            ActiveTower.Destroy();
             HidePanel();
         }
         
@@ -41,31 +57,37 @@ namespace MarblesTD.UnityCore
 
         public void ShowPanel(Tower tower)
         {
-            if (tower == activeTower)
+            if (tower == ActiveTower)
             {
                 HidePanel();
                 return;
             }
             
-            activeTower = tower;
-            towerNameText.text = activeTower.Name;
-            towerIconImage.sprite = activeTower.Icon;
-            
+            ActiveTower = tower;
+            towerNameText.text = ActiveTower.Name;
+            towerIconImage.sprite = ActiveTower.Icon;
+
+            leftPath.Init(tower, tower.Upgrades[Path.Left]);
+            middlePath.Init(tower, tower.Upgrades[Path.Middle]);
+            rightPath.Init(tower, tower.Upgrades[Path.Right]);
+
+            Debug.Log("opening");
             gameObject.SetActive(true);
         }
 
         public void HidePanel()
         {
+            Debug.Log("hiding");
             gameObject.SetActive(false);
-            activeTower = null;
+            ActiveTower = null;
         }
 
         public void UpdatePanel()
         {
-            if (activeTower == null) return;
+            if (ActiveTower == null) return;
 
-            killCountText.text = $"{activeTower.KIllCount}";
-            sellTowerText.text = $"Sell for ${activeTower.SellValue}";
+            killCountText.text = $"{ActiveTower.KIllCount}";
+            sellTowerText.text = $"Sell for ${ActiveTower.SellValue}";
         }
     }
 }

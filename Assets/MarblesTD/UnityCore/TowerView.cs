@@ -7,9 +7,26 @@ namespace MarblesTD.UnityCore
 {
     public class TowerView : MonoBehaviour, ITowerView
     {
-        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] GameObject projectilePrefab;
+        [SerializeField] SpriteRenderer towerRenderer;
+        [SerializeField] SpriteRenderer selectRenderer;
         
         public event Action Clicked;
+
+        public void Init(Sprite sprite, TowerType towerType)
+        {
+            towerRenderer.sprite = sprite;
+        }
+
+        public void Select()
+        {
+            selectRenderer.enabled = true;
+        }
+
+        public void Unselect()
+        {
+            selectRenderer.enabled = false;
+        }
 
         public Projectile SpawnProjectile(ProjectileConfig config)
         {

@@ -7,16 +7,14 @@ namespace MarblesTD.Core.Upgrades
      public abstract class Upgrade
      {
          public string Name;
-         public string Description;
          public int Cost;
-         public Sprite Icon;
+         
+         public bool IsActive { get; protected set; }
 
          public virtual void UpdateSettings(SettingsBase settingsBase)
          {
              Name = settingsBase.Name;
-             Description = settingsBase.Description;
              Cost = settingsBase.Cost;
-             Icon = settingsBase.Icon;
          }
 
          public abstract void Apply(Tower tower);
@@ -24,10 +22,9 @@ namespace MarblesTD.Core.Upgrades
          [Serializable]
          public class SettingsBase
          {
+             [Header("Display Data")]
              public string Name;
-             public string Description;
              public int Cost;
-             public Sprite Icon;
          }
      }
      
@@ -42,6 +39,7 @@ namespace MarblesTD.Core.Upgrades
          public sealed override void Apply(Tower tower)
          {
              if (!(tower is TTower newTower)) throw new ArgumentException();
+             IsActive = true;
              ExplicitApply(newTower);
          }
 

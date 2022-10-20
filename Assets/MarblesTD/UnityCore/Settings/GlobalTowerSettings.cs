@@ -24,7 +24,7 @@ namespace MarblesTD.UnityCore.Settings
             var found = towerSets.FirstOrDefault(x => x.TowerType == towerType);
             return found ? found : throw new ArgumentException();
         }
-        
+
         //temp, to factory
         public Tower CreateTower(Tower.SettingsBase settings, ITowerView towerView, Vector3 spawnPosition)
         {

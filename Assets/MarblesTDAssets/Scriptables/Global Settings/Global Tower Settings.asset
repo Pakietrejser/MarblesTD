@@ -20,19 +20,48 @@ MonoBehaviour:
   QuickFoxSettings:
     Name: Quick Fox
     Description: UwU
-    Cost: 10
+    Cost: 50
     TowerType: 1
     Icon: {fileID: 21300000, guid: bc035781f6f88904ba66404ef2fa8b67, type: 3}
     Damage: 1
     Pierce: 2
     AttackSpeed: 0.95
     Range: 6
-    ProjectileTravelDistance: 10
+    ProjectileTravelDistance: 30
     ProjectileSpeed: 20
-    RuleOfThree:
-      Name: Rule of Three
-      Description: wow
-      Cost: 20
-      Icon: {fileID: 21300000, guid: bc035781f6f88904ba66404ef2fa8b67, type: 3}
-      Damage: 10
-      Range: 10
+    LongerRange:
+      Name: Longer Range
+      Cost: 30
+      Range: 3
+    EvenLongerRange:
+      Name: Even Longer Range
+      Cost: 50
+      Range: 3
+    DrasticallyMoreRange:
+      Name: Drastically More Range
+      Cost: 200
+      Range: 50
+    MoreDamage:
+      Name: More Damage
+      Cost: 50
+      Damage: 1
+    EvenMoreDamage:
+      Name: Even More Damage
+      Cost: 100
+      Damage: 3
+    DrasticallyMoreDamage:
+      Name: Drastically More Damage
+      Cost: 600
+      Damage: 15
+    BetterSpeed:
+      Name: Better Speed
+      Cost: 100
+      Speed: 0.8
+    EvenBetterSpeed:
+      Name: Even Better Speed
+      Cost: 200
+      Speed: 0.75
+    DrasticallyBetterSpeed:
+      Name: Drastically Better Speed
+      Cost: 800
+      Speed: 0.2

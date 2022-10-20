@@ -19,19 +19,20 @@ namespace MarblesTD.Core.Towers
         public bool IsDestroyed { get; private set; }
         public int SellValue => Convert.ToInt32(Cost * .75f);
         public int KIllCount;
+        public IReadOnlyDictionary<Path, Upgrade[]> Upgrades => _upgrades;
+
+        protected readonly ITowerView _view;
+        protected Vector2 _position;
+        readonly Dictionary<Path, Upgrade[]> _upgrades;
         
-        protected ITowerView View;
-        protected Vector2 Position;
-        readonly Dictionary<Path, Upgrade[]> activeUpgrades;
-        
-        protected Tower(ITowerView view, Vector2 position)
+        protected Tower(ITowerView view, Vector2 position, Dictionary<Path, Upgrade[]> upgrades)
         {
-            View = view;
-            Position = position;
-            activeUpgrades = new Dictionary<Path, Upgrade[]>();
+            _view = view;
+            _position = position;
+            _upgrades = upgrades;
             KIllCount = 0;
             
-            View.Clicked += SelectTower;
+            _view.Clicked += SelectTower;
         }
 
         void SelectTower()
@@ -46,6 +47,8 @@ namespace MarblesTD.Core.Towers
             Cost = settingsBase.Cost;
             TowerType = settingsBase.TowerType;
             Icon = settingsBase.Icon;
+            
+            _view.Init(Icon, TowerType);
         }
 
         public abstract void Update(IEnumerable<MarblePlacement> marblePlacements, float delta);
@@ -53,42 +56,27 @@ namespace MarblesTD.Core.Towers
         public void ApplyUpgrade(Upgrade upgrade)
         {
             upgrade.Apply(this);
-            activeUpgrades.Add(Path.None, new []{upgrade});
-        }
-        bool IsUpgraded(Path path, int tier)
-        {
-            if (tier <= 0) throw new ArgumentException();
-            if (!activeUpgrades.TryGetValue(path, out var upgrades)) return false;
-            return upgrades.Length >= tier;
-        }
-        public int GetHighestActiveTier()
-        {
-            if (activeUpgrades.Count == 0) return 0;
-
-            int highestTier = 0;
-            foreach (var upgrade in activeUpgrades.Values)
-            {
-                if (upgrade.Length > highestTier)
-                    highestTier = upgrade.Length;
-            }
-
-            return highestTier;
         }
 
         public void Destroy()
         {
-            View.DestroySelf();
+            _view.DestroySelf();
             IsDestroyed = true;
         }
 
+        public void Select() => _view.Select();
+        public void Unselect() => _view.Unselect();
+
         [Serializable]
-        public class SettingsBase
+        public abstract class SettingsBase
         {
             public string Name;
             public string Description;
             public int Cost;
             public TowerType TowerType;
             public Sprite Icon;
+
+            public abstract Dictionary<Path, Upgrade[]> GetUpgrades();
         }
     }
 }

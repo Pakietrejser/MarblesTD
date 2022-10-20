@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MarblesTD.Core.Marbles;
 using MarblesTD.Core.Player;
 using MarblesTD.Core.Projectiles;
@@ -15,8 +16,8 @@ namespace MarblesTD.UnityCore
     {
         [SerializeField] PathCreator pathCreator;
 
-        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0);
-        public Vector3 EndPosition => pathCreator.path.GetPointAtTime(1);
+        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0, EndOfPathInstruction.Stop);
+        public Vector3 EndPosition => pathCreator.path.GetPointAtTime(1, EndOfPathInstruction.Stop);
         
         public PlayerView PlayerView;
         public Transform PlaceTowerButtonsParent;
@@ -25,9 +26,9 @@ namespace MarblesTD.UnityCore
         public TowerPanelView TowerPanelView;
         public LayerMask TowersMask;
 
-        public List<Tower> Towers = new List<Tower>();
-        public List<Marble> Marbles = new List<Marble>();
-        public List<Projectile> Projectiles = new List<Projectile>();
+        public readonly List<Tower> Towers = new List<Tower>();
+        public readonly Dictionary<int, List<Marble>> MarbleWaves = new Dictionary<int, List<Marble>>();
+        public readonly List<Projectile> Projectiles = new List<Projectile>();
 
         public Player Player { get; private set; }
         
@@ -44,8 +45,8 @@ namespace MarblesTD.UnityCore
         
             //do player
             Player = new Player(PlayerView);
-            Player.AddLives(100);
-            StartCoroutine(AddLivesAfterDelay());
+            Player.AddLives(20);
+            Player.AddMoney(100);
             
             GlobalTowerSettings.Init();
             TowerPanelView.Init(Player);
@@ -57,6 +58,13 @@ namespace MarblesTD.UnityCore
             placeTowerButton = go.GetComponent<PlaceTowerButton>();
             placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
             
+            //do marbles
+            Marble.Cracked += OnMarbleCracked;
+        }
+
+        void OnMarbleCracked(Marble marble, int crackedAmount)
+        {
+            Player.AddMoney(crackedAmount);
         }
 
         PlaceTowerButton placeTowerButton;
@@ -64,15 +72,6 @@ namespace MarblesTD.UnityCore
         void GlobalTowerSettingsOnSettingsChanged()
         {
             placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
-        }
-
-        IEnumerator AddLivesAfterDelay()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(0.2f);
-                Player.AddMoney(10);
-            }
         }
 
         void Update()
@@ -92,19 +91,35 @@ namespace MarblesTD.UnityCore
             {
                 Projectiles[i].Update(Time.deltaTime);
             }
-        
-            for (int i = Marbles.Count - 1; i >= 0; i--)
-            {
-                if (Marbles[i].IsDestroyed)
-                {
-                    Marbles.Remove(Marbles[i]);
-                    continue;
-                }
 
-                float distanceTravelled = Marbles[i].DistanceTravelled + Marbles[i].Speed * 20 * Time.deltaTime;
-                var position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-                var rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-                Marbles[i].Update(distanceTravelled, position, rotation, position == EndPosition);
+            foreach (var marbleWave in MarbleWaves)
+            {
+                int wave = marbleWave.Key;
+                var marbles = marbleWave.Value;
+                
+                for (int i = marbles.Count - 1; i >= 0; i--)
+                {
+                    if (marbles[i].IsDestroyed)
+                    {
+                        MarbleWaves[wave].Remove(marbles[i]);
+                        if (MarbleWaves[wave].Count == 0)
+                        {
+                            Player.AddMoney(wave * 10);
+                        }
+                        continue;
+                    }
+
+                    float distanceTravelled = marbles[i].DistanceTravelled + marbles[i].Speed * Time.deltaTime;
+                    var position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                    var rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+
+                    bool reachedDestination = position == EndPosition;
+                    marbles[i].Update(distanceTravelled, position, rotation, reachedDestination);
+                    if (reachedDestination)
+                    {
+                        Player.RemoveLives(marbles[i].Health);
+                    }
+                }
             }
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -119,14 +134,9 @@ namespace MarblesTD.UnityCore
             TowerPanelView.UpdatePanel();
         }
 
-        private IEnumerable<MarblePlacement> GetMarblePlacements()
+        IEnumerable<MarblePlacement> GetMarblePlacements()
         {
-            int marblesCount = Marbles.Count;
-            for (int i = 0; i < marblesCount; i++)
-            {
-                var marble = Marbles[i];
-                yield return new MarblePlacement(marble, marble.Position);
-            }
+            return MarbleWaves.SelectMany(x => x.Value).Select(marble => new MarblePlacement(marble, marble.Position));
         }
     }
 }

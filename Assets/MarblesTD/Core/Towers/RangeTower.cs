@@ -17,7 +17,7 @@ namespace MarblesTD.Core.Towers
 
         float timeUntilNextAttack;
 
-        protected RangeTower(TSettings settings, ITowerView view, Vector2 position) : base(view, position)
+        protected RangeTower(TSettings settings, ITowerView view, Vector2 position) : base(view, position, settings.GetUpgrades())
         {
             UpdateSettings(settings);
         }
@@ -45,7 +45,7 @@ namespace MarblesTD.Core.Towers
             
             foreach (var marblePlacement in marblePlacements)
             {
-                float distance = Vector2.Distance(Position, marblePlacement.Position);
+                float distance = Vector2.Distance(_position, marblePlacement.Position);
                 if (distance > Range) continue;
                 if (!(distance < minDistance)) continue;
                 
@@ -71,11 +71,11 @@ namespace MarblesTD.Core.Towers
             if (!SeekClosestMarble(marblePlacements, out var closestMarble)) return;
             
             var projectileConfig = new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble, this);
-            View.SpawnProjectile(projectileConfig);
+            _view.SpawnProjectile(projectileConfig);
         }
         
         [Serializable]
-        public class SettingsRangeBase : SettingsBase
+        public abstract class SettingsRangeBase : SettingsBase
         {
             public int Damage;
             public int Pierce;
