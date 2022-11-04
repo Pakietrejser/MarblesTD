@@ -10,6 +10,7 @@ namespace MarblesTD.UnityCore
         [SerializeField] GameObject projectilePrefab;
         [SerializeField] SpriteRenderer towerRenderer;
         [SerializeField] SpriteRenderer selectRenderer;
+        [SerializeField] Collider collider;
         
         public event Action Clicked;
 
@@ -45,5 +46,20 @@ namespace MarblesTD.UnityCore
         }
         
         public void DestroySelf() => Destroy(gameObject);
+        
+        public void EnableCollider()
+        {
+            collider.enabled = true;
+        }
+
+        public void DisableCollider()
+        {
+            collider.enabled = false;
+        }
+
+        public void ShowAsPlaceable(bool canBePlaced)
+        {
+            towerRenderer.color = canBePlaced ? Color.white : Color.red;
+        }
     }
 }

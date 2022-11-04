@@ -127,7 +127,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1411520399839680534
 MonoBehaviour:
@@ -144,6 +144,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8422161118259489185, guid: dbc6bae9914cc9541b15910facf9a81b, type: 3}
   towerRenderer: {fileID: 8422161119800740975}
   selectRenderer: {fileID: 2192080711268765900}
+  collider: {fileID: 8671679530004780034}
 --- !u!1 &8422161119800740961
 GameObject:
   m_ObjectHideFlags: 0

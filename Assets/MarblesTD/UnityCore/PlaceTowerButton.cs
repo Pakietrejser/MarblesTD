@@ -1,4 +1,5 @@
-﻿using MarblesTD.Core.Towers;
+﻿using System;
+using MarblesTD.Core.Towers;
 using MarblesTD.UnityCore.Settings;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace MarblesTD.UnityCore
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float yPlacingHeight;
 
+        bool _draggedTowerOutOfPanel;
+        bool _canPlaceTowerAtCurrentPosition;
+        
         Button towerButton;
         GameObject currentTower;
 
@@ -40,18 +44,40 @@ namespace MarblesTD.UnityCore
             towerSetColor.color = globalTowerSettings.GetTowerTypeSettings(settingsBase.TowerType).Color;
         }
         
+        
         public void OnBeginDrag(PointerEventData data)
         {
             currentTower = Instantiate(towerPrefab);
+            _draggedTowerOutOfPanel = false;
+            var view = currentTower.GetComponent<ITowerView>();
+            view.DisableCollider();
         }
 
         public void OnDrag(PointerEventData data)
         {
             if (currentTower == null) return;
+            if (Camera.main == null) throw new NullReferenceException();
             
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit, 1000.0f,groundMask))
+
+            if (EventSystem.current.IsPointerOverGameObject() && !_draggedTowerOutOfPanel)
             {
+                return;
+            }
+
+            _draggedTowerOutOfPanel = true;
+
+            if (Physics.Raycast(ray, out var hit, 1000.0f))
+            {
+                _canPlaceTowerAtCurrentPosition = hit.collider.gameObject.name == "Map";
+                var view = currentTower.GetComponent<ITowerView>();
+                view.ShowAsPlaceable(_canPlaceTowerAtCurrentPosition);
+                
+                
+                var go = hit.collider.gameObject.name;
+                Debug.Log($"{go}");
+                
+                
                 currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;
             }
             else
@@ -64,15 +90,18 @@ namespace MarblesTD.UnityCore
         public void OnEndDrag(PointerEventData data)
         {
             if (currentTower == null) return;
-            
+            if (Camera.main == null) throw new NullReferenceException();
+
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var hit, 1000.0f,groundMask) && Bootstrap.Instance.Player.Money >= settings.Cost)
+
+            if (Physics.Raycast(ray, out var hit, 1000.0f, groundMask) && Bootstrap.Instance.Player.Money >= settings.Cost && _canPlaceTowerAtCurrentPosition)
             {
                 Debug.Log("Placed Tower.");
                 currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;
                 // currentTower.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
                 
                 var view = currentTower.GetComponent<ITowerView>();
+                view.EnableCollider();
                 
                 Bootstrap.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z)));
                 Bootstrap.Instance.Player.RemoveMoney(settings.Cost);

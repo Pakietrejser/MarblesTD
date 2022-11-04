@@ -13,5 +13,8 @@ namespace MarblesTD.Core.Towers
         void Unselect();
         Projectile SpawnProjectile(ProjectileConfig config);
         void DestroySelf();
+        void EnableCollider();
+        void DisableCollider();
+        void ShowAsPlaceable(bool canBePlaced);
     }
 }
