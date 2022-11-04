@@ -104,7 +104,7 @@ namespace MarblesTD.UnityCore
                         MarbleWaves[wave].Remove(marbles[i]);
                         if (MarbleWaves[wave].Count == 0)
                         {
-                            Player.AddMoney(wave * 10);
+                            Player.AddMoney(50 + wave * 20);
                         }
                         continue;
                     }
