@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using MarblesTD.Core.Marbles;
 using MarblesTD.Core.Waves;
@@ -28,8 +29,10 @@ namespace MarblesTD
         IEnumerator SpawnWave()
         {
             var wave = _waveManager.GetNextWave();
+            var marbleWave = new MarbleWave(wave.WaveIndex);
+            
             roundText.text = $"{wave.WaveIndex}";
-            Bootstrap.Instance.MarbleWaves.Add(wave.WaveIndex, new List<Marble>());
+            Bootstrap.Instance.MarbleWaves.Add(marbleWave);
 
             foreach (var waveGroup in wave.GetGroups())
             {
@@ -40,11 +43,13 @@ namespace MarblesTD
                     
                     var view = go.GetComponent<IMarbleView>();
                     var marble = new Marble(view, new Vector2(spawnPosition.x, spawnPosition.z), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
-                    Bootstrap.Instance.MarbleWaves[wave.WaveIndex].Add(marble);
+                    marbleWave.Add(marble);
                     
                     yield return new WaitForSeconds(waveGroup.MarbleDelay);
                 }
             }
+
+            marbleWave.FinishedSpawning = true;
         }
     }
 }

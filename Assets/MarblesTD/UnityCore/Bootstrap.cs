@@ -5,6 +5,7 @@ using MarblesTD.Core.Marbles;
 using MarblesTD.Core.Player;
 using MarblesTD.Core.Projectiles;
 using MarblesTD.Core.Towers;
+using MarblesTD.Core.Waves;
 using MarblesTD.UnityCore.Settings;
 using PathCreation;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace MarblesTD.UnityCore
         public LayerMask TowersMask;
 
         public readonly List<Tower> Towers = new List<Tower>();
-        public readonly Dictionary<int, List<Marble>> MarbleWaves = new Dictionary<int, List<Marble>>();
+        public readonly List<MarbleWave> MarbleWaves = new List<MarbleWave>();
         public readonly List<Projectile> Projectiles = new List<Projectile>();
 
         public Player Player { get; private set; }
@@ -38,7 +39,8 @@ namespace MarblesTD.UnityCore
         }
 
         public static Bootstrap Instance;
-        private void Awake()
+
+        void Awake()
         {
             Instance = this;
             TowerPanelView.HidePanel();
@@ -94,15 +96,15 @@ namespace MarblesTD.UnityCore
 
             foreach (var marbleWave in MarbleWaves)
             {
-                int wave = marbleWave.Key;
-                var marbles = marbleWave.Value;
+                int wave = marbleWave.WaveIndex;
+                var marbles = marbleWave.Marbles;
                 
                 for (int i = marbles.Count - 1; i >= 0; i--)
                 {
                     if (marbles[i].IsDestroyed)
                     {
-                        MarbleWaves[wave].Remove(marbles[i]);
-                        if (MarbleWaves[wave].Count == 0)
+                        marbles.Remove(marbles[i]);
+                        if (marbles.Count == 0)
                         {
                             Player.AddMoney(50 + wave * 20);
                         }
@@ -136,7 +138,7 @@ namespace MarblesTD.UnityCore
 
         IEnumerable<MarblePlacement> GetMarblePlacements()
         {
-            return MarbleWaves.SelectMany(x => x.Value).Select(marble => new MarblePlacement(marble, marble.Position));
+            return MarbleWaves.SelectMany(wave => wave.Marbles).Select(marble => new MarblePlacement(marble, marble.Position));
         }
     }
 }
