@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarblesTD.Core.Towers;
-using MarblesTD.Core.Upgrades;
+using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.Entities.Towers.Upgrades;
 using MarblesTD.Towers.QuickFoxImpl.LeftPathUpgrades;
 using MarblesTD.Towers.QuickFoxImpl.MiddlePathUpgrades;
 using MarblesTD.Towers.QuickFoxImpl.RightPathUpgrades;

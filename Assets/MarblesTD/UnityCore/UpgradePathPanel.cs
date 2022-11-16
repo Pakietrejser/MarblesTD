@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using MarblesTD.Core.Towers;
-using MarblesTD.Core.Upgrades;
+using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.Entities.Towers.Upgrades;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

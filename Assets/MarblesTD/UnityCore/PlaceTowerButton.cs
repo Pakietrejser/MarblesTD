@@ -1,5 +1,5 @@
 ﻿using System;
-using MarblesTD.Core.Towers;
+using MarblesTD.Core.Entities.Towers;
 using MarblesTD.UnityCore.Settings;
 using TMPro;
 using UnityEngine;

@@ -1,5 +1,5 @@
 ﻿using System;
-using MarblesTD.Core.Marbles;
+using MarblesTD.Core.Entities.Marbles;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore

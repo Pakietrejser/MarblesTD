@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using MarblesTD.Core.Marbles;
-using MarblesTD.Core.Player;
-using MarblesTD.Core.Projectiles;
-using MarblesTD.Core.Towers;
-using MarblesTD.Core.Waves;
+using MarblesTD.Core.Entities.Marbles;
+using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.Entities.Towers.Projectiles;
+using MarblesTD.Core.Systems.Player;
+using MarblesTD.Core.Systems.Waves;
 using MarblesTD.UnityCore.Settings;
 using PathCreation;
 using UnityEngine;
@@ -56,9 +56,12 @@ namespace MarblesTD.UnityCore
             GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
             
             //do towers
-            var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
-            placeTowerButton = go.GetComponent<PlaceTowerButton>();
-            placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
+            for (int i = 0; i < 9; i++)
+            {
+                var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
+                placeTowerButton = go.GetComponent<PlaceTowerButton>();
+                placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
+            }
             
             //do marbles
             Marble.Cracked += OnMarbleCracked;
@@ -86,7 +89,7 @@ namespace MarblesTD.UnityCore
                     continue;
                 }
                 
-                Towers[i].Update(GetMarblePlacements(), Time.deltaTime);
+                Towers[i].Update(GetMarbles(), Time.deltaTime);
             }
 
             for (int i = Projectiles.Count - 1; i >= 0; i--)
@@ -136,9 +139,9 @@ namespace MarblesTD.UnityCore
             TowerPanelView.UpdatePanel();
         }
 
-        IEnumerable<MarblePlacement> GetMarblePlacements()
+        IEnumerable<Marble> GetMarbles()
         {
-            return MarbleWaves.SelectMany(wave => wave.Marbles).Select(marble => new MarblePlacement(marble, marble.Position));
+            return MarbleWaves.SelectMany(wave => wave.Marbles);
         }
     }
 }
