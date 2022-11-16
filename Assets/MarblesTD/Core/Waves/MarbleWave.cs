@@ -8,7 +8,7 @@ namespace MarblesTD.Core.Waves
         public int WaveIndex { get; }
         public bool FinishedSpawning { get; set; }
         
-        public List<Marble> Marbles;
+        public readonly List<Marble> Marbles;
 
         public MarbleWave(int waveIndex)
         {
