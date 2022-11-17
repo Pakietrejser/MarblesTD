@@ -1,6 +1,6 @@
 ﻿namespace MarblesTD.Core.Common.Systems
 {
-    public abstract class System
+    public abstract class GameSystem
     {
         public virtual void OnEnter() {}
         public virtual void OnExit() {}

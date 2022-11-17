@@ -39,7 +39,8 @@ namespace MarblesTD.UnityCore
                     
                     var go = Instantiate(marblePrefab);
                     var view = go.GetComponent<IMarbleView>();
-                    var marble = new Marble(view, new Vector2(spawnPosition.x, spawnPosition.z), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
+                    var marble = MarbleController.GetFreshMarbleTest();
+                    marble.Init(view, new Vector2(spawnPosition.x, spawnPosition.z), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
                     marbleWave.Add(marble);
                     
                     yield return new WaitForSeconds(waveGroup.MarbleDelay);

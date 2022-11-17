@@ -1,5 +1,7 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
+using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
 namespace MarblesTD.Core.Entities.Marbles
 {
@@ -19,7 +21,12 @@ namespace MarblesTD.Core.Entities.Marbles
         public bool IsDestroyed { get; private set; }
         public float DistanceTravelled { get; private set; }
 
-        public Marble(IMarbleView view, Vector2 position, int health, int speed)
+        public Marble(SignalBus signalBus)
+        {
+            
+        }
+
+        public void Init(IMarbleView view, Vector2 position, int health, int speed)
         {
             _view = view;
             _view.Marble = this;
@@ -28,8 +35,6 @@ namespace MarblesTD.Core.Entities.Marbles
             _speed = speed;
             
             _view.UpdateMarble(_health);
-
-            // Debug.Log($"Creating {GetType()} at position {_position} w {_health}HP");
         }
 
         public void TakeDamage(int damage)
@@ -75,6 +80,11 @@ namespace MarblesTD.Core.Entities.Marbles
         {
             _view.DestroySelf();
             IsDestroyed = true;
+        }
+        
+        public class Factory : PlaceholderFactory<Marble>
+        {
+            
         }
     }
 
