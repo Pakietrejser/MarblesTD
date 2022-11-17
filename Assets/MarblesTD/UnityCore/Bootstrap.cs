@@ -55,12 +55,16 @@ namespace MarblesTD.UnityCore
             GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
             
             //do towers
-            for (int i = 0; i < 9; i++)
-            {
-                var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
-                placeTowerButton = go.GetComponent<PlaceTowerButton>();
-                placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
-            }
+            
+            var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
+            placeTowerButton = go.GetComponent<PlaceTowerButton>();
+            placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
+            // for (int i = 0; i < 9; i++)
+            // {
+            //     var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
+            //     placeTowerButton = go.GetComponent<PlaceTowerButton>();
+            //     placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
+            // }
             
             //do marbles
             Marble.Cracked += OnMarbleCracked;
