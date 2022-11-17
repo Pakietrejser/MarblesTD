@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarblesTD.Core.Entities.Marbles;
-using MarblesTD.Core.Entities.Towers.Projectiles;
+using MarblesTD.Core.Marbles;
+using MarblesTD.Core.Towers.Projectiles;
 using UnityEngine;
 
-namespace MarblesTD.Core.Entities.Towers
+namespace MarblesTD.Core.Towers
 {
     public abstract class RangeTower<TSettings> : Tower where TSettings : RangeTower<TSettings>.SettingsRangeBase
     {

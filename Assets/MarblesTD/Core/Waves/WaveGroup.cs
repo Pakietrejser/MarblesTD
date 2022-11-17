@@ -1,4 +1,4 @@
-﻿namespace MarblesTD.Core.Systems.Waves
+﻿namespace MarblesTD.Core.Waves
 {
     public readonly struct WaveGroup
     {

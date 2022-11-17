@@ -1,5 +1,5 @@
 ﻿using MarblesTD.Core.Common.Systems;
-using MarblesTD.Core.Entities.Marbles;
+using MarblesTD.Core.Marbles;
 using Zenject;
 
 namespace MarblesTD.UnityCore.Installers

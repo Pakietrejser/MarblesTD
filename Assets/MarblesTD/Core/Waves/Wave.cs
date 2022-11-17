@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace MarblesTD.Core.Systems.Waves
+namespace MarblesTD.Core.Waves
 {
-    public class WaveManager
+    public class WaveProvider
     {
         int _currentWave;
         
-        public Wave GetNextWave()
+        public Wave Next()
         {
             _currentWave++;
 
@@ -29,6 +29,11 @@ namespace MarblesTD.Core.Systems.Waves
                 15 => new Wave15(),
                 _ => new ModularWave(_currentWave)
             };
+        }
+
+        public void Reset()
+        {
+            _currentWave = 0;
         }
     }
     

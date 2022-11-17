@@ -1,20 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using MarblesTD.Core.Entities.Marbles;
-using MarblesTD.Core.Entities.Towers;
-using MarblesTD.Core.Entities.Towers.Projectiles;
-using MarblesTD.Core.Systems.Player;
-using MarblesTD.Core.Systems.Waves;
+using MarblesTD.Core.Marbles;
+using MarblesTD.Core.Players;
+using MarblesTD.Core.Towers;
+using MarblesTD.Core.Towers.Projectiles;
 using MarblesTD.UnityCore.Settings;
 using PathCreation;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace MarblesTD.UnityCore
 {
     public class Bootstrap : MonoBehaviour
     {
+        [Inject] MarbleController MarbleController;
+        
         [SerializeField] PathCreator pathCreator;
 
         public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0, EndOfPathInstruction.Stop);
@@ -28,7 +28,6 @@ namespace MarblesTD.UnityCore
         public LayerMask TowersMask;
 
         public readonly List<Tower> Towers = new List<Tower>();
-        public readonly List<MarbleWave> MarbleWaves = new List<MarbleWave>();
         public readonly List<Projectile> Projectiles = new List<Projectile>();
 
         public Player Player { get; private set; }
@@ -89,7 +88,7 @@ namespace MarblesTD.UnityCore
                     continue;
                 }
                 
-                Towers[i].Update(GetMarbles(), Time.deltaTime);
+                Towers[i].Update(MarbleController.Marbles, Time.deltaTime);
             }
 
             for (int i = Projectiles.Count - 1; i >= 0; i--)
@@ -97,35 +96,23 @@ namespace MarblesTD.UnityCore
                 Projectiles[i].Update(Time.deltaTime);
             }
 
-            foreach (var marbleWave in MarbleWaves)
+            foreach (var marble in MarbleController.Marbles)
             {
-                int wave = marbleWave.WaveIndex;
-                var marbles = marbleWave.Marbles;
+                if (marble.IsDestroyed) continue;
                 
-                for (int i = marbles.Count - 1; i >= 0; i--)
+                float distanceTravelled = marble.DistanceTravelled + marble.Speed * Time.deltaTime;
+                var position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+                var rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+
+                bool reachedDestination = position == EndPosition;
+                marble.Update(distanceTravelled, position, rotation, reachedDestination);
+                if (reachedDestination)
                 {
-                    if (marbles[i].IsDestroyed)
-                    {
-                        marbles.Remove(marbles[i]);
-                        if (marbles.Count == 0 && marbleWave.FinishedSpawning)
-                        {
-                            Player.AddMoney(50 + wave * 20);
-                        }
-                        continue;
-                    }
-
-                    float distanceTravelled = marbles[i].DistanceTravelled + marbles[i].Speed * Time.deltaTime;
-                    var position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-                    var rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-
-                    bool reachedDestination = position == EndPosition;
-                    marbles[i].Update(distanceTravelled, position, rotation, reachedDestination);
-                    if (reachedDestination)
-                    {
-                        Player.RemoveLives(marbles[i].Health);
-                    }
+                    Player.RemoveLives(marble.Health);
                 }
             }
+            
+            MarbleController.OnUpdate(Time.deltaTime);
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
@@ -135,13 +122,8 @@ namespace MarblesTD.UnityCore
                     TowerPanelView.HidePanel();
                 }
             }
-            
-            TowerPanelView.UpdatePanel();
-        }
 
-        IEnumerable<Marble> GetMarbles()
-        {
-            return MarbleWaves.SelectMany(wave => wave.Marbles);
+            TowerPanelView.UpdatePanel();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using MarblesTD.Core.Entities.Towers;
-using MarblesTD.Core.Entities.Towers.Upgrades;
-using MarblesTD.Core.Systems.Player;
+﻿using MarblesTD.Core.Players;
+using MarblesTD.Core.Towers;
+using MarblesTD.Core.Towers.Upgrades;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

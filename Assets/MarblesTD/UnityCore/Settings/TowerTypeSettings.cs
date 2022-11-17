@@ -1,4 +1,4 @@
-﻿using MarblesTD.Core.Entities.Towers;
+﻿using MarblesTD.Core.Towers;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore.Settings

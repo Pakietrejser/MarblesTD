@@ -1,4 +1,4 @@
-﻿namespace MarblesTD.Core.Entities.Towers.Upgrades
+﻿namespace MarblesTD.Core.Towers.Upgrades
 {
     public enum Path
     {

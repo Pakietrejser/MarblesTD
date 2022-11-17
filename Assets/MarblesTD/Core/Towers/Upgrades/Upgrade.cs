@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace MarblesTD.Core.Entities.Towers.Upgrades
+namespace MarblesTD.Core.Towers.Upgrades
  {
      public abstract class Upgrade
      {

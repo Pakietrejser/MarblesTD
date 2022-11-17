@@ -3,6 +3,7 @@
     public abstract class GameSystem
     {
         public virtual void OnEnter() {}
+        public virtual void OnUpdate(float deltaTime) {}
         public virtual void OnExit() {}
         public virtual void OnPause() {}
         public virtual void OnResume() {}

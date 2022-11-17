@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using MarblesTD.Core.Entities.Marbles;
-using MarblesTD.Core.Entities.Towers.Upgrades;
+using MarblesTD.Core.Marbles;
+using MarblesTD.Core.Towers.Upgrades;
 using UnityEngine;
 
-namespace MarblesTD.Core.Entities.Towers
+namespace MarblesTD.Core.Towers
 {
     public abstract class Tower
     {

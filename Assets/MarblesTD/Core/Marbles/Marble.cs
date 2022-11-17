@@ -3,7 +3,7 @@ using UnityEngine;
 using Zenject;
 using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
-namespace MarblesTD.Core.Entities.Marbles
+namespace MarblesTD.Core.Marbles
 {
     public class Marble
     {
@@ -33,7 +33,7 @@ namespace MarblesTD.Core.Entities.Marbles
             _position = position;
             _health = health;
             _speed = speed;
-            
+
             _view.UpdateMarble(_health);
         }
 
@@ -82,9 +82,15 @@ namespace MarblesTD.Core.Entities.Marbles
             IsDestroyed = true;
         }
         
-        public class Factory : PlaceholderFactory<Marble>
+        public class Pool : MemoryPool<Marble>
         {
-            
+            protected override void Reinitialize(Marble marble)
+            {
+                marble.IsDestroyed = false;
+                marble._position = Vector2.zero;
+                marble._health = 999;
+                marble.DistanceTravelled = 0;
+            }
         }
     }
 

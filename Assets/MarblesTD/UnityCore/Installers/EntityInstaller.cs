@@ -1,4 +1,4 @@
-﻿using MarblesTD.Core.Entities.Marbles;
+﻿using MarblesTD.Core.Marbles;
 using Zenject;
 
 namespace MarblesTD.UnityCore.Installers
@@ -7,7 +7,7 @@ namespace MarblesTD.UnityCore.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindFactory<Marble, Marble.Factory>();
+            Container.BindMemoryPool<Marble, Marble.Pool>().WithInitialSize(100).ExpandByDoubling();
         }
     }
 }

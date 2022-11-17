@@ -1,8 +1,8 @@
 ﻿using System;
-using MarblesTD.Core.Entities.Towers.Projectiles;
+using MarblesTD.Core.Towers.Projectiles;
 using UnityEngine;
 
-namespace MarblesTD.Core.Entities.Towers
+namespace MarblesTD.Core.Towers
 {
     public interface ITowerView
     {

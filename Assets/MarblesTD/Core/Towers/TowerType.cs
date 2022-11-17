@@ -1,4 +1,4 @@
-﻿namespace MarblesTD.Core.Entities.Towers
+﻿namespace MarblesTD.Core.Towers
 {
     public enum TowerType
     {

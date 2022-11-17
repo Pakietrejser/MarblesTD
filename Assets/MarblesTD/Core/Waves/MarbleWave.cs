@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using MarblesTD.Core.Entities.Marbles;
+using MarblesTD.Core.Marbles;
 
-namespace MarblesTD.Core.Systems.Waves
+namespace MarblesTD.Core.Waves
 {
     public class MarbleWave
     {

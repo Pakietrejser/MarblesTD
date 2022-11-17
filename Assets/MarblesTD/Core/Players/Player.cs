@@ -1,14 +1,16 @@
-﻿namespace MarblesTD.Core.Systems.Player
+﻿namespace MarblesTD.Core.Players
 {
     public class Player
     {
         public int Lives { get; private set; }
         public int Money { get; private set; }
 
+        public static Player Instance;
         readonly IPlayerView view;
 
         public Player(IPlayerView view)
         {
+            Instance = this;
             this.view = view;
         }
 

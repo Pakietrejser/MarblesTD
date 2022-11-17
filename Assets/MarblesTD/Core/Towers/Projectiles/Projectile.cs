@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarblesTD.Core.Entities.Marbles;
+using MarblesTD.Core.Marbles;
 using UnityEngine;
 
-namespace MarblesTD.Core.Entities.Towers.Projectiles
+namespace MarblesTD.Core.Towers.Projectiles
 {
     public class Projectile
     {
