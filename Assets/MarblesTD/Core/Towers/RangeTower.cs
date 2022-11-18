@@ -72,6 +72,7 @@ namespace MarblesTD.Core.Towers
             
             var projectileConfig = new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble, this);
             _view.SpawnProjectile(projectileConfig);
+            _view.UpdateRotation(closestMarble.Position);
         }
         
         [Serializable]

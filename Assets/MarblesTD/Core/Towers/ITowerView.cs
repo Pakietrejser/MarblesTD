@@ -16,5 +16,6 @@ namespace MarblesTD.Core.Towers
         void EnableCollider();
         void DisableCollider();
         void ShowAsPlaceable(bool canBePlaced);
+        void UpdateRotation(Vector2 closestMarblePosition);
     }
 }

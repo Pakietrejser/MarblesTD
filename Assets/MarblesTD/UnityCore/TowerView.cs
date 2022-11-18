@@ -61,5 +61,28 @@ namespace MarblesTD.UnityCore
         {
             towerRenderer.color = canBePlaced ? Color.white : Color.red;
         }
+        
+        public void UpdateRotation(Vector2 target)
+        {
+            var current = transform.position;
+            float x = target.x - current.x;
+            float y = target.y - current.z;
+            var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
+
+            if (rotation < 0)
+            {
+                rotation = Math.Abs(rotation) + 90;
+            }
+            else if (rotation > 90 )
+            {
+                rotation = 270 + Math.Abs(rotation - 180);
+            }
+            else
+            {
+                rotation = Math.Abs(rotation - 90);
+            }
+            
+            transform.rotation = Quaternion.Euler(0, rotation + 180, 0);
+        }
     }
 }
