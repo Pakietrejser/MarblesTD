@@ -6,7 +6,7 @@ namespace MarblesTD.Core.Common.Signals
     public class SignalBus
     {
         // TODO: remove singleton
-        static SignalBus Instance;
+        public static SignalBus Instance;
         public SignalBus() => Instance = this;
         public static void FireStatic<TSignal>(TSignal signal) where TSignal : ISignal => Instance?.Fire(signal);
         

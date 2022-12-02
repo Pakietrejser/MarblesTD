@@ -75,7 +75,7 @@ namespace MarblesTD.UnityCore
                 
                 
                 var go = hit.collider.gameObject.name;
-                Debug.Log($"{go}");
+                // Debug.Log($"{go}");
                 
                 
                 currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;

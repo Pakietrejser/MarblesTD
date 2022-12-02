@@ -13,11 +13,13 @@ namespace MarblesTD.UnityCore
 {
     public class Bootstrap : MonoBehaviour
     {
+        public float TimeScale = 1;
+        
         [Inject] MarbleController MarbleController;
         
         [SerializeField] PathCreator pathCreator;
 
-        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0, EndOfPathInstruction.Stop);
+        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0, EndOfPathInstruction.Stop); //x z
         public Vector3 EndPosition => pathCreator.path.GetPointAtTime(1, EndOfPathInstruction.Stop);
         
         public PlayerView PlayerView;
@@ -68,6 +70,7 @@ namespace MarblesTD.UnityCore
             
             //do marbles
             Marble.Cracked += OnMarbleCracked;
+            MarbleController.SpawnPosition = StartingPosition;
         }
 
         void OnMarbleCracked(Marble marble, int crackedAmount)
@@ -92,31 +95,31 @@ namespace MarblesTD.UnityCore
                     continue;
                 }
                 
-                Towers[i].Update(MarbleController.Marbles, Time.deltaTime);
+                Towers[i].Update(MarbleController.Marbles, Time.deltaTime * TimeScale);
             }
 
             for (int i = Projectiles.Count - 1; i >= 0; i--)
             {
-                Projectiles[i].Update(Time.deltaTime);
+                Projectiles[i].Update(Time.deltaTime * TimeScale);
             }
 
             foreach (var marble in MarbleController.Marbles)
             {
                 if (marble.IsDestroyed) continue;
                 
-                float distanceTravelled = marble.DistanceTravelled + marble.Speed * Time.deltaTime;
+                float distanceTravelled = marble.DistanceTravelled + marble.Speed * Time.deltaTime * TimeScale;
                 var position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
                 var rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
 
                 bool reachedDestination = position == EndPosition;
-                marble.Update(distanceTravelled, position, rotation, reachedDestination);
+                marble.Update(distanceTravelled, position, rotation, reachedDestination, TimeScale);
                 if (reachedDestination)
                 {
                     Player.RemoveLives(marble.Health);
                 }
             }
             
-            MarbleController.OnUpdate(Time.deltaTime);
+            MarbleController.OnUpdate(Time.deltaTime * TimeScale);
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {

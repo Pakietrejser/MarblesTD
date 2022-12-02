@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
@@ -16,10 +15,12 @@ namespace MarblesTD.Core.Marbles
     public class MarbleController : GameSystem
     {
         public IEnumerable<Marble> Marbles => _marbleWaves.SelectMany(wave => wave.Marbles);
-
+        public Vector3 SpawnPosition;
+        
         readonly Marble.Pool _marblePool;
         readonly WaveProvider _waveProvider = new WaveProvider();
         readonly List<MarbleWave> _marbleWaves = new List<MarbleWave>();
+        
         
         public MarbleController(Marble.Pool marblePool, SignalBus signalBus)
         {
@@ -68,7 +69,7 @@ namespace MarblesTD.Core.Marbles
                     var go = Object.Instantiate(signal.MarblePrefab);
                     var view = go.GetComponent<IMarbleView>();
                     var marble = _marblePool.Spawn();
-                    marble.Init(view, Vector3.zero, waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
+                    marble.Init(view, SpawnPosition, waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
                     marbleWave.Add(marble);
 
                     await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay));

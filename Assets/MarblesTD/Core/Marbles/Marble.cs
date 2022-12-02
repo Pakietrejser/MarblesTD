@@ -60,7 +60,7 @@ namespace MarblesTD.Core.Marbles
             _view.UpdateMarble(_health);
         }
 
-        public void Update(float distanceTravelled, Vector3 position, Quaternion rotation, bool stop)
+        public void Update(float distanceTravelled, Vector3 position, Quaternion rotation, bool stop, float animationSpeed)
         {
             DistanceTravelled = distanceTravelled;
             
@@ -69,6 +69,7 @@ namespace MarblesTD.Core.Marbles
             _view.UpdatePosition(_position);
             _view.UpdateRotation(rotation);
             _view.UpdateSorting(distanceTravelled);
+            _view.UpdateAnimationSpeed(animationSpeed);
             
             if (stop)
             {
@@ -102,5 +103,6 @@ namespace MarblesTD.Core.Marbles
         void UpdateRotation(Quaternion rotation);
         void UpdateMarble(int health);
         void UpdateSorting(float distanceTravelled);
+        void UpdateAnimationSpeed(float speed);
     }
 }

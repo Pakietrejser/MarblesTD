@@ -1,5 +1,4 @@
-﻿using System;
-using MarblesTD.Core.Marbles;
+﻿using MarblesTD.Core.Marbles;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore
@@ -45,6 +44,11 @@ namespace MarblesTD.UnityCore
         public void UpdateSorting(float distanceTravelled)
         {
             marbleRenderer.sortingOrder = (int) -(distanceTravelled * 10);
+        }
+
+        public void UpdateAnimationSpeed(float speed)
+        {
+            animator.speed = speed;
         }
 
         void OnCollisionEnter(Collision col)
