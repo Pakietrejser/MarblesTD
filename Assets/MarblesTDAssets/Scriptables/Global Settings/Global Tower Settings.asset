@@ -65,3 +65,21 @@ MonoBehaviour:
       Name: Drastically Better Speed
       Cost: 800
       Speed: 0.2
+  StarStagSettings:
+    Name: Star Stag
+    Description: 
+    Cost: 0
+    TowerType: 1
+    Icon: {fileID: 21300000, guid: 6c0cad340b9d7314f9fe56e81d840173, type: 3}
+  ShadowPawSettings:
+    Name: Shadow Paw
+    Description: 
+    Cost: 0
+    TowerType: 3
+    Icon: {fileID: 21300000, guid: 524c09440cec76c4b836d69b490bab80, type: 3}
+  HalberdBearSettings:
+    Name: Halberd Bear
+    Description: 
+    Cost: 0
+    TowerType: 2
+    Icon: {fileID: 21300000, guid: 7e4929178fce8fd42a5f0aa7793c6a7a, type: 3}

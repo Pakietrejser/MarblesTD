@@ -42,6 +42,8 @@ namespace MarblesTD.UnityCore
             towerImage.sprite = settingsBase.Icon;
             costText.text = $"${settingsBase.Cost}";
             towerSetColor.color = globalTowerSettings.GetTowerTypeSettings(settingsBase.TowerType).Color;
+
+            if (settingsBase.Cost == 0) costText.text = "NYI";
         }
         
         
@@ -50,6 +52,7 @@ namespace MarblesTD.UnityCore
             currentTower = Instantiate(towerPrefab);
             _draggedTowerOutOfPanel = false;
             var view = currentTower.GetComponent<ITowerView>();
+            view.Init(settings.Icon, settings.TowerType);
             view.DisableCollider();
         }
 

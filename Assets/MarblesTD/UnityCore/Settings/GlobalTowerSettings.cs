@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using MarblesTD.Core.Towers;
 using MarblesTD.Towers;
+using MarblesTD.Towers.HalberdBearImpl;
 using MarblesTD.Towers.QuickFoxImpl;
 using MarblesTD.Towers.QuickFoxImpl.LeftPathUpgrades;
+using MarblesTD.Towers.ShadowPawImpl;
+using MarblesTD.Towers.StarStagImpl;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,6 +21,9 @@ namespace MarblesTD.UnityCore.Settings
 
         [Header("Tower Settings")]
         public QuickFox.Settings QuickFoxSettings;
+        public StarStag.Settings StarStagSettings;
+        public ShadowPaw.Settings ShadowPawSettings;
+        public HalberdBear.Settings HalberdBearSettings;
 
         public TowerTypeSettings GetTowerTypeSettings(TowerType towerType)
         {
@@ -28,7 +34,15 @@ namespace MarblesTD.UnityCore.Settings
         //temp, to factory
         public Tower CreateTower(Tower.SettingsBase settings, ITowerView towerView, Vector3 spawnPosition)
         {
-            var tower = new QuickFox(QuickFoxSettings, towerView, spawnPosition);
+            Tower tower = settings switch
+            {
+                HalberdBear.Settings _ => new HalberdBear(HalberdBearSettings, towerView, spawnPosition),
+                QuickFox.Settings _ => new QuickFox(QuickFoxSettings, towerView, spawnPosition),
+                ShadowPaw.Settings _ => new ShadowPaw(ShadowPawSettings, towerView, spawnPosition),
+                StarStag.Settings _ => new StarStag(StarStagSettings, towerView, spawnPosition),
+                _ => throw new ArgumentOutOfRangeException(nameof(settings))
+            };
+
             activeTowers.Add(tower);
             tower.Selected += () => Bootstrap.Instance.SelectTower(tower);
             return tower;

@@ -57,17 +57,18 @@ namespace MarblesTD.UnityCore
             GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
             
             //do towers
-            
-            var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
-            placeTowerButton = go.GetComponent<PlaceTowerButton>();
+            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
             placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
-            // for (int i = 0; i < 9; i++)
-            // {
-            //     var go = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent);
-            //     placeTowerButton = go.GetComponent<PlaceTowerButton>();
-            //     placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
-            // }
             
+            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
+            placeTowerButton.Init(GlobalTowerSettings.StarStagSettings, GlobalTowerSettings);
+            
+            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
+            placeTowerButton.Init(GlobalTowerSettings.HalberdBearSettings, GlobalTowerSettings);
+            
+            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
+            placeTowerButton.Init(GlobalTowerSettings.ShadowPawSettings, GlobalTowerSettings);
+
             //do marbles
             Marble.Cracked += OnMarbleCracked;
             MarbleController.SpawnPosition = StartingPosition;

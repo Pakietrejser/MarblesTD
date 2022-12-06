@@ -57,6 +57,8 @@ namespace MarblesTD.UnityCore
 
         public void ShowPanel(Tower tower)
         {
+            if (tower.Upgrades == null) return;
+
             if (tower == ActiveTower)
             {
                 HidePanel();
@@ -66,7 +68,7 @@ namespace MarblesTD.UnityCore
             ActiveTower = tower;
             towerNameText.text = ActiveTower.Name;
             towerIconImage.sprite = ActiveTower.Icon;
-
+            
             leftPath.Init(tower, tower.Upgrades[Path.Left]);
             middlePath.Init(tower, tower.Upgrades[Path.Middle]);
             rightPath.Init(tower, tower.Upgrades[Path.Right]);
