@@ -694,8 +694,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: Assets/MarblesTDAssets/Audio/MarblesTDFMOD/MarblesTDFMOD.fspro
-  sourceBankPath: Assets/MarblesTDAssets/Audio/MarblesTDFMOD/Build
+  sourceProjectPath: Assets/MarblesTDAssets/Audio/FMOD/MarblesTDFMOD.fspro
+  sourceBankPath: Assets/MarblesTDAssets/Audio/FMOD/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -707,7 +707,7 @@ MonoBehaviour:
   TargetAssetPath: FMODBanks
   TargetBankFolder: 
   EventLinkage: 0
-  LoggingLevel: 2
+  LoggingLevel: 1
   SpeakerModeSettings: []
   SampleRateSettings: []
   LiveUpdateSettings: []
@@ -762,13 +762,13 @@ MonoBehaviour:
   active: 1
   Properties:
     LiveUpdate:
-      Value: 1
+      Value: 0
       HasValue: 1
     LiveUpdatePort:
       Value: 0
       HasValue: 0
     Overlay:
-      Value: 1
+      Value: 0
       HasValue: 1
     Logging:
       Value: 0

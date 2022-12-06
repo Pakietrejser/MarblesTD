@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{d1b17ee5-b48a-45f2-8dc9-1bc4edbb6c4f}">
+		<property name="assetPath">
+			<value>pieceofconcrete01-88079.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.3440000000000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{55493390-9d40-413a-8593-41ac25564389}</destination>
+		</relationship>
+	</object>
+</objects>

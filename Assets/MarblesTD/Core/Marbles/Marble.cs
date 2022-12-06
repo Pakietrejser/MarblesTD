@@ -1,4 +1,5 @@
 ﻿using System;
+using MarblesTD.Core.Common.Signals.List;
 using UnityEngine;
 using Zenject;
 using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
@@ -7,6 +8,7 @@ namespace MarblesTD.Core.Marbles
 {
     public class Marble
     {
+        readonly SignalBus _signalBus;
         public static event Action<Marble, int> Cracked;
 
         public Vector2 Position => _position;
@@ -23,7 +25,7 @@ namespace MarblesTD.Core.Marbles
 
         public Marble(SignalBus signalBus)
         {
-            
+            _signalBus = signalBus;
         }
 
         public void Init(IMarbleView view, Vector2 position, int health, int speed)
@@ -51,6 +53,7 @@ namespace MarblesTD.Core.Marbles
                 }
             }
             Cracked?.Invoke(this, cracks);
+            _signalBus.Fire(new MarbleDamagedSignal());
             
             if (_health == 0)
             {
