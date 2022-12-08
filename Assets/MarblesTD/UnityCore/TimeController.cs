@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using TMPro;
@@ -10,7 +9,6 @@ namespace MarblesTD.UnityCore
 {
     public class TimeController : MonoBehaviour
     {
-        
         [SerializeField] Bootstrap bootstrap;
         [SerializeField] TMP_Text text;
         [SerializeField] Button changeSpeedButton;

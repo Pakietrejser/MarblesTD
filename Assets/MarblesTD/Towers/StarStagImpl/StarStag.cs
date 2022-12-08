@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarblesTD.Core.Marbles;
-using MarblesTD.Core.Towers;
-using MarblesTD.Core.Towers.Upgrades;
+using MarblesTD.Core.Entities.Marbles;
+using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.Entities.Towers.Upgrades;
 using UnityEngine;
 
 namespace MarblesTD.Towers.StarStagImpl

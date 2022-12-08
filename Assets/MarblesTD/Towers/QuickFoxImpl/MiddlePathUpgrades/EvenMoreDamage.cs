@@ -1,5 +1,5 @@
 ﻿using System;
-using MarblesTD.Core.Towers.Upgrades;
+using MarblesTD.Core.Entities.Towers.Upgrades;
 using UnityEngine;
 
 namespace MarblesTD.Towers.QuickFoxImpl.MiddlePathUpgrades

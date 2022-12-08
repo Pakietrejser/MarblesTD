@@ -1,9 +1,11 @@
 using System.Collections.Generic;
-using MarblesTD.Core.Marbles;
-using MarblesTD.Core.Players;
-using MarblesTD.Core.Towers;
-using MarblesTD.Core.Towers.Projectiles;
-using MarblesTD.UnityCore.Settings;
+using MarblesTD.Core.Entities;
+using MarblesTD.Core.Entities.Marbles;
+using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.Entities.Towers.Projectiles;
+using MarblesTD.Core.Systems;
+using MarblesTD.UnityCore.Entities.Settings;
+using MarblesTD.UnityCore.UI;
 using PathCreation;
 using UnityEngine;
 using UnityEngine.EventSystems;
