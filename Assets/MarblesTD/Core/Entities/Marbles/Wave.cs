@@ -49,8 +49,7 @@ namespace MarblesTD.Core.Entities.Marbles
 
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            // yield return new WaveGroup(1, 20);
-            yield return new WaveGroup(1, 1);
+            yield return new WaveGroup(1, 20);
         }
     }
     
@@ -132,7 +131,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int WaveIndex => 9;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 5, 30, 2);
+            yield return new WaveGroup(10, 5, 3, 2);
         }
     }
     
@@ -141,7 +140,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int WaveIndex => 10;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 20, 30, 2);
+            yield return new WaveGroup(10, 20, 3, 2);
         }
     }
     
@@ -150,7 +149,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int WaveIndex => 11;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 30, 30, 1.2f);
+            yield return new WaveGroup(10, 30, 3, 1.2f);
         }
     }
     
@@ -159,7 +158,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int WaveIndex => 12;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 40, 30, .8f);
+            yield return new WaveGroup(10, 40, 3, .8f);
         }
     }
     

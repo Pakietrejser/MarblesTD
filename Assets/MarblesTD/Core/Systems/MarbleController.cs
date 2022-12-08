@@ -18,13 +18,15 @@ namespace MarblesTD.Core.Systems
         public Vector3 SpawnPosition;
         
         readonly Marble.Pool _marblePool;
+        readonly TimeController _timeController;
         readonly WaveProvider _waveProvider = new WaveProvider();
         readonly List<MarbleWave> _marbleWaves = new List<MarbleWave>();
         
         
-        public MarbleController(Marble.Pool marblePool, SignalBus signalBus)
+        public MarbleController(Marble.Pool marblePool, SignalBus signalBus, TimeController timeController)
         {
             _marblePool = marblePool;
+            _timeController = timeController;
             signalBus.Subscribe<MarbleWaveSpawnedSignal>(SpawnMarbleWave);
         }
 
@@ -72,7 +74,8 @@ namespace MarblesTD.Core.Systems
                     marble.Init(view, SpawnPosition, waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
                     marbleWave.Add(marble);
 
-                    await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay));
+                    await UniTask.WaitUntil(() => _timeController.TimeScale != 0f);
+                    await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale));
                 }
             }
 

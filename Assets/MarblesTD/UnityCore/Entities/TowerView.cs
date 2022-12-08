@@ -41,7 +41,6 @@ namespace MarblesTD.UnityCore.Entities
 
         void OnMouseDown()
         {
-            Debug.Log("Click");
             Clicked?.Invoke();
         }
         

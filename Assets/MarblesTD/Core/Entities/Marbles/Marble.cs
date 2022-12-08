@@ -17,9 +17,9 @@ namespace MarblesTD.Core.Entities.Marbles
         IMarbleView _view;
         Vector2 _position;
         int _health;
-        int _speed;
+        float _speed;
 
-        public int Speed => _speed;
+        public float Speed => _speed;
         public bool IsDestroyed { get; private set; }
         public float DistanceTravelled { get; private set; }
 
@@ -28,7 +28,7 @@ namespace MarblesTD.Core.Entities.Marbles
             _signalBus = signalBus;
         }
 
-        public void Init(IMarbleView view, Vector2 position, int health, int speed)
+        public void Init(IMarbleView view, Vector2 position, int health, float speed)
         {
             _view = view;
             _view.Marble = this;

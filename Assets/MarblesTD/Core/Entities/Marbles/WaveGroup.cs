@@ -4,10 +4,10 @@
     {
         public readonly int MarbleHealth;
         public readonly int MarbleCount;
-        public readonly int MarbleSpeed;
+        public readonly float MarbleSpeed;
         public readonly float MarbleDelay;
         
-        public WaveGroup(int marbleHealth, int marbleCount, int marbleSpeed = 50, float marbleDelay = .4f)
+        public WaveGroup(int marbleHealth, int marbleCount, float marbleSpeed = 2.5f, float marbleDelay = .4f)
         {
             MarbleHealth = marbleHealth;
             MarbleCount = marbleCount;
