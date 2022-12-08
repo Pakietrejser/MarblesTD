@@ -30,8 +30,8 @@ namespace MarblesTD.UnityCore.Entities
             Bootstrap.Instance.Projectiles.Remove(Projectile);
             Destroy(gameObject);
         }
-
-        void OnCollisionEnter(Collision col)
+        
+        void OnTriggerEnter2D(Collider2D col)
         {
             if (!col.gameObject.TryGetComponent(out IMarbleView view)) return;
             
