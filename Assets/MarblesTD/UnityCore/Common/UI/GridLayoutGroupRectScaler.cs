@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace MarblesTD.UnityCore.UI
+namespace MarblesTD.UnityCore.Common.UI
 {
     [RequireComponent(typeof(GridLayoutGroup))]
     public class GridLayoutGroupRectScaler : MonoBehaviour

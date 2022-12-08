@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace MarblesTD.UnityCore.UI
+namespace MarblesTD.UnityCore.Common.UI
 {
     [RequireComponent(typeof(Button))]
     public class PlaceTowerButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler

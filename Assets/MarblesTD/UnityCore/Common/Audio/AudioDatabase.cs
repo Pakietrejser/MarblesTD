@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using FMODUnity;
 using UnityEngine;
 
-namespace MarblesTD.UnityCore.Audio
+namespace MarblesTD.UnityCore.Common.Audio
 {
     [CreateAssetMenu(menuName = "Scriptables/Audio/database", fileName = "AudioDatabase")]
     public class AudioDatabase : ScriptableObject

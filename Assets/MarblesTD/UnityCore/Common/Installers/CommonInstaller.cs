@@ -1,9 +1,9 @@
-﻿using MarblesTD.UnityCore.Audio;
+﻿using MarblesTD.UnityCore.Common.Audio;
 using UnityEngine;
 using Zenject;
 using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
-namespace MarblesTD.UnityCore.Installers
+namespace MarblesTD.UnityCore.Common.Installers
 {
     public class CommonInstaller : MonoInstaller
     {

@@ -2,7 +2,7 @@
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 
-namespace MarblesTD.UnityCore.Audio
+namespace MarblesTD.UnityCore.Common.Audio
 {
     public class AudioPlayer
     {

@@ -1,4 +1,4 @@
-﻿namespace MarblesTD.UnityCore.Audio
+﻿namespace MarblesTD.UnityCore.Common.Audio
 {
     public enum AudioName
     {

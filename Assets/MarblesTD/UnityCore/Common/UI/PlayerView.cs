@@ -1,9 +1,8 @@
-﻿using MarblesTD.Core.Entities;
-using MarblesTD.Core.Systems;
+﻿using MarblesTD.Core.Systems;
 using TMPro;
 using UnityEngine;
 
-namespace MarblesTD.UnityCore.UI
+namespace MarblesTD.UnityCore.Common.UI
 {
     public class PlayerView : MonoBehaviour, IPlayerView
     {
