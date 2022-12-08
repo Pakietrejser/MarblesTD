@@ -23,12 +23,14 @@ namespace MarblesTD.UnityCore.Entities
         
         public void UpdatePosition(Vector2 newPosition)
         {
-            transform.position = new Vector3(newPosition.x, transform.position.y, newPosition.y);
+            transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
         }
 
         public void UpdateRotation(Quaternion rotation)
         {
-            marbleRenderer.transform.rotation = Quaternion.Euler(90, rotation.eulerAngles.y + 180, 0);
+            marbleRenderer.transform.rotation = rotation.eulerAngles.y < 100 
+                ? Quaternion.Euler(0, 0, rotation.eulerAngles.y - rotation.eulerAngles.x) 
+                : Quaternion.Euler(0, 0, rotation.eulerAngles.x - 90);
         }
 
         public void UpdateMarble(int health)
@@ -51,11 +53,11 @@ namespace MarblesTD.UnityCore.Entities
             animator.speed = speed;
         }
 
-        void OnCollisionEnter(Collision col)
+        void OnCollisionEnter2D(Collision2D col)
         {
             if (!col.gameObject.TryGetComponent(out MarbleView view)) return;
             
-            Physics.IgnoreCollision(col.collider, GetComponent<Collider>());
+            Physics2D.IgnoreCollision(col.collider, GetComponent<Collider2D>());
         }
     }
 }

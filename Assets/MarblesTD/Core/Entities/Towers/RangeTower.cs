@@ -58,6 +58,7 @@ namespace MarblesTD.Core.Entities.Towers
 
         public override void Update(IEnumerable<Marble> marbles, float delta)
         {
+
             timeUntilNextAttack -= delta;
             if (timeUntilNextAttack <= 0)
             {
@@ -69,10 +70,10 @@ namespace MarblesTD.Core.Entities.Towers
             }
             
             if (!SeekClosestMarble(marbles, out var closestMarble)) return;
+            _view.UpdateRotation(closestMarble.Position);
             
             var projectileConfig = new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble, this);
             _view.SpawnProjectile(projectileConfig);
-            _view.UpdateRotation(closestMarble.Position);
         }
         
         [Serializable]

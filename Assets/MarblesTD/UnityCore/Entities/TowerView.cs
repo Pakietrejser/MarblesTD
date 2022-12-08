@@ -10,7 +10,7 @@ namespace MarblesTD.UnityCore.Entities
         [SerializeField] GameObject projectilePrefab;
         [SerializeField] SpriteRenderer towerRenderer;
         [SerializeField] SpriteRenderer selectRenderer;
-        [SerializeField] Collider collider;
+        [SerializeField] Collider2D towerCollider;
         
         public event Action Clicked;
 
@@ -33,7 +33,7 @@ namespace MarblesTD.UnityCore.Entities
         {
             var go = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             var projectileView = go.GetComponent<IProjectileView>();
-            var projectile = new Projectile(projectileView, new Vector2(transform.position.x, transform.position.z), config);
+            var projectile = new Projectile(projectileView, new Vector2(transform.position.x, transform.position.y), config);
 
             Bootstrap.Instance.Projectiles.Add(projectile);
             return projectile;
@@ -49,12 +49,12 @@ namespace MarblesTD.UnityCore.Entities
         
         public void EnableCollider()
         {
-            collider.enabled = true;
+            towerCollider.enabled = true;
         }
 
         public void DisableCollider()
         {
-            collider.enabled = false;
+            towerCollider.enabled = false;
         }
 
         public void ShowAsPlaceable(bool canBePlaced)
@@ -66,23 +66,9 @@ namespace MarblesTD.UnityCore.Entities
         {
             var current = transform.position;
             float x = target.x - current.x;
-            float y = target.y - current.z;
+            float y = target.y - current.y;
             var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
-
-            if (rotation < 0)
-            {
-                rotation = Math.Abs(rotation) + 90;
-            }
-            else if (rotation > 90 )
-            {
-                rotation = 270 + Math.Abs(rotation - 180);
-            }
-            else
-            {
-                rotation = Math.Abs(rotation - 90);
-            }
-            
-            transform.rotation = Quaternion.Euler(0, rotation + 180, 0);
+            transform.rotation = Quaternion.Euler(0, 0, rotation + 90);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace MarblesTD.UnityCore
         
         [SerializeField] PathCreator pathCreator;
 
-        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0, EndOfPathInstruction.Stop); //x z
+        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0, EndOfPathInstruction.Stop); //x y
         public Vector3 EndPosition => pathCreator.path.GetPointAtTime(1, EndOfPathInstruction.Stop);
         
         public PlayerView PlayerView;
@@ -124,8 +124,9 @@ namespace MarblesTD.UnityCore
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (!Physics.Raycast(ray, out var hit, Mathf.Infinity, TowersMask))
+                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var hit = Physics2D.Raycast(position, Vector2.down, 100, TowersMask);
+                if (hit.collider == null)
                 {
                     TowerPanelView.HidePanel();
                 }

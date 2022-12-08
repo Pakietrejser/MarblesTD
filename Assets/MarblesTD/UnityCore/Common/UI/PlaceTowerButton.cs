@@ -49,42 +49,37 @@ namespace MarblesTD.UnityCore.Common.UI
         
         public void OnBeginDrag(PointerEventData data)
         {
-            currentTower = Instantiate(towerPrefab);
             _draggedTowerOutOfPanel = false;
-            var view = currentTower.GetComponent<ITowerView>();
-            view.Init(settings.Icon, settings.TowerType);
-            view.DisableCollider();
         }
 
         public void OnDrag(PointerEventData data)
         {
-            if (currentTower == null) return;
-            if (Camera.main == null) throw new NullReferenceException();
-            
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             if (EventSystem.current.IsPointerOverGameObject() && !_draggedTowerOutOfPanel)
             {
                 return;
             }
+            
+            if (!_draggedTowerOutOfPanel)
+            {
+                currentTower = Instantiate(towerPrefab);
+                var view = currentTower.GetComponent<ITowerView>();
+                view.Init(settings.Icon, settings.TowerType);
+                view.DisableCollider();
+                _draggedTowerOutOfPanel = true;
+            }
 
-            _draggedTowerOutOfPanel = true;
-
-            if (Physics.Raycast(ray, out var hit, 1000.0f))
+            var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var hit = Physics2D.Raycast(position, Vector2.down, 100);
+            if (hit.collider != null)
             {
                 _canPlaceTowerAtCurrentPosition = hit.collider.gameObject.name == "Map";
                 var view = currentTower.GetComponent<ITowerView>();
                 view.ShowAsPlaceable(_canPlaceTowerAtCurrentPosition);
-                
-                
-                var go = hit.collider.gameObject.name;
-                // Debug.Log($"{go}");
-                
-                
-                currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;
+                currentTower.transform.position = new Vector3(position.x, position.y, 0);
             }
             else
             {
+                Debug.Log("early exit");
                 Destroy(currentTower);
                 currentTower = null;
             }
@@ -93,20 +88,12 @@ namespace MarblesTD.UnityCore.Common.UI
         public void OnEndDrag(PointerEventData data)
         {
             if (currentTower == null) return;
-            if (Camera.main == null) throw new NullReferenceException();
 
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out var hit, 1000.0f, groundMask) && Bootstrap.Instance.Player.Money >= settings.Cost && _canPlaceTowerAtCurrentPosition)
+            if (Bootstrap.Instance.Player.Money >= settings.Cost && _canPlaceTowerAtCurrentPosition)
             {
-                Debug.Log("Placed Tower.");
-                currentTower.transform.position = hit.point + Vector3.up * yPlacingHeight;
-                // currentTower.GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionY;
-                
                 var view = currentTower.GetComponent<ITowerView>();
                 view.EnableCollider();
-                
-                Bootstrap.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.z)));
+                Bootstrap.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.y)));
                 Bootstrap.Instance.Player.RemoveMoney(settings.Cost);
             }
             else

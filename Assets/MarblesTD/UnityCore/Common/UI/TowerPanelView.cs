@@ -73,13 +73,13 @@ namespace MarblesTD.UnityCore.Common.UI
             middlePath.Init(tower, tower.Upgrades[Path.Middle]);
             rightPath.Init(tower, tower.Upgrades[Path.Right]);
 
-            Debug.Log("opening");
+            // Debug.Log("opening");
             gameObject.SetActive(true);
         }
 
         public void HidePanel()
         {
-            Debug.Log("hiding");
+            // Debug.Log("hiding");
             gameObject.SetActive(false);
             ActiveTower = null;
         }

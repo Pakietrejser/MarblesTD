@@ -14,10 +14,10 @@ namespace MarblesTD.Core.Entities.Marbles
         public Vector2 Position => _position;
         public int Health => _health;
 
-        private IMarbleView _view;
-        private Vector2 _position;
-        private int _health;
-        private int _speed;
+        IMarbleView _view;
+        Vector2 _position;
+        int _health;
+        int _speed;
 
         public int Speed => _speed;
         public bool IsDestroyed { get; private set; }
@@ -63,11 +63,11 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.UpdateMarble(_health);
         }
 
-        public void Update(float distanceTravelled, Vector3 position, Quaternion rotation, bool stop, float animationSpeed)
+        public void Update(float distanceTravelled, Vector2 position, Quaternion rotation, bool stop, float animationSpeed)
         {
             DistanceTravelled = distanceTravelled;
             
-            _position = new Vector2(position.x, position.z);
+            _position = new Vector2(position.x, position.y);
             
             _view.UpdatePosition(_position);
             _view.UpdateRotation(rotation);

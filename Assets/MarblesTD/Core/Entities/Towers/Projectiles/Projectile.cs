@@ -7,13 +7,13 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
 {
     public class Projectile
     {
-        private IProjectileView _view;
-        private Vector2 _position;
-        private ProjectileConfig _config;
-        private Vector2 _targetPosition;
+        IProjectileView _view;
+        Vector2 _position;
+        ProjectileConfig _config;
+        Vector2 _targetPosition;
 
-        private float _remainingHits;
-        private List<Marble> _hitMarbles;
+        float _remainingHits;
+        List<Marble> _hitMarbles;
 
         public Projectile(IProjectileView view, Vector2 position, ProjectileConfig config)
         {
@@ -38,7 +38,7 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
             // Debug.Log($"Creating {GetType()} at position {_position}, target position {_targetPosition}");
         }
 
-        private void OnMarbleHit(Marble marble)
+        void OnMarbleHit(Marble marble)
         {
             if (_hitMarbles.Contains(marble)) return;
             _hitMarbles.Add(marble);
