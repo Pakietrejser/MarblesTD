@@ -26,7 +26,7 @@ namespace MarblesTD.UnityCore.UI
         void OnSpawnButtonClicked()
         {
             roundText.text = $"{++_wave}";
-            SignalBus.FireStatic(new MarbleWaveBeginSpawnSignal(marblePrefab));
+            SignalBus.FireStatic(new MarbleWaveSpawnedSignal(marblePrefab));
         }
     }
 }

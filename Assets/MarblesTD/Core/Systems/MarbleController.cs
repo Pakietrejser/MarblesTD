@@ -25,7 +25,7 @@ namespace MarblesTD.Core.Systems
         public MarbleController(Marble.Pool marblePool, SignalBus signalBus)
         {
             _marblePool = marblePool;
-            signalBus.Subscribe<MarbleWaveBeginSpawnSignal>(SpawnMarbleWave);
+            signalBus.Subscribe<MarbleWaveSpawnedSignal>(SpawnMarbleWave);
         }
 
         public override void OnEnter()
@@ -56,7 +56,7 @@ namespace MarblesTD.Core.Systems
             }
         }
 
-        async void SpawnMarbleWave(MarbleWaveBeginSpawnSignal signal)
+        async void SpawnMarbleWave(MarbleWaveSpawnedSignal spawnedSignal)
         {
             var wave = _waveProvider.Next();
             var marbleWave = new MarbleWave(wave.WaveIndex);
@@ -66,7 +66,7 @@ namespace MarblesTD.Core.Systems
             {
                 for (var i = 0; i < waveGroup.MarbleCount; i++)
                 {
-                    var go = Object.Instantiate(signal.MarblePrefab);
+                    var go = Object.Instantiate(spawnedSignal.MarblePrefab);
                     var view = go.GetComponent<IMarbleView>();
                     var marble = _marblePool.Spawn();
                     marble.Init(view, SpawnPosition, waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
