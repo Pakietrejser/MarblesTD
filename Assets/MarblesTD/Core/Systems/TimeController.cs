@@ -31,7 +31,10 @@ namespace MarblesTD.Core.Systems
         public void Enter()
         {
             _currentTimeScaleIndex = 1;
+            _view.UpdateTimeScale(_timeScales[_currentTimeScaleIndex]);
         }
+
+        public void Update(float timeDelta) {}
 
         public void Exit()
         {
@@ -45,8 +48,7 @@ namespace MarblesTD.Core.Systems
             else
                 _currentTimeScaleIndex++;
 
-            float timeScale = _timeScales[_currentTimeScaleIndex];
-            _view.UpdateTimeScale(timeScale);
+            _view.UpdateTimeScale(_timeScales[_currentTimeScaleIndex]);
         }
         
         void OnMarbleWaveSpawned()

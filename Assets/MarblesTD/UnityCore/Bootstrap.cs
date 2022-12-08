@@ -5,7 +5,6 @@ using MarblesTD.Core.Entities.Towers.Projectiles;
 using MarblesTD.Core.Systems;
 using MarblesTD.UnityCore.Common.UI;
 using MarblesTD.UnityCore.Entities.Settings;
-using PathCreation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -16,12 +15,7 @@ namespace MarblesTD.UnityCore
     {
         [Inject] MarbleController MarbleController;
         [Inject] TimeController TimeController;
-        
-        [SerializeField] PathCreator pathCreator;
 
-        public Vector3 StartingPosition => pathCreator.path.GetPointAtTime(0, EndOfPathInstruction.Stop); //x y
-        public Vector3 EndPosition => pathCreator.path.GetPointAtTime(1, EndOfPathInstruction.Stop);
-        
         public PlayerView PlayerView;
         public Transform PlaceTowerButtonsParent;
         public GameObject PlaceTowerButtonPrefab;
@@ -71,7 +65,6 @@ namespace MarblesTD.UnityCore
 
             //do marbles
             Marble.Cracked += OnMarbleCracked;
-            MarbleController.SpawnPosition = StartingPosition;
         }
 
         void OnMarbleCracked(Marble marble, int crackedAmount)
@@ -103,24 +96,6 @@ namespace MarblesTD.UnityCore
             {
                 Projectiles[i].Update(Time.deltaTime * TimeController.TimeScale);
             }
-
-            foreach (var marble in MarbleController.Marbles)
-            {
-                if (marble.IsDestroyed) continue;
-                
-                float distanceTravelled = marble.DistanceTravelled + marble.Speed * Time.deltaTime * TimeController.TimeScale;
-                var position = pathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-                var rotation = pathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
-
-                bool reachedDestination = position == EndPosition;
-                marble.Update(distanceTravelled, position, rotation, reachedDestination, TimeController.TimeScale);
-                if (reachedDestination)
-                {
-                    Player.RemoveLives(marble.Health);
-                }
-            }
-            
-            MarbleController.OnUpdate(Time.deltaTime * TimeController.TimeScale);
 
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {

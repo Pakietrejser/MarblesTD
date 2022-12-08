@@ -11,13 +11,17 @@ namespace MarblesTD.Core.Common.Automatons
         {
             _states = states;
         }
-
-
+        
         public void Enter()
         {
             if (IsActive) return;
             IsActive = true;
             _states.ForEach(state => state.Enter());
+        }
+
+        public void Update(float timeDelta)
+        {
+            _states.ForEach(state => state.Update(timeDelta));
         }
 
         public void Exit()

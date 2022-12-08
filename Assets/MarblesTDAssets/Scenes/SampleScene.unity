@@ -4195,7 +4195,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 9
     vertexPathMinVertexSpacing: 0.2
     showTransformTool: 1
@@ -6567,6 +6567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7b7375c993c493390b38fdfe28a823f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  marbleControllerView: {fileID: 2072045693}
   timeControllerView: {fileID: 2072045692}
 --- !u!114 &1474261861
 MonoBehaviour:
@@ -8359,8 +8360,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2072045690}
   - component: {fileID: 2072045689}
+  - component: {fileID: 2072045694}
   - component: {fileID: 2072045691}
   - component: {fileID: 2072045692}
+  - component: {fileID: 2072045693}
   m_Layer: 0
   m_Name: Bootstrap
   m_TagString: Untagged
@@ -8380,7 +8383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f9e1376578b114a82a10441512ca43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 1048117859}
   PlayerView: {fileID: 2072045691}
   PlaceTowerButtonsParent: {fileID: 1821116788}
   PlaceTowerButtonPrefab: {fileID: 417565935655696995, guid: 5e772fb2ba2b8f4459530a2b57e96f57, type: 3}
@@ -8433,6 +8435,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 765544500}
   changeSpeedButton: {fileID: 1162537713}
+--- !u!114 &2072045693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072045688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de350ab7878542308eef1b2d640be850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathCreator: {fileID: 1048117859}
+--- !u!114 &2072045694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072045688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de900a37568d4c5c96cc0161c80fe899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2085410281
 GameObject:
   m_ObjectHideFlags: 0
