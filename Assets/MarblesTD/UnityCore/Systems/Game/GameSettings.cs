@@ -30,7 +30,7 @@ namespace MarblesTD.UnityCore.Systems.Game
         [Space] 
         [SerializeField] Button closeButton;
         [SerializeField] Button restoreDefaultButton;
- 
+
         Bus _masterBus;
         Bus _musicBus;
         Bus _sfxBus;
@@ -74,18 +74,20 @@ namespace MarblesTD.UnityCore.Systems.Game
             Hide();
         }
 
-        void HandleClose()
+        async void HandleClose()
         {
             Hide();
             MainMenu.Show();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
         public void Exit() {}
         
         public void Show() => gameObject.SetActive(true);
+
         public void Hide() => gameObject.SetActive(false);
 
-        public async void RestoreDefault()
+        async void RestoreDefault()
         {
             bool proceed = await Mediator.SendAsync(new BinaryChoiceRequest("Restore Default", "Are you sure you want to restore default settings?"));
             if (!proceed) return;
@@ -112,7 +114,7 @@ namespace MarblesTD.UnityCore.Systems.Game
             _masterBus = RuntimeManager.GetBus("bus:/Master");
             _musicBus = RuntimeManager.GetBus("bus:/Master/Music");
             _sfxBus = RuntimeManager.GetBus("bus:/Master/Sfx");
-            
+
             int targetResolution = -1;
             _possibleResolutions = new List<Resolution>();
             foreach (var resolution in Screen.resolutions.Reverse())
@@ -149,6 +151,24 @@ namespace MarblesTD.UnityCore.Systems.Game
                 }
             }
             _resolution = _possibleResolutions[targetResolution];
+            
+            
+            _masterVolume = .5f;
+            _musicVolume = 1f;
+            _sfxVolume = 1f;
+            _muteWhileInBackground = true;
+            _windowMode = FullScreenMode.FullScreenWindow;
+            _resolution = _possibleResolutions[0];
+            _framerate = 60;
+            _vsyncEnabled = false;
+            _masterBus.setVolume(_masterVolume);
+            _musicBus.setVolume(_musicVolume);
+            _sfxBus.setVolume(_sfxVolume);
+            Screen.fullScreenMode = _windowMode;
+            Screen.SetResolution(Resolution.width, Resolution.height, Screen.fullScreen);
+            
+            
+            
             resolutionsDropdown.value = targetResolution;
             resolutionsDropdown.RefreshShownValue();
             resolutionsDropdown.onValueChanged.AddListener(SetResolution);
@@ -165,6 +185,11 @@ namespace MarblesTD.UnityCore.Systems.Game
             vsyncToggle.onValueChanged.AddListener(SetVsync);
             closeButton.onClick.AddListener(HandleClose);
             restoreDefaultButton.onClick.AddListener(RestoreDefault);
+            
+            masterSlider.onValueChanged.AddListener(SetMasterVolume);
+            musicSlider.onValueChanged.AddListener(SetMusicVolume);
+            sfxSlider.onValueChanged.AddListener(SetSfxVolume);
+            muteWhileInBackgroundToggle.onValueChanged.AddListener(SetMuteWhileInBackground);
         }
         
         void OnApplicationFocus(bool hasFocus)
@@ -173,7 +198,7 @@ namespace MarblesTD.UnityCore.Systems.Game
                 _masterBus.setMute(!hasFocus);
         }
 
-        async void SetVsync(bool vsyncEnabled)
+        void SetVsync(bool vsyncEnabled)
         {
             _vsyncEnabled = vsyncEnabled;
             if (vsyncEnabled)
@@ -184,10 +209,9 @@ namespace MarblesTD.UnityCore.Systems.Game
             {
                 Application.targetFrameRate = _framerate;
             }
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
-        public async void SetWindowMode(int value)
+        void SetWindowMode(int value)
         {
             _windowMode = value switch
             {
@@ -197,17 +221,16 @@ namespace MarblesTD.UnityCore.Systems.Game
                 _ => throw new ArgumentOutOfRangeException()
             };
             Screen.fullScreenMode = _windowMode;
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
         
-        async void SetResolution(int index)
+        void SetResolution(int index)
         {
             _resolution = _possibleResolutions[index];
             Screen.SetResolution(Resolution.width, Resolution.height, Screen.fullScreen);
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
+            
         }
 
-        async void SetFramerate(int index)
+        void SetFramerate(int index)
         {
             _framerate = _framerateList[index];
             if (_vsyncEnabled)
@@ -218,34 +241,29 @@ namespace MarblesTD.UnityCore.Systems.Game
             {
                 Application.targetFrameRate = _framerate;
             }
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
-        public async void SetMasterVolume(float volume)
+        void SetMasterVolume(float volume)
         {
             _masterVolume = volume;
             _masterBus.setVolume(_masterVolume);
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
         
-        public async void SetMusicVolume(float volume)
+        void SetMusicVolume(float volume)
         {
             _musicVolume = volume;
             _musicBus.setVolume(_musicVolume);
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
         
-        public async void SetSfxVolume(float volume)
+        void SetSfxVolume(float volume)
         {
             _sfxVolume = volume;
             _sfxBus.setVolume(_sfxVolume);
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
-        public async void SetMuteWhileInBackground(bool muteWhileInBackground)
+        public void SetMuteWhileInBackground(bool muteWhileInBackground)
         {
             _muteWhileInBackground = muteWhileInBackground;
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
         public void Save(SaveData saveData, bool freshSave)
@@ -257,7 +275,6 @@ namespace MarblesTD.UnityCore.Systems.Game
                 _sfxVolume = 1f;
                 _muteWhileInBackground = true;
                 _windowMode = FullScreenMode.FullScreenWindow;
-                Debug.Log(_possibleResolutions.Count);
                 _resolution = _possibleResolutions[0];
                 _framerate = 60;
                 _vsyncEnabled = false;

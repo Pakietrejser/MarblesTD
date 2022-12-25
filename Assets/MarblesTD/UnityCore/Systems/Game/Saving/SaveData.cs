@@ -2,7 +2,7 @@
 
 namespace MarblesTD.UnityCore.Systems.Game.Saving
 {
-    public struct SaveData
+    public class SaveData
     {
         public float MasterVolume;
         public float MusicVolume;

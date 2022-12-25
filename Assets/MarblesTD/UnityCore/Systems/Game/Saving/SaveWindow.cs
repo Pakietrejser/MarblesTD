@@ -135,13 +135,14 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
             var saveData = new SaveData();
             GameSettings.Save(saveData, freshSave);
             
-            string saveDataString  = JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Auto});
+            string saveDataString  = JsonConvert.SerializeObject(saveData, Formatting.Indented, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Auto});
             if (!FileWriter.WriteToFile($"{fileName}.json", saveDataString))
             {
                 _currentSaveName = fileName;
+                return true;
             }
-
-            return true;
+            
+            return false;
         }
         
         bool LoadJsonData(string fileName)
