@@ -8,12 +8,6 @@ namespace MarblesTD.Core.Common.Requests
     {
         readonly Dictionary<Type, object> _handlers = new Dictionary<Type, object>();
 
-        public static Mediator Instance; //TODO: remove
-        public Mediator()
-        {
-            Instance = this;
-        }
-        
         public void AddHandler<TRequest, TResponse>(IRequestHandler<TResponse> requestHandler) where TRequest : IRequest<TResponse>
         {
             if (requestHandler == null) throw new Exception("Can't add a null handler.");
