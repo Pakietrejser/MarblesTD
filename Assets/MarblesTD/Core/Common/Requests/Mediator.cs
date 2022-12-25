@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 
 namespace MarblesTD.Core.Common.Requests
 {
@@ -14,7 +14,7 @@ namespace MarblesTD.Core.Common.Requests
             _handlers.Add(typeof(TRequest), requestHandler);
         }
         
-        public async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
+        public async UniTask<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
         {
             if (request == null) throw new Exception("Can't execute a null request");
             if (!_handlers.TryGetValue(request.GetType(), out object handler)) throw new Exception($"No handler for a request of type: {request.GetType().Name}");

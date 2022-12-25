@@ -3,7 +3,11 @@
     public interface IState
     {
         void Enter();
-        void Update(float timeDelta);
         void Exit();
+    }
+
+    public interface IUpdateState : IState
+    {
+        void UpdateState(float timeDelta); 
     }
 }

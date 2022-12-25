@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MarblesTD.UnityCore.Systems.Game.Saving
 {
-    public static class FileManager
+    public static class FileWriter
     {
         public static string GetFullPath(string fileName) => Path.Combine($"{Application.persistentDataPath}", "saves" , fileName);
         public static string GetPartialPath() => Path.Combine($"{Application.persistentDataPath}", "saves");

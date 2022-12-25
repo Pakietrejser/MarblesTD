@@ -8,9 +8,9 @@ using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Marbles;
 using UnityEngine;
 
-namespace MarblesTD.Core.Systems
+namespace MarblesTD.Core.ScenarioSystems
 {
-    public class MarbleController : IState
+    public class MarbleController : IUpdateState
     {
         public IEnumerable<Marble> Marbles => _marbleWaves.SelectMany(wave => wave.Marbles);
         
@@ -54,7 +54,7 @@ namespace MarblesTD.Core.Systems
 
         public void Enter() {}
 
-        public void Update(float timeDelta)
+        public void UpdateState(float timeDelta)
         {
             foreach (var marbleWave in _marbleWaves)
             {

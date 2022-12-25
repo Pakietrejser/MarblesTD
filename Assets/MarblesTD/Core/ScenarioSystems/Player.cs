@@ -1,4 +1,4 @@
-﻿namespace MarblesTD.Core.Systems
+﻿namespace MarblesTD.Core.ScenarioSystems
 {
     public class Player
     {

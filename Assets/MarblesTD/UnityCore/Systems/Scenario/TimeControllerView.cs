@@ -1,11 +1,12 @@
 ﻿using System;
+using MarblesTD.Core.ScenarioSystems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace MarblesTD.UnityCore.Systems.Scenario
 {
-    public class TimeControllerView : MonoBehaviour, Core.Systems.TimeController.IView
+    public class TimeControllerView : MonoBehaviour, TimeController.IView
     {
         [SerializeField] TMP_Text text;
         [SerializeField] Button changeSpeedButton;

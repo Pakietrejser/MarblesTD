@@ -12,7 +12,5 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
         public Resolution Resolution;
         public int Framerate;
         public bool VsyncEnabled;
-        public bool ScreenShakeEnabled;
-        public bool UploadGameplayDataEnabled;
     }
 }

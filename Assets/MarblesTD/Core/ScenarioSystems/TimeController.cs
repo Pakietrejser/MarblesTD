@@ -4,7 +4,7 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 
-namespace MarblesTD.Core.Systems
+namespace MarblesTD.Core.ScenarioSystems
 {
     public class TimeController : IState
     {
@@ -33,9 +33,7 @@ namespace MarblesTD.Core.Systems
             _currentTimeScaleIndex = 1;
             _view.UpdateTimeScale(_timeScales[_currentTimeScaleIndex]);
         }
-
-        public void Update(float timeDelta) {}
-
+        
         public void Exit()
         {
             _currentTimeScaleIndex = 0;

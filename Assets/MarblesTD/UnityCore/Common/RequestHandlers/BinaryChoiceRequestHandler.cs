@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Requests.List;
 using TMPro;
 using UnityEngine;
@@ -25,7 +24,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             Hide();
         }
 
-        protected override async Task<bool> Execute(BinaryChoiceRequest request)
+        protected override async UniTask<bool> Execute(BinaryChoiceRequest request)
         {
             titleText.text = request.Title;
             contentText.text = request.Description;

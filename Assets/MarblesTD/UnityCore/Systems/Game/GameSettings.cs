@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FMOD.Studio;
 using FMODUnity;
+using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
-using MarblesTD.Core.Systems.Game;
 using MarblesTD.UnityCore.Systems.Game.Saving;
 using TMPro;
 using UnityEngine;
@@ -14,10 +14,9 @@ using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.Game
 {
-    public class SettingsView : MonoBehaviour
+    public class GameSettings : MonoBehaviour, IState
     {
         [Inject] Mediator Mediator { get; set; }
-        [Inject] SaveManager SaveManager { get; set; }
         
         [SerializeField] Slider masterSlider;
         [SerializeField] Slider musicSlider;
@@ -84,8 +83,8 @@ namespace MarblesTD.UnityCore.Systems.Game
             _sfxBus.setVolume(_sfxVolume);
             Screen.fullScreenMode = _windowMode;
             Screen.SetResolution(Resolution.width, Resolution.height, Screen.fullScreen);
-            
-            SaveManager.SaveGame();
+
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
         
         void Awake()
@@ -159,7 +158,7 @@ namespace MarblesTD.UnityCore.Systems.Game
                 _masterBus.setMute(!hasFocus);
         }
 
-        void SetVsync(bool vsyncEnabled)
+        async void SetVsync(bool vsyncEnabled)
         {
             _vsyncEnabled = vsyncEnabled;
             if (vsyncEnabled)
@@ -170,10 +169,10 @@ namespace MarblesTD.UnityCore.Systems.Game
             {
                 Application.targetFrameRate = _framerate;
             }
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
-        public void SetWindowMode(int value) //set inside Unity
+        public async void SetWindowMode(int value) //set inside Unity
         {
             _windowMode = value switch
             {
@@ -183,17 +182,17 @@ namespace MarblesTD.UnityCore.Systems.Game
                 _ => throw new ArgumentOutOfRangeException()
             };
             Screen.fullScreenMode = _windowMode;
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
         
-        void SetResolution(int index)
+        async void SetResolution(int index)
         {
             _resolution = _possibleResolutions[index];
             Screen.SetResolution(Resolution.width, Resolution.height, Screen.fullScreen);
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
-        void SetFramerate(int index)
+        async void SetFramerate(int index)
         {
             _framerate = _framerateList[index];
             if (_vsyncEnabled)
@@ -204,34 +203,34 @@ namespace MarblesTD.UnityCore.Systems.Game
             {
                 Application.targetFrameRate = _framerate;
             }
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
-        public void SetMasterVolume(float volume)
+        public async void SetMasterVolume(float volume)
         {
             _masterVolume = volume;
             _masterBus.setVolume(_masterVolume);
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
         
-        public void SetMusicVolume(float volume)
+        public async void SetMusicVolume(float volume)
         {
             _musicVolume = volume;
             _musicBus.setVolume(_musicVolume);
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
         
-        public void SetSfxVolume(float volume)
+        public async void SetSfxVolume(float volume)
         {
             _sfxVolume = volume;
             _sfxBus.setVolume(_sfxVolume);
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
-        public void SetMuteWhileInBackground(bool muteWhileInBackground)
+        public async void SetMuteWhileInBackground(bool muteWhileInBackground)
         {
             _muteWhileInBackground = muteWhileInBackground;
-            SaveManager.SaveGame();
+            bool successful = await Mediator.SendAsync(new SaveGameRequest());
         }
 
         public void Save(SaveData saveData)
@@ -333,6 +332,16 @@ namespace MarblesTD.UnityCore.Systems.Game
 
             ratioString = string.Empty;
             return false;
+        }
+
+        public void Enter()
+        {
+            
+        }
+
+        public void Exit()
+        {
+            
         }
     }
 }

@@ -19,9 +19,15 @@ namespace MarblesTD.Core.Common.Automatons
             _states.ForEach(state => state.Enter());
         }
 
-        public void Update(float timeDelta)
+        public void UpdateState(float timeDelta)
         {
-            _states.ForEach(state => state.Update(timeDelta));
+            foreach (var state in _states)
+            {
+                if (state is IUpdateState updateState)
+                {
+                    updateState.UpdateState(timeDelta);
+                }
+            }
         }
 
         public void Exit()

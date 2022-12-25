@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
-using MarblesTD.Core.Systems;
+using MarblesTD.Core.ScenarioSystems;
+using MarblesTD.UnityCore.Systems.Game;
+using MarblesTD.UnityCore.Systems.Game.Saving;
 using UnityEngine;
 using Zenject;
 
@@ -9,6 +10,10 @@ namespace MarblesTD.UnityCore
 {
     public class GameController : MonoBehaviour
     {
+        [Inject] SaveWindow _saveWindow;
+        [Inject] MainMenu _mainMenu;
+        [Inject] GameSettings _gameSettings;
+        
         [Inject] TimeController _timeController;
         [Inject] MarbleController _marbleController;
         
@@ -18,12 +23,20 @@ namespace MarblesTD.UnityCore
 
         void Awake()
         {
+            _gameStates = new GroupState(new List<IState>()
+            {
+                _saveWindow,
+                _mainMenu,
+                _gameSettings,
+            });
+            
             _scenarioStates = new GroupState(new List<IState>()
             {
                 _timeController,
                 _marbleController,
             });
-            
+         
+            _gameStates.Enter();
             _scenarioStates.Enter();
         }
 
@@ -31,7 +44,7 @@ namespace MarblesTD.UnityCore
         {
             if (_scenarioStates.IsActive)
             {
-                _scenarioStates.Update(Time.deltaTime * _timeController.TimeScale);
+                _scenarioStates.UpdateState(Time.deltaTime * _timeController.TimeScale);
             }
         }
     }
