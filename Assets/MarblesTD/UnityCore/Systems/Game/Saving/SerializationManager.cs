@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace MarblesTD.UnityCore.Systems.Saving
+namespace MarblesTD.UnityCore.Systems.Game.Saving
 {
     public class SerializationManager
     {

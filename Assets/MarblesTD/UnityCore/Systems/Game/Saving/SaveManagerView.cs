@@ -5,7 +5,7 @@ using MarblesTD.Core.Common.Requests.List;
 using UnityEngine;
 using Zenject;
 
-namespace MarblesTD.UnityCore.Systems.Saving
+namespace MarblesTD.UnityCore.Systems.Game.Saving
 {
     public class SaveManagerView : MonoBehaviour
     {
