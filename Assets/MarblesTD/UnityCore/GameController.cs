@@ -21,7 +21,7 @@ namespace MarblesTD.UnityCore
         GroupState _mapStates;
         GroupState _scenarioStates;
 
-        void Awake()
+        void Start()
         {
             _gameStates = new GroupState(new List<IState>()
             {

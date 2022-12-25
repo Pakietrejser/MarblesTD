@@ -15,6 +15,7 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
     {
         [Inject] Mediator Mediator { get; set; }
         [Inject] GameSettings GameSettings { get; set; }
+        [Inject] MainMenu MainMenu { get; set; }
         
         [SerializeField] SaveButton[] saveButtons;
 
@@ -22,7 +23,7 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
 
         protected override async UniTask<bool> Execute(SaveGameRequest request)
         {
-            return SaveJsonData(_currentSaveName);
+            return SaveJsonData(_currentSaveName, false);
         }
         
         public void Enter()
@@ -34,19 +35,23 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
                 saveButton.CreateSaveClicked += HandleCreateSave;
                 saveButton.DeleteSaveClicked += HandleDeleteSave;
             }
-            
-            gameObject.SetActive(true);
+
+            Show();
         }
         
         public void Exit()
         {
-            gameObject.SetActive(false);
+            Hide();
+            
             foreach (var saveButton in saveButtons)
             {
                 saveButton.CreateSaveClicked -= HandleCreateSave;
                 saveButton.DeleteSaveClicked -= HandleDeleteSave;
             }
         }
+
+        void Show() => gameObject.SetActive(true);
+        void Hide() => gameObject.SetActive(false);
         
         async void HandleCreateSave(string saveName, bool containsSave)
         {
@@ -56,7 +61,9 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
                 if (successful)
                 {
                     UpdateSaveButtons();
-                    // gameManagerOverlay.ChangeScreen(mainMenu);
+                    
+                    Hide();
+                    MainMenu.Show();
                 }
                 else
                 {
@@ -65,10 +72,11 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
             }
             else
             {
-                SaveJsonData(saveName);
+                SaveJsonData(saveName, true);
                 UpdateSaveButtons();
-                
-                // gameManagerOverlay.ChangeScreen(mainMenu);
+
+                Hide();
+                MainMenu.Show();
             }
         }
         
@@ -122,12 +130,10 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
             return fileNames;
         }
         
-        bool SaveJsonData(string fileName)
+        bool SaveJsonData(string fileName, bool freshSave)
         {
-            if (string.IsNullOrEmpty(_currentSaveName)) return false;
-            
             var saveData = new SaveData();
-            GameSettings.Save(saveData);
+            GameSettings.Save(saveData, freshSave);
             
             string saveDataString  = JsonConvert.SerializeObject(this, Formatting.Indented, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Auto});
             if (!FileWriter.WriteToFile($"{fileName}.json", saveDataString))

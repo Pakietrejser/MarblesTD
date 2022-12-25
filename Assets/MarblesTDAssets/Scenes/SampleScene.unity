@@ -5935,6 +5935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860d521513d44f2f9365fe28abb2152f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  escapeKey: 0
   playButton: {fileID: 325594384}
   settingsButton: {fileID: 210386804}
   exitButton: {fileID: 1065835305}
@@ -7403,6 +7404,7 @@ MonoBehaviour:
   - {fileID: 1474261862}
   - {fileID: 1474261861}
   - {fileID: 1474261860}
+  - {fileID: 1474261863}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -7473,6 +7475,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioDatabase: {fileID: 11400000, guid: 3c47f33b33a3b9c438755548110dc27d, type: 2}
+  binaryChoiceRequestHandler: {fileID: 3537740040125166568}
+  saveWindow: {fileID: 2128689871}
 --- !u!114 &1474261863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9645,6 +9649,7 @@ RectTransform:
   - {fileID: 2128689870}
   - {fileID: 6927112980895587436}
   - {fileID: 1272042004}
+  - {fileID: 3537740040125166561}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12952,37 +12957,20 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3537740040125166565}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3537740041562263549}
   - {fileID: 3537740041085779339}
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 2048271835}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3537740040125166564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3537740040125166565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &3537740040125166565
 GameObject:
   m_ObjectHideFlags: 0
@@ -12992,61 +12980,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3537740040125166561}
-  - component: {fileID: 3537740040125166566}
-  - component: {fileID: 3537740040125166567}
-  - component: {fileID: 3537740040125166564}
   - component: {fileID: 3537740040125166568}
   m_Layer: 5
-  m_Name: BinaryChoiceRequestHandler
+  m_Name: Binary Choice Modal Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!223 &3537740040125166566
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3537740040125166565}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 963194227}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
-  m_SortingOrder: 10
-  m_TargetDisplay: 0
---- !u!114 &3537740040125166567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3537740040125166565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
 --- !u!114 &3537740040125166568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16532,6 +16473,8 @@ MonoBehaviour:
   resolutionsDropdown: {fileID: 973580353144160445}
   framerateDropdown: {fileID: 542930558958507719}
   vsyncToggle: {fileID: 2551117857755478247}
+  closeButton: {fileID: 6103453482713025534}
+  restoreDefaultButton: {fileID: 6920839334862682328}
 --- !u!1 &6927112980927800587
 GameObject:
   m_ObjectHideFlags: 0
@@ -19092,7 +19035,7 @@ GameObject:
   - component: {fileID: 6583671564696430165}
   - component: {fileID: 6103453482713025534}
   m_Layer: 5
-  m_Name: Exit Button
+  m_Name: Close Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

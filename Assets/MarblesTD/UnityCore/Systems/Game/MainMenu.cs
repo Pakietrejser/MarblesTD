@@ -1,5 +1,4 @@
-﻿using System;
-using MarblesTD.Core.Common.Automatons;
+﻿using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using UnityEngine;
@@ -11,26 +10,55 @@ namespace MarblesTD.UnityCore.Systems.Game
     public class MainMenu : MonoBehaviour, IState
     {
         [Inject] Mediator Mediator { get; set; }
+        [Inject] GameSettings GameSettings { get; set; }
         
+        [SerializeField] KeyCode escapeKey;
         [SerializeField] Button playButton;
         [SerializeField] Button settingsButton;
         [SerializeField] Button exitButton;
 
-        void Awake()
+        public void Enter()
         {
             playButton.onClick.AddListener(HandlePlayClicked);
             settingsButton.onClick.AddListener(HandleSettingsClicked);
             exitButton.onClick.AddListener(HandleExitGameButton);
+            Hide();
+        }
+
+        public void Exit()
+        {
+            playButton.onClick.RemoveListener(HandlePlayClicked);
+            settingsButton.onClick.RemoveListener(HandleSettingsClicked);
+            exitButton.onClick.RemoveListener(HandleExitGameButton);
+        }
+
+        public void Show() => gameObject.SetActive(true);
+        public void Hide() => gameObject.SetActive(false);
+        
+        void Update()
+        {
+            if (Input.GetKeyDown(escapeKey))
+            {
+                if (gameObject.activeSelf)
+                {
+                    Hide();
+                }
+                else
+                {
+                    Show();
+                }
+            }
         }
 
         void HandlePlayClicked()
         {
-            throw new NotImplementedException();
+            Hide();
         }
         
         void HandleSettingsClicked()
         {
-            throw new NotImplementedException();
+            Hide();
+            GameSettings.Show();
         }
 
         async void HandleExitGameButton()
@@ -45,9 +73,5 @@ namespace MarblesTD.UnityCore.Systems.Game
 #endif
             return;
         }
-
-        public void Enter() {}
-
-        public void Exit() {}
     }
 }
