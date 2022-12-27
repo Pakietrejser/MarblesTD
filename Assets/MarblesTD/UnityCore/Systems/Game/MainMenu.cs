@@ -39,6 +39,7 @@ namespace MarblesTD.UnityCore.Systems.Game
         {
             if (Input.GetKeyDown(escapeKey))
             {
+                Debug.Log(gameObject.activeSelf);
                 if (gameObject.activeSelf)
                 {
                     Hide();

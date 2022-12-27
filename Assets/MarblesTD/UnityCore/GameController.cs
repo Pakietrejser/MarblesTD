@@ -3,6 +3,7 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Systems.Game;
 using MarblesTD.UnityCore.Systems.Game.Saving;
+using MarblesTD.UnityCore.Systems.Map;
 using UnityEngine;
 using Zenject;
 
@@ -13,6 +14,8 @@ namespace MarblesTD.UnityCore
         [Inject] SaveWindow _saveWindow;
         [Inject] MainMenu _mainMenu;
         [Inject] GameSettings _gameSettings;
+
+        [Inject] ScenarioSpawner _scenarioSpawner;
         
         [Inject] TimeController _timeController;
         [Inject] MarbleController _marbleController;
@@ -29,6 +32,11 @@ namespace MarblesTD.UnityCore
                 _mainMenu,
                 _gameSettings,
             });
+
+            _mapStates = new GroupState(new List<IState>()
+            {
+                _scenarioSpawner
+            });
             
             _scenarioStates = new GroupState(new List<IState>()
             {
@@ -37,7 +45,6 @@ namespace MarblesTD.UnityCore
             });
          
             _gameStates.Enter();
-            _scenarioStates.Enter();
         }
 
         void Update()
