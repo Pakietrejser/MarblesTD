@@ -10,6 +10,7 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
         [SerializeField] TMP_InputField inputField;
         [SerializeField] Button createSaveButton;
         [SerializeField] Button deleteSaveButton;
+        [SerializeField] TMP_Text createSaveText;
 
         public event Action<string, bool> CreateSaveClicked;
         public event Action<string> DeleteSaveClicked;
@@ -28,6 +29,7 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
             inputField.text = fileMame;
             inputField.interactable = false;
             createSaveButton.interactable = true;
+            createSaveText.text = "Otwórz";
             deleteSaveButton.gameObject.SetActive(true);
         }
 
@@ -38,9 +40,15 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
             inputField.interactable = true;
             inputField.characterValidation = TMP_InputField.CharacterValidation.Alphanumeric;
             inputField.onValueChanged.RemoveAllListeners();
-            inputField.onValueChanged.AddListener(_ => createSaveButton.interactable = true);
+            inputField.onValueChanged.AddListener(OnInputFieldChanged);
             createSaveButton.interactable = false;
+            createSaveText.text = "Zapisz";
             deleteSaveButton.gameObject.SetActive(false);
+        }
+
+        void OnInputFieldChanged(string text)
+        {
+            createSaveButton.interactable = !string.IsNullOrEmpty(text);
         }
     }
 }

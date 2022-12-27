@@ -558,6 +558,7 @@ MonoBehaviour:
   inputField: {fileID: 3246078207369289767}
   createSaveButton: {fileID: 5288853731347868147}
   deleteSaveButton: {fileID: 2571230219914319975}
+  createSaveText: {fileID: 1768830016853300304}
 --- !u!1 &5952545456665772982
 GameObject:
   m_ObjectHideFlags: 0
