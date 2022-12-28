@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Cinemachine;
 using MarblesTD.UnityCore.Common.Extensions;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MarblesTD.UnityCore.Systems.Map
 {
@@ -10,6 +12,12 @@ namespace MarblesTD.UnityCore.Systems.Map
         [SerializeField] ArrowButton arrowPrefab;
         [SerializeField] Collider2D arrowBoundsCollider;
         [SerializeField] CinemachineVirtualCamera virtualCamera;
+        [Space] 
+        [SerializeField] TMP_Text scenarioText;
+        [SerializeField] Image backgroundImage;
+        [SerializeField] Image pathImage;
+        [SerializeField] Image[] stars;
+        [SerializeField] GameObject lockedBox;
         [Space]
         [SerializeField] List<ScenarioButton> targets;
 

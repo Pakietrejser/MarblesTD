@@ -31,7 +31,7 @@ namespace MarblesTD.Core.ScenarioSystems
         async void SpawnMarbleWave(MarbleWaveSpawnedSignal spawnedSignal)
         {
             var wave = _waveProvider.Next();
-            var marbleWave = new MarbleWave(wave.WaveIndex);
+            var marbleWave = new MarbleWave(wave.HoneyReward);
             _marbleWaves.Add(marbleWave);
 
             foreach (var waveGroup in wave.GetGroups())
@@ -58,7 +58,6 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             foreach (var marbleWave in _marbleWaves)
             {
-                int wave = marbleWave.WaveIndex;
                 var marbles = marbleWave.Marbles;
 
                 for (int i = marbles.Count - 1; i >= 0; i--)
@@ -72,7 +71,7 @@ namespace MarblesTD.Core.ScenarioSystems
 
                         if (marbles.Count == 0 && marbleWave.FinishedSpawning)
                         {
-                            Player.Instance.AddMoney(50 + wave * 20);
+                            Player.Instance.AddMoney(marbleWave.HoneyReward);
                         }
                     }
                     else
