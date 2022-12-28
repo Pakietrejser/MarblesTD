@@ -1,9 +1,11 @@
 ﻿using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
+using MarblesTD.Core.Common.Signals.List;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
 namespace MarblesTD.UnityCore.Systems.GameSystems
 {
@@ -11,6 +13,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
     {
         [Inject] Mediator Mediator { get; set; }
         [Inject] GameSettings GameSettings { get; set; }
+        [Inject] SignalBus Bus { get; set; }
         
         [SerializeField] KeyCode escapeKey;
         [SerializeField] Button playButton;
@@ -51,8 +54,9 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
             }
         }
 
-        void HandlePlayClicked()
+        async void HandlePlayClicked()
         {
+            Bus.Fire(new MapStartedSignal());
             Hide();
         }
         

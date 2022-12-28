@@ -6,12 +6,12 @@ using UnityEngine;
 
 namespace MarblesTD.UnityCore.Common.Extensions
 {
-    public class ScenarioHelper
+    public static class ScenarioHelper
     {
         const string SpritesPath = "Scenario Paths";
         static readonly Sprite[] Sprites = Resources.LoadAll<Sprite>(SpritesPath) ?? throw new Exception($"Unable to load resources at {SpritesPath}");
         
-        public static Sprite GetArtworkFor(ScenarioID id)
+        public static Sprite GetPathSprite(this ScenarioID id)
         {
             foreach (var artwork in Sprites)
             {

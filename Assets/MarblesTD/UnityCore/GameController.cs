@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
+using MarblesTD.Core.Common.Requests;
+using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Systems.GameSystems;
 using MarblesTD.UnityCore.Systems.GameSystems.Saving;
 using MarblesTD.UnityCore.Systems.MapSystems;
 using UnityEngine;
 using Zenject;
+using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
 namespace MarblesTD.UnityCore
 {
@@ -20,9 +24,29 @@ namespace MarblesTD.UnityCore
         [Inject] TimeController _timeController;
         [Inject] MarbleController _marbleController;
         
+        [Inject] SignalBus _bus;
+        
         GroupState _gameStates;
         GroupState _mapStates;
         GroupState _scenarioStates;
+
+        void Awake()
+        {
+            _bus.Subscribe<MapStartedSignal>(EnterMap);
+            _bus.Subscribe<ScenarioStartedSignal>(EnterScenario);
+        }
+
+        void EnterMap(MapStartedSignal signal)
+        {
+            _scenarioStates?.Exit();
+            _mapStates.Enter();
+        }
+        
+        void EnterScenario(ScenarioStartedSignal signal)
+        {
+            _mapStates?.Exit();
+            _scenarioStates.Enter();
+        }
 
         void Start()
         {
@@ -54,5 +78,7 @@ namespace MarblesTD.UnityCore
                 _scenarioStates.UpdateState(Time.deltaTime * _timeController.TimeScale);
             }
         }
+        
+        
     }
 }

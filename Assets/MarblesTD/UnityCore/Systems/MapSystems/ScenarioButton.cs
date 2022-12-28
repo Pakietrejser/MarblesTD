@@ -60,6 +60,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         public void Init(Scenario scenario)
         {
             _scenario = scenario;
+            pathImage.sprite = scenario.ID.GetPathSprite();
         }
 
         public void UpdateButton()
