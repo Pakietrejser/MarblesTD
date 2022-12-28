@@ -157,9 +157,16 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
             }
 
             var saveData = JsonConvert.DeserializeObject<SaveData>(json, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto});
-            
-            ((ISaveable) GameSettings).Load(saveData);
-            ((ISaveable) ScenarioSpawner).Load(saveData);
+
+            try
+            {
+                ((ISaveable) GameSettings).Load(saveData);
+                ((ISaveable) ScenarioSpawner).Load(saveData);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
             
             _currentSaveName = fileName;
             return true;

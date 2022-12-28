@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Cinemachine;
 using MarblesTD.Core.Common.Enums;
+using MarblesTD.Core.Common.Extensions;
+using MarblesTD.Core.MapSystems;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
@@ -23,12 +25,17 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         [SerializeField] ScenarioID id;
         [SerializeField] List<ScenarioButton> targets;
 
+        public ScenarioID ID => id;
+        
         static ScenarioButton ActiveScenarioButton;
         
+        Scenario _scenario;
         readonly List<ArrowButton> _arrowButtons = new List<ArrowButton>();
-        
+
         void Awake()
         {
+            lockedBox.SetActive(true);
+            
             foreach (var target in targets)
             {
                 if (!target.targets.Contains(this))
@@ -46,16 +53,37 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
                 arrowButton.ArrowClicked += OnArrowClicked;
                 _arrowButtons.Add(arrowButton);
             }
-            
+
             SetAsInactive();
         }
-
-        void OnArrowClicked(ScenarioButton scenarioButton)
+        
+        public void Init(Scenario scenario)
         {
-            scenarioButton.SetAsActive();
+            _scenario = scenario;
         }
 
-        public void SetAsActive()
+        public void UpdateButton()
+        {
+            scenarioText.text = id.GetName();
+
+            for (var i = 0; i < stars.Length; i++)
+            {
+                stars[i].ChangeAlpha(_scenario.GetQuestCompletion(i) ? 1 : 0.2f);
+            }
+
+            if (_scenario.Completed)
+            {
+                targets.ForEach(button => button.lockedBox.SetActive(false));
+            }
+            
+            if (id == ScenarioID.HelloWorld)
+            {
+                lockedBox.SetActive(false);
+                SetAsActive();
+            }
+        }
+
+        void SetAsActive()
         {
             ActiveScenarioButton?.SetAsInactive();
             ActiveScenarioButton = this;
@@ -68,6 +96,11 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         {
             virtualCamera.Priority = 0;
             _arrowButtons.ForEach(button => button.Hide());
+        }
+        
+        void OnArrowClicked(ScenarioButton scenarioButton)
+        {
+            scenarioButton.SetAsActive();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
@@ -10,22 +11,13 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 {
     public class ScenarioSpawner : MonoBehaviour, IState, ISaveable
     {
-        [SerializeField] ScenarioButton main;
+        [SerializeField] List<ScenarioButton> scenarioButtons;
 
-        Scenario[] _scenarios;
-
-        void Start()
-        {
-            main.SetAsActive();
-        }
+        List<Scenario> _scenarios;
 
         public void Enter()
         {
-            
-            
-            
-            
-            main.SetAsActive();
+            scenarioButtons.ForEach(button => button.UpdateButton());
         }
 
         public void Exit()
@@ -37,12 +29,15 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         {
             if (freshSave)
             {
-                var ids = Enum.GetValues(typeof(ScenarioID)).Cast<ScenarioID>().ToArray();
-                int length = ids.Length;
-                _scenarios = new Scenario[length];
+                var ids = Enum.GetValues(typeof(ScenarioID)).Cast<ScenarioID>().ToList();
+                ids.Remove(ScenarioID.NULL);
+                int length = ids.Count;
+                _scenarios = new List<Scenario>();
                 for (var i = 0; i < length; i++)
                 {
-                    _scenarios[i] = new Scenario(ids[i], false, false, false);
+                    var scenario = new Scenario(ids[i], false, false, false);
+                    _scenarios.Add(scenario);
+                    scenarioButtons.First(x => x.ID == ids[i]).Init(scenario);
                 }
             }
             
@@ -57,11 +52,13 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         public void Load(SaveData saveData)
         {
             int length = saveData.ScenarioQuests.Length;
-            _scenarios = new Scenario[length];
+            _scenarios = new List<Scenario>();
             for (var i = 0; i < length; i++)
             {
                 (var id, bool questA, bool questB, bool questC) = saveData.ScenarioQuests[i];
-                _scenarios[i] = new Scenario(id, questA, questB, questC);
+                var scenario = new Scenario(id, questA, questB, questC);
+                _scenarios.Add(scenario);
+                scenarioButtons.First(x => x.ID == id).Init(scenario);
             }
         }
     }
