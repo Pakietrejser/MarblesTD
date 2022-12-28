@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace MarblesTD.UnityCore.Systems.Game
+namespace MarblesTD.UnityCore.Systems.GameSystems
 {
     public class MainMenu : MonoBehaviour, IState
     {

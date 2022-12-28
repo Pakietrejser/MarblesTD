@@ -5,16 +5,18 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.UnityCore.Common.RequestHandlers;
+using MarblesTD.UnityCore.Systems.MapSystems;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
-namespace MarblesTD.UnityCore.Systems.Game.Saving
+namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
 {
     public class SaveWindow : MonoRequestHandler<SaveGameRequest, bool>, IState
     {
         [Inject] Mediator Mediator { get; set; }
         [Inject] GameSettings GameSettings { get; set; }
+        [Inject] ScenarioSpawner ScenarioSpawner { get; set; }
         [Inject] MainMenu MainMenu { get; set; }
         
         [SerializeField] SaveButton[] saveButtons;
@@ -133,7 +135,9 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
         bool SaveJsonData(string fileName, bool freshSave)
         {
             var saveData = new SaveData();
-            GameSettings.Save(saveData, freshSave);
+            
+            ((ISaveable) GameSettings).Save(saveData, freshSave);
+            ((ISaveable) ScenarioSpawner).Save(saveData, freshSave);
             
             string saveDataString  = JsonConvert.SerializeObject(saveData, Formatting.Indented, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Auto});
             if (!FileWriter.WriteToFile($"{fileName}.json", saveDataString))
@@ -151,9 +155,11 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
             {
                 return false;
             }
-            
+
             var saveData = JsonConvert.DeserializeObject<SaveData>(json, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto});
-            GameSettings.Load(saveData);
+            
+            ((ISaveable) GameSettings).Load(saveData);
+            ((ISaveable) ScenarioSpawner).Load(saveData);
             
             _currentSaveName = fileName;
             return true;

@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MarblesTD.UnityCore.Systems.Map
+namespace MarblesTD.UnityCore.Systems.MapSystems
 {
     public class ArrowButton : MonoBehaviour
     {

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.ScenarioSystems;
-using MarblesTD.UnityCore.Systems.Game;
-using MarblesTD.UnityCore.Systems.Game.Saving;
-using MarblesTD.UnityCore.Systems.Map;
+using MarblesTD.UnityCore.Systems.GameSystems;
+using MarblesTD.UnityCore.Systems.GameSystems.Saving;
+using MarblesTD.UnityCore.Systems.MapSystems;
 using UnityEngine;
 using Zenject;
 

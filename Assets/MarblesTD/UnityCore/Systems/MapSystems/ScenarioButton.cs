@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Cinemachine;
+using MarblesTD.Core.Common.Enums;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MarblesTD.UnityCore.Systems.Map
+namespace MarblesTD.UnityCore.Systems.MapSystems
 {
     public class ScenarioButton : MonoBehaviour
     {
@@ -18,7 +19,8 @@ namespace MarblesTD.UnityCore.Systems.Map
         [SerializeField] Image pathImage;
         [SerializeField] Image[] stars;
         [SerializeField] GameObject lockedBox;
-        [Space]
+        [Space] 
+        [SerializeField] ScenarioID id;
         [SerializeField] List<ScenarioButton> targets;
 
         static ScenarioButton ActiveScenarioButton;

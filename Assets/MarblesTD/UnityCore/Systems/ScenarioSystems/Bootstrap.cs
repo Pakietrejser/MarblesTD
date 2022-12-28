@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace MarblesTD.UnityCore.Systems.Scenario
+namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 {
     public class Bootstrap : MonoBehaviour
     {

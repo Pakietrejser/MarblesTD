@@ -6,15 +6,15 @@ using FMODUnity;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
-using MarblesTD.UnityCore.Systems.Game.Saving;
+using MarblesTD.UnityCore.Systems.GameSystems.Saving;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace MarblesTD.UnityCore.Systems.Game
+namespace MarblesTD.UnityCore.Systems.GameSystems
 {
-    public class GameSettings : MonoBehaviour, IState
+    public class GameSettings : MonoBehaviour, IState, ISaveable
     {
         [Inject] Mediator Mediator { get; set; }
         [Inject] MainMenu MainMenu { get; set; }

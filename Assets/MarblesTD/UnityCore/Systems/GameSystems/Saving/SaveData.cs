@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using MarblesTD.Core.Common.Enums;
+using UnityEngine;
 
-namespace MarblesTD.UnityCore.Systems.Game.Saving
+namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
 {
     public class SaveData
     {
@@ -12,5 +13,7 @@ namespace MarblesTD.UnityCore.Systems.Game.Saving
         public Resolution Resolution;
         public int Framerate;
         public bool VsyncEnabled;
+
+        public (ScenarioID, bool, bool, bool)[] ScenarioQuests;
     }
 }

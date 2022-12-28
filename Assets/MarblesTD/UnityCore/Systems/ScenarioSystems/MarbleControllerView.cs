@@ -2,7 +2,7 @@
 using PathCreation;
 using UnityEngine;
 
-namespace MarblesTD.UnityCore.Systems.Scenario
+namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 {
     public class MarbleControllerView : MonoBehaviour, MarbleController.IView
     {

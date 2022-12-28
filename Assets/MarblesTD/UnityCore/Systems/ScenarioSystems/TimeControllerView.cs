@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MarblesTD.UnityCore.Systems.Scenario
+namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 {
     public class TimeControllerView : MonoBehaviour, TimeController.IView
     {
