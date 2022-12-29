@@ -9,7 +9,7 @@ namespace MarblesTD.Core.MapSystems
     {
         public ScenarioID ID { get; }
         public bool Completed => _questsCompletion.Values.Any(x => x);
-        
+
         readonly Dictionary<QuestID, bool> _questsCompletion;
 
         public Scenario(ScenarioID id, bool questA, bool questB, bool questC)
@@ -39,6 +39,11 @@ namespace MarblesTD.Core.MapSystems
                 2 => _questsCompletion[GetLastQuestFor(ID)],
                 _ => throw new ArgumentException()
             };
+        }
+
+        public int GetCompletedQuests()
+        {
+            return _questsCompletion.Values.Count(completed => completed);
         }
 
         static QuestID GetLastQuestFor(ScenarioID id)

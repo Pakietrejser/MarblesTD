@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers.Upgrades;
 using UnityEngine;
@@ -17,7 +18,21 @@ namespace MarblesTD.Core.Entities.Towers
         public Sprite Icon;
         
         public bool IsDestroyed { get; private set; }
-        public int SellValue => Convert.ToInt32(Cost * .75f);
+
+        public int SellValue
+        {
+            get
+            {
+                int totalCost = Cost;
+                foreach (var upgrades in Upgrades.Values)
+                foreach (var upgrade in upgrades)
+                {
+                    if (upgrade.IsActive) totalCost += upgrade.Cost;
+                }
+                return Convert.ToInt32(totalCost * .75f);
+            }
+        }
+        
         public int KIllCount;
         public IReadOnlyDictionary<Path, Upgrade[]> Upgrades => _upgrades;
 

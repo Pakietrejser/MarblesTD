@@ -5,6 +5,7 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.MapSystems;
 using MarblesTD.UnityCore.Systems.GameSystems.Saving;
+using TMPro;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore.Systems.MapSystems
@@ -12,12 +13,17 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
     public class ScenarioSpawner : MonoBehaviour, IState, ISaveable
     {
         [SerializeField] List<ScenarioButton> scenarioButtons;
+        [SerializeField] TMP_Text questsCompletedText;
 
         List<Scenario> _scenarios;
 
         public void Enter()
         {
             scenarioButtons.ForEach(button => button.UpdateButton());
+
+            int allQuests = _scenarios.Count * 3;
+            int completedQuests = _scenarios.Sum(scenario => scenario.GetCompletedQuests());
+            questsCompletedText.text = $"Completed Quests: {completedQuests}/{allQuests}";
         }
 
         public void Exit()

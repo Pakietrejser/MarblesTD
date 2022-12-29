@@ -21,6 +21,8 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         [SerializeField] Image pathImage;
         [SerializeField] Image[] stars;
         [SerializeField] GameObject lockedBox;
+        [SerializeField] Sprite starLocked;
+        [SerializeField] Sprite starUnlocked;
         [Space] 
         [SerializeField] ScenarioID id;
         [SerializeField] List<ScenarioButton> targets;
@@ -69,7 +71,9 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
             for (var i = 0; i < stars.Length; i++)
             {
-                stars[i].ChangeAlpha(_scenario.GetQuestCompletion(i) ? 1 : 0.2f);
+                bool unlocked = _scenario.GetQuestCompletion(i);
+                stars[i].sprite = unlocked ? starUnlocked : starLocked;
+                stars[i].ChangeAlpha(unlocked ? 1f : 0.8f);
             }
 
             if (_scenario.Completed)
