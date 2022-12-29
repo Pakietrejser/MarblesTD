@@ -14,6 +14,7 @@ namespace MarblesTD.UnityCore.Common.Installers
         [SerializeField] AudioDatabase audioDatabase;
         
         [SerializeField] BinaryChoiceRequestHandler binaryChoiceRequestHandler;
+        [SerializeField] StartScenarioRequestHandler startScenarioRequestHandler;
         [SerializeField] SaveWindow saveWindow;
 
         public override void InstallBindings()
@@ -32,6 +33,7 @@ namespace MarblesTD.UnityCore.Common.Installers
             Container.BindInstance(mediator);
             
             mediator.AddHandler<BinaryChoiceRequest, bool>(binaryChoiceRequestHandler);
+            mediator.AddHandler<StartScenarioRequest, bool>(startScenarioRequestHandler);
             mediator.AddHandler<SaveGameRequest, bool>(saveWindow);
         }
     }

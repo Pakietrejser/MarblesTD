@@ -2,6 +2,8 @@
 using Cinemachine;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Extensions;
+using MarblesTD.Core.Common.Requests;
+using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.MapSystems;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
@@ -23,6 +25,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         [SerializeField] GameObject lockedBox;
         [SerializeField] Sprite starLocked;
         [SerializeField] Sprite starUnlocked;
+        [SerializeField] Button scenarioButton;
         [Space] 
         [SerializeField] ScenarioID id;
         [SerializeField] List<ScenarioButton> targets;
@@ -32,10 +35,13 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
         static ScenarioButton ActiveScenarioButton;
         
         Scenario _scenario;
+        Mediator _mediator;
         readonly List<ArrowButton> _arrowButtons = new List<ArrowButton>();
 
         void Awake()
         {
+            scenarioButton.onClick.AddListener(ScenarioStartedClicked);
+            
             lockedBox.SetActive(true);
             
             foreach (var target in targets)
@@ -58,10 +64,18 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
             SetAsInactive();
         }
-        
-        public void Init(Scenario scenario)
+
+        async void ScenarioStartedClicked()
+        {
+            Debug.Log("end scenario started");
+            var started = await _mediator.SendAsync(new StartScenarioRequest());
+            Debug.Log("finish scenario started");
+        }
+
+        public void Init(Scenario scenario, Mediator mediator)
         {
             _scenario = scenario;
+            _mediator = mediator;
             pathImage.sprite = scenario.ID.GetPathSprite();
         }
 

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
+using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.MapSystems;
 using MarblesTD.UnityCore.Systems.GameSystems.Saving;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.MapSystems
 {
@@ -14,6 +16,8 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
     {
         [SerializeField] List<ScenarioButton> scenarioButtons;
         [SerializeField] TMP_Text questsCompletedText;
+        
+        [Inject] Mediator Mediator { get; set; }
 
         List<Scenario> _scenarios;
 
@@ -43,7 +47,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
                 {
                     var scenario = new Scenario(ids[i], false, false, false);
                     _scenarios.Add(scenario);
-                    scenarioButtons.First(x => x.ID == ids[i]).Init(scenario);
+                    scenarioButtons.First(x => x.ID == ids[i]).Init(scenario, Mediator);
                 }
             }
             
@@ -64,7 +68,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
                 (var id, bool questA, bool questB, bool questC) = saveData.ScenarioQuests[i];
                 var scenario = new Scenario(id, questA, questB, questC);
                 _scenarios.Add(scenario);
-                scenarioButtons.First(x => x.ID == id).Init(scenario);
+                scenarioButtons.First(x => x.ID == id).Init(scenario, Mediator);
             }
         }
     }
