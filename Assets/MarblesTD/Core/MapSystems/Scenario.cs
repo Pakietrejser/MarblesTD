@@ -40,6 +40,22 @@ namespace MarblesTD.Core.MapSystems
                 _ => throw new ArgumentException()
             };
         }
+        
+        public QuestID GetQuest(int index)
+        {
+            var x = 0;
+            foreach (var id in _questsCompletion.Keys)
+            {
+                if (index == x)
+                {
+                    return id;
+                }
+
+                x++;
+            }
+
+            throw new ArgumentException();
+        }
 
         public int GetCompletedQuests()
         {

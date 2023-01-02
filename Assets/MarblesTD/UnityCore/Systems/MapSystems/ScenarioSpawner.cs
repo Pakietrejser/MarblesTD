@@ -16,10 +16,17 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
     {
         [SerializeField] List<ScenarioButton> scenarioButtons;
         [SerializeField] TMP_Text questsCompletedText;
+        [Space] 
+        [SerializeField] GameObject mapCanvas;
         
         [Inject] Mediator Mediator { get; set; }
 
         List<Scenario> _scenarios;
+
+        void Start()
+        {
+            Exit();
+        }
 
         public void Enter()
         {
@@ -28,11 +35,17 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
             int allQuests = _scenarios.Count * 3;
             int completedQuests = _scenarios.Sum(scenario => scenario.GetCompletedQuests());
             questsCompletedText.text = $"Completed Quests: {completedQuests}/{allQuests}";
+
+            mapCanvas.SetActive(true);
+            gameObject.SetActive(true);
+            Debug.Log("enter map");
         }
 
         public void Exit()
         {
-            
+            mapCanvas.SetActive(false);
+            gameObject.SetActive(false);
+            Debug.Log("close map");
         }
 
         public void Save(SaveData saveData, bool freshSave)

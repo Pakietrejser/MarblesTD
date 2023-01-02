@@ -78,7 +78,5 @@ namespace MarblesTD.UnityCore
                 _scenarioStates.UpdateState(Time.deltaTime * _timeController.TimeScale);
             }
         }
-        
-        
     }
 }

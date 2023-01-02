@@ -67,9 +67,9 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
         async void ScenarioStartedClicked()
         {
-            Debug.Log("end scenario started");
-            var started = await _mediator.SendAsync(new StartScenarioRequest());
-            Debug.Log("finish scenario started");
+            Debug.Log("await StartScenarioRequest");
+            bool started = await _mediator.SendAsync(new StartScenarioRequest(_scenario));
+            Debug.Log($"await StartScenarioRequest FINISHED{started}");
         }
 
         public void Init(Scenario scenario, Mediator mediator)
