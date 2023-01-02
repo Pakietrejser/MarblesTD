@@ -80,6 +80,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
         async void Hide()
         {
             _confirmed = false;
+            _receivedConfirmation = true;
             windowBox.transform.DOKill();
             windowBox.transform.DOScale(Vector3.one * .01f, .2f);
             await UniTask.Delay(TimeSpan.FromSeconds(.2f));
