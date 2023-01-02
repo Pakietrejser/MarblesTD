@@ -5,13 +5,16 @@ using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.Installers
 {
-    public class SystemInstaller : MonoInstaller
+    public class ScenarioSystemsInstaller : MonoInstaller
     {
+        [SerializeField] ScenarioManager scenarioSpawner;
         [SerializeField] MarbleControllerView marbleControllerView;
         [SerializeField] TimeControllerView timeControllerView;
-
+        
         public override void InstallBindings()
         {
+            Container.BindInstance(scenarioSpawner);
+            
             Container.Bind<MarbleController.IView>().FromInstance(marbleControllerView);
             Container.Bind<TimeController.IView>().FromInstance(timeControllerView);
 
