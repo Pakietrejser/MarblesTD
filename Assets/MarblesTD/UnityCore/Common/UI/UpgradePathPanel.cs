@@ -1,7 +1,8 @@
 ﻿using System.Linq;
+using MarblesTD.Core.Common.Requests;
+using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Upgrades;
-using MarblesTD.UnityCore.Systems.ScenarioSystems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +28,7 @@ namespace MarblesTD.UnityCore.Common.UI
             nextUpgradeButton.onClick.AddListener(OnUpgradeClicked);
         }
 
-        void OnUpgradeClicked()
+        async void OnUpgradeClicked()
         {
             var nextUpgrade = _upgrades.FirstOrDefault(upgrade => upgrade.IsActive == false);
             if (nextUpgrade == null)
@@ -36,13 +37,11 @@ namespace MarblesTD.UnityCore.Common.UI
             }
             else
             {
-                if (Bootstrap.Instance.Player.Money < nextUpgrade.Cost)
+                bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(nextUpgrade.Cost));
+                if (purchaseCompleted)
                 {
-                    return;
+                    _tower.ApplyUpgrade(nextUpgrade);
                 }
-                    
-                Bootstrap.Instance.Player.RemoveMoney(nextUpgrade.Cost);
-                _tower.ApplyUpgrade(nextUpgrade);
             }
             
             UpdateOwned();

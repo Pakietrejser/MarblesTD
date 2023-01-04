@@ -1,5 +1,6 @@
 ﻿using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
+using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.Audio;
 using MarblesTD.UnityCore.Common.RequestHandlers;
 using MarblesTD.UnityCore.Systems.GameSystems.Saving;
@@ -12,7 +13,6 @@ namespace MarblesTD.UnityCore.Common.Installers
     public class CommonInstaller : MonoInstaller
     {
         [SerializeField] AudioDatabase audioDatabase;
-        
         [SerializeField] BinaryChoiceRequestHandler binaryChoiceRequestHandler;
         [SerializeField] StartScenarioRequestHandler startScenarioRequestHandler;
         [SerializeField] SaveWindow saveWindow;

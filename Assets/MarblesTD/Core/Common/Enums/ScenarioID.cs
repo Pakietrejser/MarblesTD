@@ -20,7 +20,7 @@
         Sandwich,
         Scribbles, //unlock cat
         Snail, //unlock gar
-        Sneak, 
+        Snake, 
         SpiderLair,
         Spider, //unlock spider
         TwinTowers, //unlock bear

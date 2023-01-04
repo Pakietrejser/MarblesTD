@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
-using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Systems.GameSystems;
@@ -21,6 +19,7 @@ namespace MarblesTD.UnityCore
 
         [Inject] ScenarioSpawner _scenarioSpawner;
         
+        [Inject] ScenarioManager ScenarioManager { get; set; }
         [Inject] TimeController _timeController;
         [Inject] MarbleController _marbleController;
         
@@ -64,6 +63,7 @@ namespace MarblesTD.UnityCore
             
             _scenarioStates = new GroupState(new List<IState>()
             {
+                ScenarioManager,
                 _timeController,
                 _marbleController,
             });

@@ -82,7 +82,7 @@ namespace MarblesTD.Core.MapSystems
                 ScenarioID.Sandwich => QuestID.WildOnly,
                 ScenarioID.Scribbles => QuestID.NightOnly,
                 ScenarioID.Snail => QuestID.NightOnly,
-                ScenarioID.Sneak => QuestID.NobleOnly,
+                ScenarioID.Snake => QuestID.NobleOnly,
                 ScenarioID.SpiderLair => QuestID.NoDamage,
                 ScenarioID.Spider => QuestID.NightOnly,
                 ScenarioID.TwinTowers => QuestID.NobleOnly,

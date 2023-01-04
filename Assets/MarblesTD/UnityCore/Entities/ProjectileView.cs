@@ -28,7 +28,7 @@ namespace MarblesTD.UnityCore.Entities
         public void DestroySelf()
         {
             HitMarble = null;
-            Bootstrap.Instance.Projectiles.Remove(Projectile);
+            TowerControllerView.Instance.Projectiles.Remove(Projectile);
             Destroy(gameObject);
         }
         

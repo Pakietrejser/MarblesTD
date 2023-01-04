@@ -4412,12 +4412,11 @@ GameObject:
   m_Component:
   - component: {fileID: 768843685}
   - component: {fileID: 768843684}
-  - component: {fileID: 768843689}
   - component: {fileID: 768843688}
   - component: {fileID: 768843687}
   - component: {fileID: 768843686}
   m_Layer: 0
-  m_Name: Scenario Manager
+  m_Name: Scenario Manager View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4435,6 +4434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d1db12f7e64c589e145434472fae2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  livesText: {fileID: 614901685}
+  honeyText: {fileID: 2041132383}
 --- !u!4 &768843685
 Transform:
   m_ObjectHideFlags: 0
@@ -4461,7 +4462,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f9e1376578b114a82a10441512ca43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerView: {fileID: 768843689}
   PlaceTowerButtonsParent: {fileID: 1821116788}
   PlaceTowerButtonPrefab: {fileID: 417565935655696995, guid: 5e772fb2ba2b8f4459530a2b57e96f57, type: 3}
   GlobalTowerSettings: {fileID: 11400000, guid: 983042e1529d90549bf573e20d6412c6, type: 2}
@@ -4496,20 +4496,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathCreator: {fileID: 0}
---- !u!114 &768843689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 768843683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2a8f40461f249bfbf05cd46a553ed8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLivesText: {fileID: 614901685}
-  playerMoneyText: {fileID: 2041132383}
 --- !u!1 &770871608
 GameObject:
   m_ObjectHideFlags: 0
@@ -10420,7 +10406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c467f22d9bbc4a8081a4ab75af060123, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scenarioSpawner: {fileID: 768843684}
+  scenarioManagerView: {fileID: 768843684}
   marbleControllerView: {fileID: 768843688}
   timeControllerView: {fileID: 768843687}
 --- !u!114 &1474261866
@@ -13215,7 +13201,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1766267129
 Canvas:
   m_ObjectHideFlags: 0
@@ -14976,7 +14962,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &2048271834
 Canvas:
   m_ObjectHideFlags: 0

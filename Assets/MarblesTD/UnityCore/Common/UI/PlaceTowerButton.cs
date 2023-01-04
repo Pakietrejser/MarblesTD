@@ -1,4 +1,6 @@
-﻿using MarblesTD.Core.Entities.Towers;
+﻿using MarblesTD.Core.Common.Requests;
+using MarblesTD.Core.Common.Requests.List;
+using MarblesTD.Core.Entities.Towers;
 using MarblesTD.UnityCore.Entities.Settings;
 using MarblesTD.UnityCore.Systems.ScenarioSystems;
 using TMPro;
@@ -85,20 +87,25 @@ namespace MarblesTD.UnityCore.Common.UI
             }
         }
 
-        public void OnEndDrag(PointerEventData data)
+        public async void OnEndDrag(PointerEventData data)
         {
             if (currentTower == null) return;
-
-            if (Bootstrap.Instance.Player.Money >= settings.Cost && _canPlaceTowerAtCurrentPosition)
+            if (!_canPlaceTowerAtCurrentPosition)
+            {
+                Destroy(currentTower);
+                currentTower = null;
+                return;
+            }
+            
+            bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(settings.Cost));
+            if (purchaseCompleted)
             {
                 var view = currentTower.GetComponent<ITowerView>();
                 view.EnableCollider();
-                Bootstrap.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.y)));
-                Bootstrap.Instance.Player.RemoveMoney(settings.Cost);
+                TowerControllerView.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.y)));
             }
             else
             {
-                Debug.Log("Didn't place anything.");
                 Destroy(currentTower);
                 currentTower = null;
             }

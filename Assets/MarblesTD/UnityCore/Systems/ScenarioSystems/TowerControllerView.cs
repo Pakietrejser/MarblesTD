@@ -11,12 +11,12 @@ using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 {
-    public class Bootstrap : MonoBehaviour
+    public class TowerControllerView : MonoBehaviour
     {
         [Inject] MarbleController MarbleController;
         [Inject] TimeController TimeController;
+        [Inject] ScenarioManager ScenarioManager { get; set; }
 
-        public PlayerView PlayerView;
         public Transform PlaceTowerButtonsParent;
         public GameObject PlaceTowerButtonPrefab;
         public GlobalTowerSettings GlobalTowerSettings;
@@ -25,29 +25,19 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 
         public readonly List<Tower> Towers = new List<Tower>();
         public readonly List<Projectile> Projectiles = new List<Projectile>();
-
-        public Player Player { get; private set; }
         
         public void SelectTower(Tower tower)
         {
             TowerPanelView.ShowPanel(tower);
         }
 
-        public static Bootstrap Instance;
+        public static TowerControllerView Instance;
 
         void Awake()
         {
             Instance = this;
             TowerPanelView.HidePanel();
-        
-            //do player
-            Player = new Player(PlayerView);
-            Player.AddLives(20);
-            Player.AddMoney(100);
-            
             GlobalTowerSettings.Init();
-            TowerPanelView.Init(Player);
-            
             GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
             
             //do towers
@@ -69,7 +59,7 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 
         void OnMarbleCracked(Marble marble, int crackedAmount)
         {
-            Player.AddMoney(crackedAmount);
+            ScenarioManager.Honey += crackedAmount;
         }
 
         PlaceTowerButton placeTowerButton;

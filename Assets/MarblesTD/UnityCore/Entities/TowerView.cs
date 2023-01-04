@@ -36,7 +36,7 @@ namespace MarblesTD.UnityCore.Entities
             var projectileView = go.GetComponent<IProjectileView>();
             var projectile = new Projectile(projectileView, new Vector2(transform.position.x, transform.position.y), config);
 
-            Bootstrap.Instance.Projectiles.Add(projectile);
+            TowerControllerView.Instance.Projectiles.Add(projectile);
             return projectile;
         }
 

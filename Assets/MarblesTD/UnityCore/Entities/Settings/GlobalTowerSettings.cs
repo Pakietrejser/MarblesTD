@@ -42,7 +42,7 @@ namespace MarblesTD.UnityCore.Entities.Settings
             };
 
             activeTowers.Add(tower);
-            tower.Selected += () => Bootstrap.Instance.SelectTower(tower);
+            tower.Selected += () => TowerControllerView.Instance.SelectTower(tower);
             return tower;
         }
 

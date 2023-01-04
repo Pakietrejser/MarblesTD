@@ -1,5 +1,4 @@
-﻿using PathCreation;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PathCreation.Examples {
 

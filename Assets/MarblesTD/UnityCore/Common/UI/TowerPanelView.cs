@@ -1,6 +1,7 @@
-﻿using MarblesTD.Core.Entities.Towers;
+﻿using MarblesTD.Core.Common.Signals;
+using MarblesTD.Core.Common.Signals.List;
+using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Upgrades;
-using MarblesTD.Core.ScenarioSystems;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,7 +37,6 @@ namespace MarblesTD.UnityCore.Common.UI
                 _activeTower?.Select();
             }
         }
-        Player activePlayer;
 
         void Awake()
         {
@@ -45,14 +45,9 @@ namespace MarblesTD.UnityCore.Common.UI
 
         void SellTower()
         {
-            activePlayer.AddMoney(ActiveTower.SellValue);
+            SignalBus.FireStatic(new TowerSoldSignal(ActiveTower.SellValue));
             ActiveTower.Destroy();
             HidePanel();
-        }
-        
-        public void Init(Player player)
-        {
-            activePlayer = player;
         }
 
         public void ShowPanel(Tower tower)

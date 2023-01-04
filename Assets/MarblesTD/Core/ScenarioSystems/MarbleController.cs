@@ -16,14 +16,16 @@ namespace MarblesTD.Core.ScenarioSystems
         
         readonly Marble.Pool _marblePool;
         readonly TimeController _timeController;
+        readonly ScenarioManager _scenarioManager;
         readonly IView _view;
         readonly WaveProvider _waveProvider = new WaveProvider();
         readonly List<MarbleWave> _marbleWaves = new List<MarbleWave>();
         
-        public MarbleController(Marble.Pool marblePool, SignalBus signalBus, TimeController timeController, IView view)
+        public MarbleController(Marble.Pool marblePool, SignalBus signalBus, TimeController timeController, ScenarioManager scenarioManager, IView view)
         {
             _marblePool = marblePool;
             _timeController = timeController;
+            _scenarioManager = scenarioManager;
             _view = view;
             signalBus.Subscribe<MarbleWaveSpawnedSignal>(SpawnMarbleWave);
         }
@@ -71,7 +73,7 @@ namespace MarblesTD.Core.ScenarioSystems
 
                         if (marbles.Count == 0 && marbleWave.FinishedSpawning)
                         {
-                            Player.Instance.AddMoney(marbleWave.HoneyReward);
+                            _scenarioManager.Honey += marbleWave.HoneyReward;
                         }
                     }
                     else
@@ -83,7 +85,7 @@ namespace MarblesTD.Core.ScenarioSystems
                         marble.Update(distanceTravelled, position, rotation, reachedDestination, _timeController.TimeScale);
                         if (reachedDestination)
                         {
-                            Player.Instance.RemoveLives(marble.Health);
+                            _scenarioManager.Lives -= marble.Health;
                         }
                     }
                 }
