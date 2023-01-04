@@ -4416,7 +4416,7 @@ GameObject:
   - component: {fileID: 768843687}
   - component: {fileID: 768843686}
   m_Layer: 0
-  m_Name: Scenario Manager View
+  m_Name: Scenario
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4434,6 +4434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d1db12f7e64c589e145434472fae2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scenarioCanvasGroup: {fileID: 958549435}
+  marbleControllerView: {fileID: 768843688}
   livesText: {fileID: 614901685}
   honeyText: {fileID: 2041132383}
 --- !u!4 &768843685
@@ -4446,9 +4448,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 958549434}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &768843686
 MonoBehaviour:
@@ -4495,7 +4498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de350ab7878542308eef1b2d640be850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathCreator: {fileID: 0}
+  PathCreators: []
 --- !u!1 &770871608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6023,6 +6026,7 @@ GameObject:
   - component: {fileID: 958549433}
   - component: {fileID: 958549432}
   - component: {fileID: 958549431}
+  - component: {fileID: 958549435}
   m_Layer: 5
   m_Name: Scenario Canvas
   m_TagString: Untagged
@@ -6069,7 +6073,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &958549433
 Canvas:
   m_ObjectHideFlags: 0
@@ -6079,9 +6083,9 @@ Canvas:
   m_GameObject: {fileID: 958549430}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 1
   m_Camera: {fileID: 963194227}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 0.01
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -6099,19 +6103,31 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958549430}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1506383533}
   - {fileID: 932730275}
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 768843685}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!225 &958549435
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958549430}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -13201,7 +13217,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1766267129
 Canvas:
   m_ObjectHideFlags: 0
@@ -14962,7 +14978,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &2048271834
 Canvas:
   m_ObjectHideFlags: 0

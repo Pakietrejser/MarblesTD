@@ -38,14 +38,12 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
             mapCanvas.SetActive(true);
             gameObject.SetActive(true);
-            Debug.Log("enter map");
         }
 
         public void Exit()
         {
             mapCanvas.SetActive(false);
             gameObject.SetActive(false);
-            Debug.Log("close map");
         }
 
         public void Save(SaveData saveData, bool freshSave)

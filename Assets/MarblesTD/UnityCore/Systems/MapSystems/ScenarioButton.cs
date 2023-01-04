@@ -67,9 +67,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
         async void ScenarioStartedClicked()
         {
-            Debug.Log("await StartScenarioRequest");
             bool started = await _mediator.SendAsync(new StartScenarioRequest(_scenario));
-            Debug.Log($"await StartScenarioRequest FINISHED{started}");
         }
 
         public void Init(Scenario scenario, Mediator mediator)
@@ -90,7 +88,8 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
                 stars[i].ChangeAlpha(unlocked ? 1f : 0.8f);
             }
 
-            if (_scenario.Completed)
+            if (true)
+            // if (_scenario.Completed)
             {
                 targets.ForEach(button => button.lockedBox.SetActive(false));
             }

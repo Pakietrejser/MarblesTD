@@ -64,7 +64,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             _receivedConfirmation = false;
             await UniTask.WaitUntil(PlayerInteraction);
             bool result = _confirmed;
-            if (result) Bus.Fire(new ScenarioStartedSignal());
+            if (result) Bus.Fire(new ScenarioStartedSignal(scenario));
             Hide();
             return result;
         }

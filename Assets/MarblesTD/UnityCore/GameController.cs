@@ -44,6 +44,7 @@ namespace MarblesTD.UnityCore
         void EnterScenario(ScenarioStartedSignal signal)
         {
             _mapStates?.Exit();
+            ScenarioManager.CurrentScenario = signal.Scenario;
             _scenarioStates.Enter();
         }
 

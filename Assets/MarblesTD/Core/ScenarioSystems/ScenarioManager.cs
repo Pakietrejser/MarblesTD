@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Automatons;
+using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
+using MarblesTD.Core.MapSystems;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -10,6 +12,8 @@ namespace MarblesTD.Core.ScenarioSystems
         int _lives;
         int _honey;
         readonly IView _view;
+
+        public Scenario CurrentScenario;
 
         public int Lives
         {
@@ -41,11 +45,14 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             Lives = 20;
             Honey = 100;
+
+            _view.SpawnScenario(CurrentScenario.ID);
+            _view.ShowUI();
         }
 
         public void Exit()
         {
-            
+            _view.HideUI();
         }
 
         public void UpdateState(float timeDelta)
@@ -62,8 +69,11 @@ namespace MarblesTD.Core.ScenarioSystems
         
         public interface IView
         {
+            void ShowUI();
+            void HideUI();
             void UpdateLivesText(int lives);
             void UpdateHoneyText(int honey);
+            void SpawnScenario(ScenarioID id);
         }
     }
 }

@@ -74,7 +74,7 @@ namespace MarblesTD.UnityCore.Common.UI
             var hit = Physics2D.Raycast(position, Vector2.down, 100);
             if (hit.collider != null)
             {
-                _canPlaceTowerAtCurrentPosition = hit.collider.gameObject.name == "Map";
+                _canPlaceTowerAtCurrentPosition = hit.collider.gameObject.name == "Battlefield Image";
                 var view = currentTower.GetComponent<ITowerView>();
                 view.ShowAsPlaceable(_canPlaceTowerAtCurrentPosition);
                 currentTower.transform.position = new Vector3(position.x, position.y, 0);
