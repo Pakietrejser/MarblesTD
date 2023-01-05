@@ -227,7 +227,6 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
         {
             _resolution = _possibleResolutions[index];
             Screen.SetResolution(Resolution.width, Resolution.height, Screen.fullScreen);
-            
         }
 
         void SetFramerate(int index)

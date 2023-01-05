@@ -123,10 +123,9 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
             for (var i = 0; i < fileNames.Length; i++)
             {
                 fileNames[i] = fileNames[i].Replace(FileWriter.GetPartialPath(), "");
-                
-                // transform "\name.save" to "name"
                 fileNames[i] = fileNames[i].Remove(0, 1);
                 fileNames[i] = fileNames[i].Remove(fileNames[i].Length - 5);
+                // transforms "\name.save" to "name"
             }
 
             return fileNames;
