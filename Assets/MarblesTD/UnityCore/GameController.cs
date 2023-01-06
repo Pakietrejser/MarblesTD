@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
+using MarblesTD.Core.Common.Requests;
+using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Systems.GameSystems;
@@ -23,16 +25,19 @@ namespace MarblesTD.UnityCore
         [Inject] TimeController _timeController;
         [Inject] MarbleController _marbleController;
         
-        [Inject] SignalBus _bus;
+        [Inject] SignalBus Bus { get; set; }
+        [Inject] Mediator Mediator { get; set; }
         
         GroupState _gameStates;
         GroupState _mapStates;
         GroupState _scenarioStates;
 
+        KeyCode escapeKey = KeyCode.Escape;
+
         void Awake()
         {
-            _bus.Subscribe<MapStartedSignal>(EnterMap);
-            _bus.Subscribe<ScenarioStartedSignal>(EnterScenario);
+            Bus.Subscribe<MapStartedSignal>(EnterMap);
+            Bus.Subscribe<ScenarioStartedSignal>(EnterScenario);
         }
 
         void EnterMap(MapStartedSignal signal)
@@ -54,7 +59,6 @@ namespace MarblesTD.UnityCore
             {
                 _saveWindow,
                 _mainMenu,
-                _gameSettings,
             });
 
             _mapStates = new GroupState(new List<IState>()
@@ -72,11 +76,22 @@ namespace MarblesTD.UnityCore
             _gameStates.Enter();
         }
 
+        
         void Update()
         {
             if (_scenarioStates.IsActive)
             {
                 _scenarioStates.UpdateState(Time.deltaTime * _timeController.TimeScale);
+                
+                if (Input.GetKeyDown(escapeKey))
+                {
+                    Mediator.SendAsync(new PauseScenarioRequest());
+                }
+            }
+            
+            if (Input.GetKeyDown(escapeKey))
+            {
+                Mediator.SendAsync(new ChangeSettingsRequest());
             }
         }
     }

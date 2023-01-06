@@ -8,9 +8,10 @@ namespace MarblesTD.Core.ScenarioSystems
 {
     public class TimeController : IState
     {
-        public float TimeScale => _timeScales[_currentTimeScaleIndex];
-        
+        public float TimeScale => _paused ? 0 : _timeScales[_currentTimeScaleIndex];
+
         int _currentTimeScaleIndex = 1;
+        bool _paused;
         
         readonly IView _view;
         readonly Dictionary<int, float> _timeScales = new Dictionary<int, float>
@@ -38,6 +39,9 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             _currentTimeScaleIndex = 0;
         }
+
+        public void Pause() => _paused = true;
+        public void Unpause() => _paused = false;
         
         void ChangeSpeed()
         {

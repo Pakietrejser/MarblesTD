@@ -87,9 +87,8 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
                 stars[i].sprite = unlocked ? starUnlocked : starLocked;
                 stars[i].ChangeAlpha(unlocked ? 1f : 0.8f);
             }
-
-            if (true)
-            // if (_scenario.Completed)
+            
+            if (_scenario.Completed)
             {
                 targets.ForEach(button => button.lockedBox.SetActive(false));
             }

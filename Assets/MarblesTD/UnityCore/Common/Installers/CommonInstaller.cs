@@ -1,8 +1,8 @@
 ﻿using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
-using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.Audio;
 using MarblesTD.UnityCore.Common.RequestHandlers;
+using MarblesTD.UnityCore.Systems.GameSystems;
 using MarblesTD.UnityCore.Systems.GameSystems.Saving;
 using UnityEngine;
 using Zenject;
@@ -14,7 +14,10 @@ namespace MarblesTD.UnityCore.Common.Installers
     {
         [SerializeField] AudioDatabase audioDatabase;
         [SerializeField] BinaryChoiceRequestHandler binaryChoiceRequestHandler;
+        [SerializeField] GameSettings gameSettings;
         [SerializeField] StartScenarioRequestHandler startScenarioRequestHandler;
+        [SerializeField] PauseScenarioRequestHandler pauseScenarioRequestHandler;
+        [SerializeField] ExitScenarioRequestHandler exitScenarioRequestHandler;
         [SerializeField] SaveWindow saveWindow;
 
         public override void InstallBindings()
@@ -33,7 +36,10 @@ namespace MarblesTD.UnityCore.Common.Installers
             Container.BindInstance(mediator);
             
             mediator.AddHandler<BinaryChoiceRequest, bool>(binaryChoiceRequestHandler);
+            mediator.AddHandler<ChangeSettingsRequest, bool>(gameSettings);
             mediator.AddHandler<StartScenarioRequest, bool>(startScenarioRequestHandler);
+            mediator.AddHandler<PauseScenarioRequest, bool>(pauseScenarioRequestHandler);
+            mediator.AddHandler<ExitScenarioRequest, bool>(exitScenarioRequestHandler);
             mediator.AddHandler<SaveGameRequest, bool>(saveWindow);
         }
     }

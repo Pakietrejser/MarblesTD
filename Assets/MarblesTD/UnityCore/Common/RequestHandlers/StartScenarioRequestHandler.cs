@@ -17,7 +17,6 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
     {
         [SerializeField] GameObject windowBox;
         [SerializeField] Button enterScenario;
-        [SerializeField] Button winScenario;
         [SerializeField] Button closeButton;
         [SerializeField] TMP_Text titleText;
         [SerializeField] TMP_Text unlockText;
@@ -38,7 +37,6 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
         void Awake()
         {
             enterScenario.onClick.AddListener(EnterScenarioClicked);
-            winScenario.onClick.AddListener(WinScenarioClicked);
             closeButton.onClick.AddListener(Hide);
             gameObject.SetActive(false);
         }
@@ -88,12 +86,6 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
         }
 
         void EnterScenarioClicked()
-        {
-            _confirmed = true;
-            _receivedConfirmation = true;
-        }
-        
-        void WinScenarioClicked()
         {
             _confirmed = true;
             _receivedConfirmation = true;

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using FMOD.Studio;
 using FMODUnity;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
+using MarblesTD.UnityCore.Common.RequestHandlers;
 using MarblesTD.UnityCore.Systems.GameSystems.Saving;
 using TMPro;
 using UnityEngine;
@@ -14,11 +17,12 @@ using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.GameSystems
 {
-    public class GameSettings : MonoBehaviour, IState, ISaveable
+    public class GameSettings : MonoRequestHandler<ChangeSettingsRequest, bool>, ISaveable
     {
         [Inject] Mediator Mediator { get; set; }
         [Inject] MainMenu MainMenu { get; set; }
-        
+
+        [SerializeField] CanvasGroup canvasGroup;
         [SerializeField] Slider masterSlider;
         [SerializeField] Slider musicSlider;
         [SerializeField] Slider sfxSlider;
@@ -69,23 +73,43 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
             24, 30, 60, 120, 240
         };
         
-        public void Enter()
-        {
-            Hide();
-        }
+        bool _receivedConfirmation;
+        
+        bool PlayerInteraction() => _receivedConfirmation;
 
         async void HandleClose()
         {
+            await Mediator.SendAsync(new SaveGameRequest());
+            _receivedConfirmation = true;
+        }
+        
+        
+        protected override async UniTask<bool> Execute(ChangeSettingsRequest request)
+        {
+            Show();
+            _receivedConfirmation = false;
+            await UniTask.WaitUntil(PlayerInteraction);
             Hide();
-            MainMenu.Show();
-            bool successful = await Mediator.SendAsync(new SaveGameRequest());
+            return true;
+        }
+        
+        void Show()
+        {
+            canvasGroup.interactable = true;
+            canvasGroup.transform.localScale = Vector3.one * .01f;
+            gameObject.SetActive(true);
+            canvasGroup.transform.DOKill();
+            canvasGroup.transform.DOScale(Vector3.one, .4f);
         }
 
-        public void Exit() {}
-        
-        public void Show() => gameObject.SetActive(true);
-
-        public void Hide() => gameObject.SetActive(false);
+        async void Hide()
+        {
+            canvasGroup.interactable = false;
+            canvasGroup.transform.DOKill();
+            canvasGroup.transform.DOScale(Vector3.one * .01f, .2f);
+            await UniTask.Delay(TimeSpan.FromSeconds(.2f));
+            gameObject.SetActive(false);
+        }
 
         async void RestoreDefault()
         {
@@ -111,6 +135,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
         
         void Awake()
         {
+            gameObject.SetActive(false);
             _masterBus = RuntimeManager.GetBus("bus:/Master");
             _musicBus = RuntimeManager.GetBus("bus:/Master/Music");
             _sfxBus = RuntimeManager.GetBus("bus:/Master/Sfx");

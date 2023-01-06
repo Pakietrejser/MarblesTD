@@ -12,10 +12,8 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
     public class MainMenu : MonoBehaviour, IState
     {
         [Inject] Mediator Mediator { get; set; }
-        [Inject] GameSettings GameSettings { get; set; }
         [Inject] SignalBus Bus { get; set; }
         
-        [SerializeField] KeyCode escapeKey;
         [SerializeField] Button playButton;
         [SerializeField] Button settingsButton;
         [SerializeField] Button exitButton;
@@ -37,22 +35,6 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
 
         public void Show() => gameObject.SetActive(true);
         public void Hide() => gameObject.SetActive(false);
-        
-        void Update()
-        {
-            if (Input.GetKeyDown(escapeKey))
-            {
-                Debug.Log(gameObject.activeSelf);
-                if (gameObject.activeSelf)
-                {
-                    Hide();
-                }
-                else
-                {
-                    Show();
-                }
-            }
-        }
 
         async void HandlePlayClicked()
         {
@@ -62,8 +44,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
         
         void HandleSettingsClicked()
         {
-            Hide();
-            GameSettings.Show();
+            Mediator.SendAsync(new ChangeSettingsRequest());
         }
 
         async void HandleExitGameButton()
