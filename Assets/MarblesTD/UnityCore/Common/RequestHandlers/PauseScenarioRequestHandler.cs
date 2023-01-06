@@ -39,9 +39,11 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             gameObject.SetActive(false);
         }
 
-        void SettingsClicked()
+        async void SettingsClicked()
         {
-            Mediator.SendAsync(new ChangeSettingsRequest());
+            windowBox.interactable = false;
+            await Mediator.SendAsync(new ChangeSettingsRequest());
+            windowBox.interactable = true;
         }
         
         void ContinueClicked()

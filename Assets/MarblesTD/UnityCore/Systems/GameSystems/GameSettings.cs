@@ -74,6 +74,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
         };
         
         bool _receivedConfirmation;
+        bool _processing;
         
         bool PlayerInteraction() => _receivedConfirmation;
 
@@ -86,10 +87,18 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
         
         protected override async UniTask<bool> Execute(ChangeSettingsRequest request)
         {
+            if (_processing)
+            {
+                _receivedConfirmation = true;
+                return false;
+            }
+            
+            _processing = true;
             Show();
             _receivedConfirmation = false;
             await UniTask.WaitUntil(PlayerInteraction);
             Hide();
+            _processing = false;
             return true;
         }
         

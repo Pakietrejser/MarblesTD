@@ -11853,7 +11853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioDatabase: {fileID: 11400000, guid: 3c47f33b33a3b9c438755548110dc27d, type: 2}
   binaryChoiceRequestHandler: {fileID: 3537740040125166568}
-  gameSettings: {fileID: 0}
+  gameSettings: {fileID: 6927112980895587439}
   startScenarioRequestHandler: {fileID: 1264868015}
   pauseScenarioRequestHandler: {fileID: 506681194}
   exitScenarioRequestHandler: {fileID: 506658211}

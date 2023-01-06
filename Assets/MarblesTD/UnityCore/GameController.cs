@@ -88,10 +88,12 @@ namespace MarblesTD.UnityCore
                     Mediator.SendAsync(new PauseScenarioRequest());
                 }
             }
-            
-            if (Input.GetKeyDown(escapeKey))
+            else
             {
-                Mediator.SendAsync(new ChangeSettingsRequest());
+                if (Input.GetKeyDown(escapeKey))
+                {
+                    Mediator.SendAsync(new ChangeSettingsRequest());
+                }
             }
         }
     }
