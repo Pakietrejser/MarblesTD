@@ -694,7 +694,6 @@ GameObject:
   - component: {fileID: 131718897}
   - component: {fileID: 131718896}
   - component: {fileID: 131718895}
-  - component: {fileID: 131718898}
   m_Layer: 5
   m_Name: next-round-button
   m_TagString: Untagged
@@ -804,20 +803,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131718893}
   m_CullTransparentMesh: 1
---- !u!114 &131718898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131718893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad363e8a463d4c599cfd55086c9b3c93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roundText: {fileID: 1232661544}
-  marblePrefab: {fileID: 8422161118259489185, guid: c019a73d63200ee4a90dbedc92f626cf, type: 3}
 --- !u!1 &183283647
 GameObject:
   m_ObjectHideFlags: 0
@@ -5282,6 +5267,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de350ab7878542308eef1b2d640be850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roundText: {fileID: 1232661544}
+  marblePrefab: {fileID: 8422161118259489185, guid: c019a73d63200ee4a90dbedc92f626cf, type: 3}
+  nextWaveButton: {fileID: 131718895}
+  nextWaveButtonText: {fileID: 1240958573}
   PathCreators: []
 --- !u!1 &770871608
 GameObject:
@@ -15432,7 +15421,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1766267129
 Canvas:
   m_ObjectHideFlags: 0
@@ -17917,7 +17906,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &2048271834
 Canvas:
   m_ObjectHideFlags: 0

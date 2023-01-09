@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
-using MarblesTD.Core.Common.Signals;
-using MarblesTD.Core.Common.Signals.List;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -10,28 +8,26 @@ namespace MarblesTD.Core.ScenarioSystems
     {
         public float TimeScale => _paused ? 0 : _timeScales[_currentTimeScaleIndex];
 
-        int _currentTimeScaleIndex = 1;
+        int _currentTimeScaleIndex;
         bool _paused;
         
         readonly IView _view;
         readonly Dictionary<int, float> _timeScales = new Dictionary<int, float>
         {
-            {0, 0f},
-            {1, 1f},
-            {2, 2f},
-            {3, 4f},
+            {0, 1f},
+            {1, 2f},
+            {2, 4f},
         };
         
-        public TimeController(SignalBus signalBus, IView view)
+        public TimeController(IView view)
         {
             _view = view;
             _view.RequestChangeSpeed += ChangeSpeed;
-            signalBus.Subscribe<MarbleWaveSpawnedSignal>(OnMarbleWaveSpawned);
         }
         
         public void Enter()
         {
-            _currentTimeScaleIndex = 1;
+            _currentTimeScaleIndex = 0;
             _view.UpdateTimeScale(_timeScales[_currentTimeScaleIndex]);
         }
         
@@ -52,13 +48,7 @@ namespace MarblesTD.Core.ScenarioSystems
 
             _view.UpdateTimeScale(_timeScales[_currentTimeScaleIndex]);
         }
-        
-        void OnMarbleWaveSpawned()
-        {
-            if (_currentTimeScaleIndex != 0) return;
-            ChangeSpeed();
-        }
-        
+
         public interface IView
         {
             event Action RequestChangeSpeed;

@@ -2,13 +2,13 @@
 {
     public class WaveProvider
     {
-        int _currentWave;
+        public int CurrentWave { get; private set; }
         
         public Wave Next()
         {
-            _currentWave++;
+            CurrentWave++;
 
-            return _currentWave switch
+            return CurrentWave switch
             {
                 1 => new Wave1(),
                 2 => new Wave2(),
@@ -25,13 +25,13 @@
                 13 => new Wave13(),
                 14 => new Wave14(),
                 15 => new Wave15(),
-                _ => new ModularWave(_currentWave)
+                _ => new ModularWave(CurrentWave)
             };
         }
 
         public void Reset()
         {
-            _currentWave = 0;
+            CurrentWave = 0;
         }
     }
 }

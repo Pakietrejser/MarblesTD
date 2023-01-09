@@ -4,6 +4,7 @@ using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.MapSystems;
+using UnityEngine;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -22,6 +23,11 @@ namespace MarblesTD.Core.ScenarioSystems
             {
                 _lives = value;
                 _view.UpdateLivesText(_lives);
+
+                if (Lives <= 0)
+                {
+                    Debug.Log("you lost");
+                }
             }
         }
 

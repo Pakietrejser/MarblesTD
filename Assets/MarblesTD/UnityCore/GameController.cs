@@ -17,7 +17,6 @@ namespace MarblesTD.UnityCore
     {
         [Inject] SaveWindow _saveWindow;
         [Inject] MainMenu _mainMenu;
-        [Inject] GameSettings _gameSettings;
 
         [Inject] ScenarioSpawner _scenarioSpawner;
         
@@ -90,7 +89,7 @@ namespace MarblesTD.UnityCore
             }
             else
             {
-                if (Input.GetKeyDown(escapeKey))
+                if (Input.GetKeyDown(escapeKey) && !_saveWindow.gameObject.activeSelf)
                 {
                     Mediator.SendAsync(new ChangeSettingsRequest());
                 }
