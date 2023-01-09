@@ -4,7 +4,6 @@ using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.MapSystems;
-using UnityEngine;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -12,7 +11,9 @@ namespace MarblesTD.Core.ScenarioSystems
     {
         int _lives;
         int _honey;
+        public bool RunEnded { get; set; }
         readonly IView _view;
+        readonly Mediator _mediator;
 
         public Scenario CurrentScenario;
 
@@ -23,10 +24,11 @@ namespace MarblesTD.Core.ScenarioSystems
             {
                 _lives = value;
                 _view.UpdateLivesText(_lives);
-
-                if (Lives <= 0)
+                
+                if (Lives <= 0 && !RunEnded)
                 {
-                    Debug.Log("you lost");
+                    RunEnded = true;
+                    _mediator.SendAsync(new ExitScenarioRequest(CurrentScenario, false, MarbleController.CurrentWave));
                 }
             }
         }
@@ -44,11 +46,13 @@ namespace MarblesTD.Core.ScenarioSystems
         public ScenarioManager(IView view, Mediator mediator)
         {
             _view = view;
+            _mediator = mediator;
             mediator.AddHandler<PurchaseRequest, bool>(this);
         }
 
         public void Enter()
         {
+            RunEnded = false;
             Lives = 20;
             Honey = 100;
 
@@ -59,6 +63,7 @@ namespace MarblesTD.Core.ScenarioSystems
         public void Exit()
         {
             _view.HideUI();
+            _view.DestroyScenario();
         }
 
         public void UpdateState(float timeDelta)
@@ -80,6 +85,7 @@ namespace MarblesTD.Core.ScenarioSystems
             void UpdateLivesText(int lives);
             void UpdateHoneyText(int honey);
             void SpawnScenario(ScenarioID id);
+            void DestroyScenario();
         }
     }
 }

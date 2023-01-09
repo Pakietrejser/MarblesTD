@@ -11,7 +11,7 @@ using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 {
-    public class TowerControllerView : MonoBehaviour
+    public class TowerControllerView : MonoBehaviour, TowerController.IView
     {
         [Inject] MarbleController MarbleController;
         [Inject] TimeController TimeController;
@@ -98,6 +98,16 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
             }
 
             TowerPanelView.UpdatePanel();
+        }
+
+        public void CreateTower()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DestroyAllTowers()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

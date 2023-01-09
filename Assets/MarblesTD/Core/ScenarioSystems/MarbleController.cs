@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Automatons;
+using MarblesTD.Core.Common.Requests;
+using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Marbles;
 using UnityEngine;
 
@@ -13,22 +15,25 @@ namespace MarblesTD.Core.ScenarioSystems
         public IEnumerable<Marble> Marbles => _marbleWaves.SelectMany(wave => wave.Marbles);
 
         public int LastWave = 3;
+        public static int CurrentWave;
 
         readonly Marble.Pool _marblePool;
         readonly TimeController _timeController;
         readonly ScenarioManager _scenarioManager;
         readonly IView _view;
-        readonly WaveProvider _waveProvider = new WaveProvider();
+        readonly Mediator _mediator;
+        WaveProvider _waveProvider;
         readonly List<MarbleWave> _marbleWaves = new List<MarbleWave>();
 
         bool _processing;
         
-        public MarbleController(Marble.Pool marblePool, TimeController timeController, ScenarioManager scenarioManager, IView view)
+        public MarbleController(Marble.Pool marblePool, TimeController timeController, ScenarioManager scenarioManager, IView view, Mediator mediator)
         {
             _marblePool = marblePool;
             _timeController = timeController;
             _scenarioManager = scenarioManager;
             _view = view;
+            _mediator = mediator;
             _view.NextWaveRequested += OnNextWaveRequested;
         }
 
@@ -38,6 +43,7 @@ namespace MarblesTD.Core.ScenarioSystems
             _processing = true;
             _view.ToggleWaveRequest(false);
             int waveIndex = await SpawnMarbleWave();
+            CurrentWave = waveIndex;
             if (waveIndex == LastWave) return;
             _view.ToggleWaveRequest(true);
             _processing = false;
@@ -72,13 +78,17 @@ namespace MarblesTD.Core.ScenarioSystems
 
         public void Enter()
         {
+            _waveProvider = new WaveProvider();
+            _processing = false;
             _waveProvider.Reset();
             _view.ToggleWaveRequest(true);
             _view.SetWaveString(_waveProvider.CurrentWave, LastWave);
         }
 
-        public void UpdateState(float timeDelta)
+        public async void UpdateState(float timeDelta)
         {
+            if (_scenarioManager.RunEnded) return;
+            
             foreach (var marbleWave in _marbleWaves)
             {
                 var marbles = marbleWave.Marbles;
@@ -97,7 +107,9 @@ namespace MarblesTD.Core.ScenarioSystems
                             _scenarioManager.Honey += marbleWave.HoneyReward;
                             if (marbleWave.WaveIndex == LastWave)
                             {
-                                Debug.Log("you won!");
+                                _scenarioManager.RunEnded = true;
+                                await _mediator.SendAsync(new ExitScenarioRequest(_scenarioManager.CurrentScenario, true, CurrentWave));
+                                return;
                             }
                         }
                     }

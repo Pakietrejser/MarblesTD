@@ -15,6 +15,8 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         [SerializeField] TMP_Text livesText; 
         [SerializeField] TMP_Text honeyText;
 
+        ScenarioView _currentScenarioView;
+        
         void Awake()
         {
             scenarioCanvasGroup.alpha = 0;
@@ -38,8 +40,13 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         
         public void SpawnScenario(ScenarioID id)
         {
-            var scenarioView = Instantiate(id.GetPrefab(), transform).GetComponent<ScenarioView>();
-            marbleControllerView.PathCreators = scenarioView.Paths;
+            _currentScenarioView = Instantiate(id.GetPrefab(), transform).GetComponent<ScenarioView>();
+            marbleControllerView.PathCreators = _currentScenarioView.Paths;
+        }
+
+        public void DestroyScenario()
+        {
+            Destroy(_currentScenarioView.gameObject);
         }
 
         public void UpdateLivesText(int lives) =>  livesText.text = lives.ToString();
