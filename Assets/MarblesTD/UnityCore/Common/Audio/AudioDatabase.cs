@@ -11,6 +11,10 @@ namespace MarblesTD.UnityCore.Common.Audio
         [Header("Music")] 
         [SerializeField] EventReference mainMusic;
         
+        [Header("Menu SFX")]
+        [SerializeField] EventReference buttonClick;
+        [SerializeField] EventReference buttonHover;
+        
         [Header("Marbles SFX")]
         [SerializeField] EventReference marbleDamaged;
         
@@ -25,6 +29,9 @@ namespace MarblesTD.UnityCore.Common.Audio
             return new Dictionary<AudioName, EventReference>
             {
                 {AudioName.MainMusic, mainMusic},
+
+                {AudioName.ButtonClick, buttonClick},
+                {AudioName.ButtonHover, buttonHover},
                 
                 {AudioName.MarbleDamaged, marbleDamaged},
             };

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{dc2eac74-6723-4962-8235-c38ac01acae2}">
+		<property name="assetPath">
+			<value>button-hover.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.47999999999999998</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{55493390-9d40-413a-8593-41ac25564389}</destination>
+		</relationship>
+	</object>
+</objects>

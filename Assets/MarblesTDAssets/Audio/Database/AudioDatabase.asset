@@ -19,6 +19,20 @@ MonoBehaviour:
       Data3: -1219786835
       Data4: -419807909
     Path: event:/Main Song
+  buttonClick:
+    Guid:
+      Data1: -382348809
+      Data2: 1134390851
+      Data3: 721099709
+      Data4: -1198686407
+    Path: event:/Button Click
+  buttonHover:
+    Guid:
+      Data1: -1487563579
+      Data2: 1252664723
+      Data3: -1864621415
+      Data4: 112493805
+    Path: event:/Button Hover
   marbleDamaged:
     Guid:
       Data1: -1035841180

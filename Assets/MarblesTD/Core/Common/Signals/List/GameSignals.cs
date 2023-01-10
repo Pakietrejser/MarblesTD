@@ -13,4 +13,7 @@ namespace MarblesTD.Core.Common.Signals.List
             Scenario = scenario;
         }
     }
+
+    public readonly struct ButtonClickSignal : ISignal {}
+    public readonly struct ButtonHoverSignal : ISignal {}
 }
