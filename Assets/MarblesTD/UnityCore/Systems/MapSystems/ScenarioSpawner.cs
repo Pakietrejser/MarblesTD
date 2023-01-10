@@ -5,9 +5,11 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.MapSystems;
+using MarblesTD.UnityCore.Common.Extensions;
 using MarblesTD.UnityCore.Systems.GameSystems.Saving;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.MapSystems
@@ -16,6 +18,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
     {
         [SerializeField] List<ScenarioButton> scenarioButtons;
         [SerializeField] TMP_Text questsCompletedText;
+        [SerializeField] RawImage background;
         [Space] 
         [SerializeField] GameObject mapCanvas;
         
@@ -35,6 +38,8 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
             int allQuests = _scenarios.Count * 3;
             int completedQuests = _scenarios.Sum(scenario => scenario.GetCompletedQuests());
             questsCompletedText.text = $"Completed Quests: {completedQuests}/{allQuests}";
+            background.color = ProgressionHelper.GetProgressionColor(completedQuests, allQuests);
+            LayoutRebuilder.ForceRebuildLayoutImmediate(background.rectTransform);
 
             mapCanvas.SetActive(true);
             gameObject.SetActive(true);
