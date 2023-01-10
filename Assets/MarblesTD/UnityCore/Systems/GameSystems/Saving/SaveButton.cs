@@ -10,6 +10,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
         [SerializeField] TMP_InputField inputField;
         [SerializeField] Button createSaveButton;
         [SerializeField] Button deleteSaveButton;
+        [SerializeField] Image deleteSaveShadow;
         [SerializeField] TMP_Text createSaveText;
 
         public event Action<string, bool> CreateSaveClicked;
@@ -31,6 +32,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
             createSaveButton.interactable = true;
             createSaveText.text = "Otwórz";
             deleteSaveButton.gameObject.SetActive(true);
+            deleteSaveShadow.gameObject.SetActive(true);
         }
 
         public void ShowEmptySave()
@@ -44,6 +46,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
             createSaveButton.interactable = false;
             createSaveText.text = "Zapisz";
             deleteSaveButton.gameObject.SetActive(false);
+            deleteSaveShadow.gameObject.SetActive(false);
         }
 
         void OnInputFieldChanged(string text)

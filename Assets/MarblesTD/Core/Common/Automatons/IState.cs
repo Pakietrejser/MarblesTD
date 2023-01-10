@@ -2,8 +2,8 @@
 {
     public interface IState
     {
-        void Enter();
-        void Exit();
+        void EnterState();
+        void ExitState();
     }
 
     public interface IUpdateState : IState

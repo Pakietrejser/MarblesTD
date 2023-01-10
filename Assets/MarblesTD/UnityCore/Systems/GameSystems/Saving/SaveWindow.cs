@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
@@ -19,6 +20,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
         [Inject] ScenarioSpawner ScenarioSpawner { get; set; }
         [Inject] MainMenu MainMenu { get; set; }
         
+        [SerializeField] CanvasGroup windowBox;
         [SerializeField] SaveButton[] saveButtons;
 
         string _currentSaveName;
@@ -27,34 +29,44 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
         {
             return SaveJsonData(_currentSaveName, false);
         }
-        
-        public void Enter()
+
+        void Awake()
         {
-            UpdateSaveButtons();
-            
             foreach (var saveButton in saveButtons)
             {
                 saveButton.CreateSaveClicked += HandleCreateSave;
                 saveButton.DeleteSaveClicked += HandleDeleteSave;
             }
+        }
 
+        public void EnterState()
+        {
+            UpdateSaveButtons();
             Show();
         }
-        
-        public void Exit()
+
+        public void ExitState()
         {
-            Hide();
-            
-            foreach (var saveButton in saveButtons)
-            {
-                saveButton.CreateSaveClicked -= HandleCreateSave;
-                saveButton.DeleteSaveClicked -= HandleDeleteSave;
-            }
+            windowBox.gameObject.SetActive(false);
         }
 
-        void Show() => gameObject.SetActive(true);
-        void Hide() => gameObject.SetActive(false);
-        
+        void Show()
+        {
+            windowBox.transform.localPosition = Vector3.up * 1000;
+            gameObject.SetActive(true);
+            windowBox.transform.DOKill();
+            windowBox.transform.DOLocalMoveY(50, 1.7f).SetEase(Ease.OutBounce);
+        }
+
+        async void Hide()
+        {
+            windowBox.interactable = false;
+            windowBox.transform.DOKill();
+            windowBox.transform.DOScale(Vector3.one * .01f, .2f);
+            await UniTask.Delay(TimeSpan.FromSeconds(.2f));
+            windowBox.gameObject.SetActive(false);
+        }
+
         async void HandleCreateSave(string saveName, bool containsSave)
         {
             if (containsSave)

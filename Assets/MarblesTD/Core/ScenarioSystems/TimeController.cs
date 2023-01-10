@@ -25,13 +25,13 @@ namespace MarblesTD.Core.ScenarioSystems
             _view.RequestChangeSpeed += ChangeSpeed;
         }
         
-        public void Enter()
+        public void EnterState()
         {
             _currentTimeScaleIndex = 0;
             _view.UpdateTimeScale(_timeScales[_currentTimeScaleIndex]);
         }
         
-        public void Exit()
+        public void ExitState()
         {
             _currentTimeScaleIndex = 0;
         }

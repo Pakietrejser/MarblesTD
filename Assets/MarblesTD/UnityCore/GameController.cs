@@ -41,15 +41,17 @@ namespace MarblesTD.UnityCore
 
         void EnterMap(MapStartedSignal signal)
         {
-            _scenarioStates?.Exit();
-            _mapStates.Enter();
+            _gameStates?.ExitState();
+            _scenarioStates?.ExitState();
+            _mapStates.EnterState();
         }
         
         void EnterScenario(ScenarioStartedSignal signal)
         {
-            _mapStates?.Exit();
+            _gameStates?.ExitState();
+            _mapStates?.ExitState();
             ScenarioManager.CurrentScenario = signal.Scenario;
-            _scenarioStates.Enter();
+            _scenarioStates.EnterState();
         }
 
         void Start()
@@ -72,7 +74,7 @@ namespace MarblesTD.UnityCore
                 _marbleController,
             });
          
-            _gameStates.Enter();
+            _gameStates.EnterState();
         }
 
         

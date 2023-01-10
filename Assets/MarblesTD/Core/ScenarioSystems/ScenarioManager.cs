@@ -50,7 +50,7 @@ namespace MarblesTD.Core.ScenarioSystems
             mediator.AddHandler<PurchaseRequest, bool>(this);
         }
 
-        public void Enter()
+        public void EnterState()
         {
             RunEnded = false;
             Lives = 20;
@@ -60,7 +60,7 @@ namespace MarblesTD.Core.ScenarioSystems
             _view.ShowUI();
         }
 
-        public void Exit()
+        public void ExitState()
         {
             _view.HideUI();
             _view.DestroyScenario();

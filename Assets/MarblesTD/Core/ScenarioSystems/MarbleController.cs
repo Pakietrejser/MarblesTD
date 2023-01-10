@@ -76,7 +76,7 @@ namespace MarblesTD.Core.ScenarioSystems
             return marbleWave.WaveIndex;
         }
 
-        public void Enter()
+        public void EnterState()
         {
             _waveProvider = new WaveProvider();
             _processing = false;
@@ -129,7 +129,7 @@ namespace MarblesTD.Core.ScenarioSystems
             }
         }
 
-        public void Exit()
+        public void ExitState()
         {
             
         }

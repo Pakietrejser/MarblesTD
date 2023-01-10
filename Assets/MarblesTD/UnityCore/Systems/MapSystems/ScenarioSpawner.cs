@@ -25,10 +25,10 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
         void Start()
         {
-            Exit();
+            ExitState();
         }
 
-        public void Enter()
+        public void EnterState()
         {
             scenarioButtons.ForEach(button => button.UpdateButton());
 
@@ -40,7 +40,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
             gameObject.SetActive(true);
         }
 
-        public void Exit()
+        public void ExitState()
         {
             mapCanvas.SetActive(false);
             gameObject.SetActive(false);

@@ -4,12 +4,12 @@ namespace MarblesTD.Core.ScenarioSystems
 {
     public class TowerController : IUpdateState
     {
-        public void Enter()
+        public void EnterState()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Exit()
+        public void ExitState()
         {
             throw new System.NotImplementedException();
         }
