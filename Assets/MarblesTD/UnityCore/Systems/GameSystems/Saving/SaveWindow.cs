@@ -81,7 +81,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
                 }
                 else
                 {
-                    await Mediator.SendAsync(new BinaryChoiceRequest("Old Save", "This save is no longer compatible with the build, remove it and create a new one."));
+                    await Mediator.SendAsync(new BinaryChoiceRequest("Stary Zapis", "Ten zapis gry już nie zadziała, proszę usuń go i stwórz nowy.", true));
                 }
             }
             else
@@ -96,7 +96,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
         
         async void HandleDeleteSave(string saveName)
         {
-            bool proceed = await Mediator.SendAsync(new BinaryChoiceRequest("Delete Save File", "Are you sure you want to delete your save file? All progress will be lost."));
+            bool proceed = await Mediator.SendAsync(new BinaryChoiceRequest("Usuń Zapis", "Jesteś pewien że chcesz usunąć ten zapis gry? Stracisz postęp swoich misji."));
             if (!proceed) return;
             
             RemoveJsonData(saveName);

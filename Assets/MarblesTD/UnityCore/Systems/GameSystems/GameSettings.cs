@@ -121,7 +121,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
 
         async void RestoreDefault()
         {
-            bool proceed = await Mediator.SendAsync(new BinaryChoiceRequest("Restore Default", "Are you sure you want to restore default settings?"));
+            bool proceed = await Mediator.SendAsync(new BinaryChoiceRequest("Reset ustawień", "Czy na pewno chcesz zresetować ustawienia gry?"));
             if (!proceed) return;
             
             _masterVolume = .5f;

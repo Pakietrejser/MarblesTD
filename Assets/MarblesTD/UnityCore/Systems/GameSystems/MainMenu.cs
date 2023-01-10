@@ -87,7 +87,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
 
         async void HandleExitGameButton()
         {
-            bool proceed = await Mediator.SendAsync(new BinaryChoiceRequest("Exit Game", "Are you sure you want to close the game?"));
+            bool proceed = await Mediator.Instance.SendAsync(new BinaryChoiceRequest("Wyjść z gry?", "Dzięki za grę, nie zapomnij wypełnić ankiety :)"));
             if (!proceed) return;
             
 #if UNITY_EDITOR
