@@ -37,7 +37,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
             int allQuests = _scenarios.Count * 3;
             int completedQuests = _scenarios.Sum(scenario => scenario.GetCompletedQuests());
-            questsCompletedText.text = $"Completed Quests: {completedQuests}/{allQuests}";
+            questsCompletedText.text = $"Ukończone misje: {completedQuests}/{allQuests}";
             background.color = ProgressionHelper.GetProgressionColor(completedQuests, allQuests);
             LayoutRebuilder.ForceRebuildLayoutImmediate(background.rectTransform);
 
