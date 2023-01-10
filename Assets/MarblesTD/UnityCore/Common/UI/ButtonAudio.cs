@@ -1,5 +1,4 @@
-﻿using System;
-using MarblesTD.Core.Common.Signals;
+﻿using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using UnityEngine;
 using UnityEngine.EventSystems;
