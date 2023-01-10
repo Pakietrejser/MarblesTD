@@ -46,7 +46,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             var scenario = request.Scenario;
             var scenarioPathSprite = request.Scenario.ID.GetPathSprite();
             
-            titleText.text = $"Scenariusz: {request.Scenario.ID.GetName()}";
+            titleText.text = $"Scenariusz: {request.Scenario.ID.GetTranslatedName()}";
             scenarioPath.sprite = scenarioPathSprite;
             unlockText.enabled = scenario.Completed;
             

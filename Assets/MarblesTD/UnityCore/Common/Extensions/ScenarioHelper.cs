@@ -17,22 +17,22 @@ namespace MarblesTD.UnityCore.Common.Extensions
         {
             foreach (var artwork in Sprites)
             {
-                if (string.Equals(artwork.name, id.GetName(), StringComparison.OrdinalIgnoreCase)) 
+                if (string.Equals(artwork.name, id.GetRawName(), StringComparison.OrdinalIgnoreCase)) 
                     return artwork;
             }
 
-            throw new ArgumentException($"No prefab named {id.GetName()} in Resources/{SpritesPath}");
+            throw new ArgumentException($"No prefab named {id.GetRawName()} in Resources/{SpritesPath}");
         }
         
         public static GameObject GetPrefab(this ScenarioID id)
         {
             foreach (var prefab in Prefabs)
             {
-                if (string.Equals(prefab.name, id.GetName(), StringComparison.OrdinalIgnoreCase)) 
+                if (string.Equals(prefab.name, id.GetRawName(), StringComparison.OrdinalIgnoreCase)) 
                     return prefab;
             }
 
-            throw new ArgumentException($"No prefab named {id.GetName()} in Resources/{PrefabPath}");
+            throw new ArgumentException($"No prefab named {id.GetRawName()} in Resources/{PrefabPath}");
         }
     }
 }

@@ -79,7 +79,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
 
         public void UpdateButton()
         {
-            scenarioText.text = id.GetName();
+            scenarioText.text = id.GetTranslatedName();
 
             for (var i = 0; i < stars.Length; i++)
             {
