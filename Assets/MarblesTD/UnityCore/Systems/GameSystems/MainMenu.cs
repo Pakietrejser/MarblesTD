@@ -35,6 +35,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
 
         public void EnterState()
         {
+            background.raycastTarget = true;
             background.ChangeAlpha(0);
             background.DOKill();
             background.DOFade(1f, 2f);
@@ -44,6 +45,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems
         {
             background.DOKill();
             background.DOFade(0f, 0.2f);
+            background.raycastTarget = false;
         }
 
         // public void Show() => gameObject.SetActive(true);
