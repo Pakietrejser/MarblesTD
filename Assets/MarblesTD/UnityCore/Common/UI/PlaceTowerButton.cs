@@ -30,6 +30,7 @@ namespace MarblesTD.UnityCore.Common.UI
         bool _canPlaceTowerAtCurrentPosition;
         Tower _currentTower;
         GameObject _currentTowerView;
+        Collider2D[] _cashedResult = new Collider2D[2];
         
         void Awake()
         {
@@ -74,27 +75,33 @@ namespace MarblesTD.UnityCore.Common.UI
             {
                 return;
             }
-            
+
+            Tower.IView view;
             if (!_draggedTowerOutOfPanel)
             {
                 var prefab = _currentTower.GetPrefab();
                 _currentTowerView = Instantiate(prefab);
-                var view = _currentTowerView.GetComponent<Tower.IView>();
+                view = _currentTowerView.GetComponent<Tower.IView>();
                 view.Init(_currentTower.GetIcon(), _currentTower.AnimalType);
                 view.DisableCollider();
                 _draggedTowerOutOfPanel = true;
             }
+            
+            if (_currentTowerView == null) return;
 
+            view = _currentTowerView.GetComponent<Tower.IView>();
             var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var hit = Physics2D.Raycast(position, Vector2.down, 100);
-            if (hit.collider != null)
-            {
-                _canPlaceTowerAtCurrentPosition = hit.collider.gameObject.name == "Battlefield Image";
-                var view = _currentTowerView.GetComponent<Tower.IView>();
-                view.ShowAsPlaceable(_canPlaceTowerAtCurrentPosition);
-                _currentTowerView.transform.position = new Vector3(position.x, position.y, 0);
-            }
-            else
+            // var hit = Physics2D.Raycast(position, Vector2.down, 100);
+            
+            view.Collider.enabled = true;
+            int hit = view.Collider.OverlapCollider(new ContactFilter2D().NoFilter(), _cashedResult);
+            view.Collider.enabled = false;
+            
+            _canPlaceTowerAtCurrentPosition = hit == 1;
+            view.ShowAsPlaceable(_canPlaceTowerAtCurrentPosition);
+            _currentTowerView.transform.position = new Vector3(position.x, position.y, 0);
+
+            if (hit == 0)
             {
                 Destroy(_currentTowerView);
                 _currentTowerView = null;

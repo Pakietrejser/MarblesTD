@@ -12,6 +12,8 @@ namespace MarblesTD.UnityCore.Entities
         [SerializeField] SpriteRenderer towerRenderer;
         [SerializeField] SpriteRenderer selectRenderer;
         [SerializeField] Collider2D towerCollider;
+
+        public Collider2D Collider => towerCollider;
         
         public event Action Clicked;
 

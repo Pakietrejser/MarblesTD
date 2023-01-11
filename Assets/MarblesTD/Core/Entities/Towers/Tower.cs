@@ -65,7 +65,7 @@ namespace MarblesTD.Core.Entities.Towers
         public interface IView
         {
             event Action Clicked;
-
+            Collider2D Collider { get; }
             void Init(Sprite sprite, AnimalType towerType);
             void Select();
             void Deselect();
