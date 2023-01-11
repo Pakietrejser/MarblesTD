@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8422161118259489185, guid: dbc6bae9914cc9541b15910facf9a81b, type: 3}
-  towerRenderer: {fileID: 8422161119800740975}
+  towerRenderers: []
   selectRenderer: {fileID: 2192080711268765900}
   towerCollider: {fileID: 1471787730598849473}
 --- !u!58 &1471787730598849473

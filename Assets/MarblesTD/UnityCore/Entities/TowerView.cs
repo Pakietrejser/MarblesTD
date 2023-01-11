@@ -9,18 +9,18 @@ namespace MarblesTD.UnityCore.Entities
     public class TowerView : MonoBehaviour, Tower.IView
     {
         [SerializeField] GameObject projectilePrefab;
-        [SerializeField] SpriteRenderer towerRenderer;
         [SerializeField] SpriteRenderer selectRenderer;
         [SerializeField] Collider2D towerCollider;
 
         public Collider2D Collider => towerCollider;
-        
-        public event Action Clicked;
 
-        public void Init(Sprite sprite, AnimalType animalType)
+        SpriteRenderer[] _renderers;
+        void Awake()
         {
-            towerRenderer.sprite = sprite;
+            _renderers = GetComponentsInChildren<SpriteRenderer>();
         }
+
+        public event Action Clicked;
 
         public void Select()
         {
@@ -61,7 +61,10 @@ namespace MarblesTD.UnityCore.Entities
 
         public void ShowAsPlaceable(bool canBePlaced)
         {
-            towerRenderer.color = canBePlaced ? Color.white : Color.red;
+            foreach (var spriteRenderer in _renderers)
+            {
+                spriteRenderer.color = canBePlaced ? Color.white : Color.red;
+            }
         }
         
         public void UpdateRotation(Vector2 target)

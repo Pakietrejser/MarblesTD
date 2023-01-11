@@ -82,7 +82,6 @@ namespace MarblesTD.UnityCore.Common.UI
                 var prefab = _currentTower.GetPrefab();
                 _currentTowerView = Instantiate(prefab);
                 view = _currentTowerView.GetComponent<Tower.IView>();
-                view.Init(_currentTower.GetIcon(), _currentTower.AnimalType);
                 view.DisableCollider();
                 _draggedTowerOutOfPanel = true;
             }

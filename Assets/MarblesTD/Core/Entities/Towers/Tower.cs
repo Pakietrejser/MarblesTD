@@ -66,7 +66,6 @@ namespace MarblesTD.Core.Entities.Towers
         {
             event Action Clicked;
             Collider2D Collider { get; }
-            void Init(Sprite sprite, AnimalType towerType);
             void Select();
             void Deselect();
             Projectile SpawnProjectile(ProjectileConfig config);

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using MarblesTD.Core.Common.Extensions;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.ScenarioSystems;
@@ -76,16 +75,16 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
                 _towerUnlocks = new Dictionary<Type, bool>
                 {
                     {typeof(QuickFox), true},
-                    {typeof(CannonBoar), false},
-                    {typeof(StarStag), false},
+                    {typeof(CannonBoar), true},
+                    {typeof(StarStag), true},
                     
-                    {typeof(Mastiffteer), false},
-                    {typeof(HalberdBear), false},
-                    {typeof(Beehive), false},
+                    {typeof(Mastiffteer), true},
+                    {typeof(HalberdBear), true},
+                    {typeof(Beehive), true},
                     
-                    {typeof(ShadowPaw), false},
-                    {typeof(MagicPot), false},
-                    {typeof(WebWeaver), false},
+                    {typeof(ShadowPaw), true},
+                    {typeof(MagicPot), true},
+                    {typeof(WebWeaver), true},
                 };
             }
             saveData.TowerUnlocks = _towerUnlocks.Values.ToArray();
