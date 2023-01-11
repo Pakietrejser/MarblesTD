@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
@@ -18,6 +19,8 @@ namespace MarblesTD.UnityCore.Common.UI
         [SerializeField] Image statusCheck;
         [SerializeField] Image highlight;
         [SerializeField] Button upgradeButton;
+
+        public event Action TowerUpgraded;
         
         Tower _activeTower;
         Upgrade _activeUpgrade;
@@ -32,27 +35,26 @@ namespace MarblesTD.UnityCore.Common.UI
             _activeTower = activeTower;
             _activeUpgrade = activeUpgrade;
 
-            price.text = activeUpgrade.Cost.ToString();
-            description.text = activeUpgrade.Description;
-            statusCheck.enabled = activeUpgrade.Applied;
+            price.text = _activeUpgrade.Cost.ToString();
+            description.text = _activeUpgrade.Description;
+            statusCheck.enabled = _activeUpgrade.Applied;
             statusLock.enabled = requiredUpgrade is { Applied: false };
             statusCheck.ChangeAlpha(1f);
         }
 
         async void UpgradeClicked()
         {
+            if (statusLock.enabled) return;
             bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(_activeUpgrade.Cost));
             if (!purchaseCompleted) return;
-            
             _activeUpgrade.Apply(_activeTower);
-            statusCheck.enabled = _activeUpgrade.Applied;
-            statusCheck.ChangeAlpha(1f);
+            TowerUpgraded?.Invoke();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             highlight.enabled = true;
-            if (statusLock.enabled) return;
+            if (statusLock.enabled || _activeUpgrade.Applied) return;
             statusCheck.enabled = true;
             statusCheck.ChangeAlpha(.3f);
         }
@@ -60,7 +62,7 @@ namespace MarblesTD.UnityCore.Common.UI
         public void OnPointerExit(PointerEventData eventData)
         {
             highlight.enabled = true;
-            if (statusLock.enabled) return;
+            if (statusLock.enabled || _activeUpgrade.Applied) return;
             statusCheck.enabled = false;
             statusCheck.ChangeAlpha(1f);
         }

@@ -15,5 +15,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
         public bool VsyncEnabled;
 
         public (ScenarioID, bool, bool, bool)[] ScenarioQuests;
+
+        public bool[] TowerUnlocks;
     }
 }

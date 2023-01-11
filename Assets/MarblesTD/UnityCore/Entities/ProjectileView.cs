@@ -1,7 +1,7 @@
 ﻿using System;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers.Projectiles;
-using MarblesTD.UnityCore.Systems.ScenarioSystems;
+using MarblesTD.Core.ScenarioSystems;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore.Entities
@@ -28,7 +28,7 @@ namespace MarblesTD.UnityCore.Entities
         public void DestroySelf()
         {
             HitMarble = null;
-            TowerControllerView.Instance.Projectiles.Remove(Projectile);
+            TowerController.ActiveProjectiles.Remove(Projectile);
             Destroy(gameObject);
         }
         

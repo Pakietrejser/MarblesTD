@@ -3,6 +3,8 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
+using MarblesTD.Core.Common.Signals;
+using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.MapSystems;
 
 namespace MarblesTD.Core.ScenarioSystems
@@ -43,11 +45,12 @@ namespace MarblesTD.Core.ScenarioSystems
             }
         }
 
-        public ScenarioManager(IView view, Mediator mediator)
+        public ScenarioManager(IView view, Mediator mediator, SignalBus signalBus)
         {
             _view = view;
             _mediator = mediator;
             mediator.AddHandler<PurchaseRequest, bool>(this);
+            signalBus.Subscribe<TowerSoldSignal>(OnTowerSold);
         }
 
         public void EnterState()
@@ -76,6 +79,11 @@ namespace MarblesTD.Core.ScenarioSystems
             if (Honey < request.RequiredHoney) return false;
             Honey -= request.RequiredHoney;
             return true;
+        }
+        
+        void OnTowerSold(TowerSoldSignal signal)
+        {
+            Honey += signal.Honey;
         }
         
         public interface IView

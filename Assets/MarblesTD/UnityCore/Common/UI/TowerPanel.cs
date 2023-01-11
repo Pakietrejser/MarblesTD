@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
@@ -44,20 +43,32 @@ namespace MarblesTD.UnityCore.Common.UI
         {
             switchTargetButton.onClick.AddListener(SwitchTarget);
             sellButton.onClick.AddListener(SellTower);
+            gameObject.SetActive(false);
+            topUpgradesLeftToRight.ForEach(x => x.TowerUpgraded += RefreshTowerUpgrades);
+            botUpgradesLeftToRight.ForEach(x => x.TowerUpgraded += RefreshTowerUpgrades);
         }
 
-        public void ShowPanel(Tower tower)
+        public void Show(Tower tower)
         {
             if (tower.Upgrades == null) return;
+            if (tower.Upgrades.Count == 0) return;
             if (tower == ActiveTower)
             {
-                HidePanel();
+                Hide();
                 return;
             }
             ActiveTower = tower;
             
             towerName.text = ActiveTower.TranslatedName;
             towerIcon.sprite = ActiveTower.GetIcon();
+            RefreshTowerUpgrades();
+
+            gameObject.SetActive(true);
+        }
+        
+        void RefreshTowerUpgrades()
+        {
+            if (ActiveTower == null) return;
             var upgrades = ActiveTower.Upgrades;
             botUpgradesLeftToRight[0].Init(ActiveTower, upgrades[UpgradePath.BotLeft]);
             botUpgradesLeftToRight[1].Init(ActiveTower, upgrades[UpgradePath.BotMid]);
@@ -65,11 +76,9 @@ namespace MarblesTD.UnityCore.Common.UI
             topUpgradesLeftToRight[0].Init(ActiveTower, upgrades[UpgradePath.TopLeft], upgrades[UpgradePath.BotLeft]);
             topUpgradesLeftToRight[1].Init(ActiveTower, upgrades[UpgradePath.TopMid], upgrades[UpgradePath.BotMid]);
             topUpgradesLeftToRight[2].Init(ActiveTower, upgrades[UpgradePath.TopRight], upgrades[UpgradePath.BotRight]);
-
-            gameObject.SetActive(true);
         }
 
-        public void HidePanel()
+        void Hide()
         {
             gameObject.SetActive(false);
             ActiveTower = null;
@@ -93,7 +102,7 @@ namespace MarblesTD.UnityCore.Common.UI
         {
             SignalBus.FireStatic(new TowerSoldSignal(ActiveTower.SellValue));
             ActiveTower.Destroy();
-            HidePanel();
+            Hide();
         }
     }
 }

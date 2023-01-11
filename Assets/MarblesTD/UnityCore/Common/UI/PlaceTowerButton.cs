@@ -1,7 +1,8 @@
 ﻿using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
-using MarblesTD.UnityCore.Systems.ScenarioSystems;
+using MarblesTD.Core.ScenarioSystems;
+using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,34 +17,27 @@ namespace MarblesTD.UnityCore.Common.UI
         [SerializeField] TMP_Text costText;
         [SerializeField] Image towerSetColor;
         [SerializeField] Image highlight;
-        [Space]
-        [SerializeField] GameObject towerPrefab;
+        [SerializeField] GameObject lockedBox;
 
         bool _draggedTowerOutOfPanel;
         bool _canPlaceTowerAtCurrentPosition;
+        Tower _currentTower;
+        GameObject _currentTowerView;
         
-        GameObject currentTower;
-
-        Tower.SettingsBase settings;
-        GlobalTowerSettings global;
-
         void Awake()
         {
             highlight.enabled = false;
         }
 
-        public void Init(Tower.SettingsBase settingsBase, GlobalTowerSettings globalTowerSettings)
+        public void Init(Tower tower, bool unlocked)
         {
-            settings = settingsBase;
-            global = globalTowerSettings;
+            _currentTower = tower;
             
-            towerImage.sprite = settingsBase.Icon;
-            costText.text = $"${settingsBase.Cost}";
-            towerSetColor.color = globalTowerSettings.GetTowerTypeSettings(settingsBase.TowerType).Color;
-
-            if (settingsBase.Cost == 0) costText.text = "NYI";
+            towerImage.sprite = _currentTower.GetIcon();
+            costText.text = $"${_currentTower.Cost}";
+            towerSetColor.color = _currentTower.GetColor();
+            lockedBox.SetActive(!unlocked);
         }
-        
         
         public void OnBeginDrag(PointerEventData data)
         {
@@ -59,9 +53,10 @@ namespace MarblesTD.UnityCore.Common.UI
             
             if (!_draggedTowerOutOfPanel)
             {
-                currentTower = Instantiate(towerPrefab);
-                var view = currentTower.GetComponent<Tower.IView>();
-                view.Init(settings.Icon, settings.TowerType);
+                var prefab = _currentTower.GetPrefab();
+                _currentTowerView = Instantiate(prefab);
+                var view = _currentTowerView.GetComponent<Tower.IView>();
+                view.Init(_currentTower.GetIcon(), _currentTower.AnimalType);
                 view.DisableCollider();
                 _draggedTowerOutOfPanel = true;
             }
@@ -71,39 +66,39 @@ namespace MarblesTD.UnityCore.Common.UI
             if (hit.collider != null)
             {
                 _canPlaceTowerAtCurrentPosition = hit.collider.gameObject.name == "Battlefield Image";
-                var view = currentTower.GetComponent<Tower.IView>();
+                var view = _currentTowerView.GetComponent<Tower.IView>();
                 view.ShowAsPlaceable(_canPlaceTowerAtCurrentPosition);
-                currentTower.transform.position = new Vector3(position.x, position.y, 0);
+                _currentTowerView.transform.position = new Vector3(position.x, position.y, 0);
             }
             else
             {
                 Debug.Log("early exit");
-                Destroy(currentTower);
-                currentTower = null;
+                Destroy(_currentTowerView);
+                _currentTowerView = null;
             }
         }
 
         public async void OnEndDrag(PointerEventData data)
         {
-            if (currentTower == null) return;
+            if (_currentTowerView == null) return;
             if (!_canPlaceTowerAtCurrentPosition)
             {
-                Destroy(currentTower);
-                currentTower = null;
+                Destroy(_currentTowerView);
+                _currentTowerView = null;
                 return;
             }
             
-            bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(settings.Cost));
+            bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(_currentTower.Cost));
             if (purchaseCompleted)
             {
-                var view = currentTower.GetComponent<Tower.IView>();
+                var view = _currentTowerView.GetComponent<Tower.IView>();
                 view.EnableCollider();
-                TowerControllerView.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.y)));
+                var tower = await Mediator.Instance.SendAsync(new CreateTowerRequest(view, new Vector2(_currentTowerView.transform.position.x, _currentTowerView.transform.position.y), _currentTower.GetType()));
             }
             else
             {
-                Destroy(currentTower);
-                currentTower = null;
+                Destroy(_currentTowerView);
+                _currentTowerView = null;
             }
         }
 

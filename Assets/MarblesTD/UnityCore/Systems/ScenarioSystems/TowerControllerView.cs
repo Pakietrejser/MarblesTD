@@ -1,107 +1,100 @@
+using System;
 using System.Collections.Generic;
-using MarblesTD.Core.Entities.Marbles;
+using System.Linq;
+using Cysharp.Threading.Tasks;
+using MarblesTD.Core.Common.Extensions;
+using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
-using MarblesTD.Core.Entities.Towers.Projectiles;
 using MarblesTD.Core.ScenarioSystems;
+using MarblesTD.Towers;
+using MarblesTD.Towers.CannonBoarTower;
+using MarblesTD.Towers.QuickFoxTower;
+using MarblesTD.Towers.StarStagTower;
+using MarblesTD.UnityCore.Common.RequestHandlers;
 using MarblesTD.UnityCore.Common.UI;
+using MarblesTD.UnityCore.Systems.GameSystems.Saving;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Zenject;
 
 namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 {
-    public class TowerControllerView : MonoBehaviour, TowerController.IView
+    public class TowerControllerView : MonoRequestHandler<CreateTowerRequest, Tower>, TowerController.IView, ISaveable
     {
-        [Inject] MarbleController MarbleController;
-        [Inject] TimeController TimeController;
-        [Inject] ScenarioManager ScenarioManager { get; set; }
+        [SerializeField] TowerPanel towerPanel;
+        [SerializeField] List<PlaceTowerButton> placeTowerButtons;
 
-        public Transform PlaceTowerButtonsParent;
-        public GameObject PlaceTowerButtonPrefab;
-        public GlobalTowerSettings GlobalTowerSettings;
-        public TowerPanel towerPanel;
-        public LayerMask TowersMask;
-
-        public readonly List<Tower> Towers = new List<Tower>();
-        public readonly List<Projectile> Projectiles = new List<Projectile>();
-        
-        public void SelectTower(Tower tower)
+        Dictionary<Type, bool> _towerUnlocks;
+        readonly Dictionary<Type, Func<Tower>> _towerCreate = new Dictionary<Type, Func<Tower>>()
         {
-            towerPanel.ShowPanel(tower);
-        }
-        
-        void Awake()
-        {
-            towerPanel.HidePanel();
-            GlobalTowerSettings.Init();
-            GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
+            {typeof(QuickFox), () => new QuickFox()},
+            {typeof(CannonBoar), () => new CannonBoar()},
+            {typeof(StarStag), () => new StarStag()},
             
-            //do towers
-            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
-            placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
+            {typeof(Mastiffteer), () => new Mastiffteer()},
+            {typeof(HalberdBear), () => new HalberdBear()},
+            {typeof(Beehive), () => new Beehive()},
             
-            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
-            placeTowerButton.Init(GlobalTowerSettings.StarStagSettings, GlobalTowerSettings);
-            
-            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
-            placeTowerButton.Init(GlobalTowerSettings.HalberdBearSettings, GlobalTowerSettings);
-            
-            placeTowerButton = Instantiate(PlaceTowerButtonPrefab, PlaceTowerButtonsParent).GetComponent<PlaceTowerButton>();
-            placeTowerButton.Init(GlobalTowerSettings.ShadowPawSettings, GlobalTowerSettings);
+            {typeof(ShadowPaw), () => new ShadowPaw()},
+            {typeof(MagicPot), () => new MagicPot()},
+            {typeof(WebWeaver), () => new WebWeaver()},
+        };
 
-            //do marbles
-            Marble.Cracked += OnMarbleCracked;
-        }
-
-        void OnMarbleCracked(Marble marble, int crackedAmount)
+        public void Init()
         {
-            ScenarioManager.Honey += crackedAmount;
-        }
-
-        PlaceTowerButton placeTowerButton;
-
-        void GlobalTowerSettingsOnSettingsChanged()
-        {
-            placeTowerButton.Init(GlobalTowerSettings.QuickFoxSettings, GlobalTowerSettings);
-        }
-
-        void Update()
-        {
-            for (int i = Towers.Count - 1; i >= 0; i--)
+            var index = 0;
+            foreach (var pair in _towerUnlocks)
             {
-                if (Towers[i].IsDestroyed)
+                placeTowerButtons[index++].Init(_towerCreate[pair.Key].Invoke(), pair.Value);
+                Debug.Log($"placing button {pair.Key.GetName()}, {pair.Value}");
+            }
+        }
+        
+        protected async override UniTask<Tower> Execute(CreateTowerRequest request)
+        {
+            if (!_towerCreate.TryGetValue(request.Type, out var createTower)) throw new NullReferenceException();
+            var tower = createTower.Invoke();
+            tower.Init(request.View, request.Position);
+            tower.Selected += () => towerPanel.Show(tower);
+            TowerController.ActiveTowers.Add(tower);
+            return tower;
+        }
+
+        public void Save(SaveData saveData, bool freshSave)
+        {
+            if (freshSave)
+            {
+                _towerUnlocks = new Dictionary<Type, bool>
                 {
-                    Towers.Remove(Towers[i]);
-                    continue;
-                }
+                    {typeof(QuickFox), true},
+                    {typeof(CannonBoar), false},
+                    {typeof(StarStag), false},
+                    
+                    {typeof(Mastiffteer), false},
+                    {typeof(HalberdBear), false},
+                    {typeof(Beehive), false},
+                    
+                    {typeof(ShadowPaw), false},
+                    {typeof(MagicPot), false},
+                    {typeof(WebWeaver), false},
+                };
+            }
+            saveData.TowerUnlocks = _towerUnlocks.Values.ToArray();
+        }
+
+        public void Load(SaveData saveData)
+        {
+            _towerUnlocks = new Dictionary<Type, bool>();
+            if (saveData.TowerUnlocks.Length != 9) throw new NullReferenceException();
+            _towerUnlocks.Add(typeof(QuickFox), saveData.TowerUnlocks[0]);
+            _towerUnlocks.Add(typeof(CannonBoar), saveData.TowerUnlocks[1]);
+            _towerUnlocks.Add(typeof(StarStag), saveData.TowerUnlocks[2]);
                 
-                Towers[i].UpdateTower(MarbleController.Marbles, Time.deltaTime * TimeController.TimeScale);
-            }
-
-            for (int i = Projectiles.Count - 1; i >= 0; i--)
-            {
-                Projectiles[i].Update(Time.deltaTime * TimeController.TimeScale);
-            }
-
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            {
-                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var hit = Physics2D.Raycast(position, Vector2.down, 100, TowersMask);
-                if (hit.collider == null)
-                {
-                    towerPanel.HidePanel();
-                }
-            }
-        }
-
-        public void CreateTower()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void DestroyAllTowers()
-        {
-            throw new System.NotImplementedException();
+            _towerUnlocks.Add(typeof(Mastiffteer), saveData.TowerUnlocks[3]);
+            _towerUnlocks.Add(typeof(HalberdBear), saveData.TowerUnlocks[4]);
+            _towerUnlocks.Add(typeof(Beehive), saveData.TowerUnlocks[5]);
+                
+            _towerUnlocks.Add(typeof(ShadowPaw), saveData.TowerUnlocks[6]);
+            _towerUnlocks.Add(typeof(MagicPot), saveData.TowerUnlocks[7]);
+            _towerUnlocks.Add(typeof(WebWeaver), saveData.TowerUnlocks[8]);
         }
     }
 }

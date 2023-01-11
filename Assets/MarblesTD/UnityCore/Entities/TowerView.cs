@@ -1,7 +1,7 @@
 ﻿using System;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Projectiles;
-using MarblesTD.UnityCore.Systems.ScenarioSystems;
+using MarblesTD.Core.ScenarioSystems;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore.Entities
@@ -15,9 +15,14 @@ namespace MarblesTD.UnityCore.Entities
         
         public event Action Clicked;
 
-        public void Init(Sprite sprite, TowerType towerType)
+        public void Init(Sprite sprite, AnimalType animalType)
         {
             towerRenderer.sprite = sprite;
+        }
+        
+        public void Reset()
+        {
+            Clicked = null;
         }
 
         public void Select()
@@ -36,7 +41,7 @@ namespace MarblesTD.UnityCore.Entities
             var projectileView = go.GetComponent<IProjectileView>();
             var projectile = new Projectile(projectileView, new Vector2(transform.position.x, transform.position.y), config);
 
-            TowerControllerView.Instance.Projectiles.Add(projectile);
+            TowerController.ActiveProjectiles.Add(projectile);
             return projectile;
         }
 

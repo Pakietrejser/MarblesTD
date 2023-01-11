@@ -19,7 +19,7 @@ namespace MarblesTD.UnityCore.Common.Extensions
                 if (string.Equals(artwork.name, tower.RawName, StringComparison.OrdinalIgnoreCase)) 
                     return artwork;
             }
-
+            
             throw new ArgumentException($"No prefab named {tower.RawName} in Resources/{SpritesPath}");
         }
         
@@ -32,6 +32,17 @@ namespace MarblesTD.UnityCore.Common.Extensions
             }
 
             throw new ArgumentException($"No prefab named {tower.RawName} in Resources/{PrefabPath}");
+        }
+
+        public static Color GetColor(this Tower tower)
+        {
+            return tower.AnimalType switch
+            {
+                AnimalType.WildAnimal => new Color(0.62f, 0.89f, 0.51f),
+                AnimalType.NobleAnimal => new Color(0.96f, 0.91f, 0.52f),
+                AnimalType.NightAnimal => new Color(0.66f, 0.52f, 0.93f),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
     }
 }

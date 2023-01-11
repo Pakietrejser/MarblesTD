@@ -42,10 +42,10 @@ namespace MarblesTD.Core.Entities.Towers
             }
         }
         
-        protected Vector2 Position { get; }
-        protected IView View { get; }
+        protected Vector2 Position { get; private set; }
+        protected IView View { get; private set; }
 
-        protected Tower(IView view, Vector2 position)
+        public void Init(IView view, Vector2 position)
         {
             View = view;
             Position = position;
@@ -62,7 +62,7 @@ namespace MarblesTD.Core.Entities.Towers
 
         public void Select() => View.Select();
         public void Deselect() => View.Deselect();
-        
+
         public interface IView
         {
             event Action Clicked;

@@ -7,6 +7,7 @@ using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.UnityCore.Common.RequestHandlers;
 using MarblesTD.UnityCore.Systems.MapSystems;
+using MarblesTD.UnityCore.Systems.ScenarioSystems;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
         [Inject] GameSettings GameSettings { get; set; }
         [Inject] ScenarioSpawner ScenarioSpawner { get; set; }
         [Inject] MainMenu MainMenu { get; set; }
+        [Inject] TowerControllerView TowerControllerView { get; set; }
         
         [SerializeField] CanvasGroup windowBox;
         [SerializeField] SaveButton[] saveButtons;
@@ -145,10 +147,17 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
         
         bool SaveJsonData(string fileName, bool freshSave)
         {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                Debug.Log("Trying to create an empty save.");
+                return false;
+            }
+            
             var saveData = new SaveData();
             
             ((ISaveable) GameSettings).Save(saveData, freshSave);
             ((ISaveable) ScenarioSpawner).Save(saveData, freshSave);
+            ((ISaveable) TowerControllerView).Save(saveData, freshSave);
             
             string saveDataString  = JsonConvert.SerializeObject(saveData, Formatting.Indented, new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Auto});
             if (!FileWriter.WriteToFile($"{fileName}.json", saveDataString))
@@ -173,6 +182,7 @@ namespace MarblesTD.UnityCore.Systems.GameSystems.Saving
             {
                 ((ISaveable) GameSettings).Load(saveData);
                 ((ISaveable) ScenarioSpawner).Load(saveData);
+                ((ISaveable) TowerControllerView).Load(saveData);
             }
             catch (Exception e)
             {

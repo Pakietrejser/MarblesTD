@@ -1,15 +1,13 @@
-﻿using MarblesTD.Core.Common.Enums;
-using MarblesTD.Core.Entities.Towers;
+﻿using MarblesTD.Core.Entities.Towers;
 
 namespace MarblesTD.Towers.QuickFoxTower.Upgrades
 {
     public class TripleShot : Upgrade<QuickFox>
     {
-        public override int Cost { get; }
-        public override string Description { get; }
+        public override int Cost => 1;
+        public override string Description => "Trzy strzały zamiast jednej";
         protected override void ExplicitApply(QuickFox tower)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

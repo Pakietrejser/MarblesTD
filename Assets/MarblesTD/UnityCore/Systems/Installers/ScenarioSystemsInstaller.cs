@@ -18,6 +18,7 @@ namespace MarblesTD.UnityCore.Systems.Installers
             Container.Bind<MarbleController.IView>().FromInstance(marbleControllerView);
             Container.Bind<TimeController.IView>().FromInstance(timeControllerView);
             Container.Bind<TowerController.IView>().FromInstance(towerControllerView);
+            Container.Bind<TowerControllerView>().FromInstance(towerControllerView);
 
             Container.Bind<ScenarioManager>().AsSingle().NonLazy();
             Container.Bind<MarbleController>().AsSingle().NonLazy();

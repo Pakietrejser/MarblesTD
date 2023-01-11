@@ -1,5 +1,4 @@
 ﻿using System;
-using MarblesTD.Core.Common.Enums;
 
 namespace MarblesTD.Core.Entities.Towers
  {

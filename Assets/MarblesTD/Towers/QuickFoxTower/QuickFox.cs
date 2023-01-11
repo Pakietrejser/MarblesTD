@@ -33,10 +33,6 @@ namespace MarblesTD.Towers.QuickFoxTower
             {UpgradePath.BotRight, new SeekingArrows()},
             {UpgradePath.TopRight, new TripleShot()},
         };
-
-        public QuickFox(IView view, Vector2 position) : base(view, position)
-        {
-        }
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
         {

@@ -1,5 +1,4 @@
-﻿using MarblesTD.Core.Common.Enums;
-using MarblesTD.Core.Entities.Towers;
+﻿using MarblesTD.Core.Entities.Towers;
 
 namespace MarblesTD.Towers.QuickFoxTower.Upgrades
 {
