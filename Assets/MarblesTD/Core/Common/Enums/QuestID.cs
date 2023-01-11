@@ -2,8 +2,8 @@
 {
     public enum QuestID
     {
-        Wave20 = 1,
-        Wave40 = 2,
+        Wave10 = 1,
+        Wave20 = 2,
         WildOnly = 3,
         NobleOnly = 4,
         NightOnly = 5,

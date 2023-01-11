@@ -48,13 +48,13 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             bool playerWon = request.PlayerWon;
             int wavesCompleted = request.WavesCompleted;
 
-            if (wavesCompleted >= 2)
+            if (wavesCompleted >= 10)
+            {
+                scenario.TryCompleteQuest(QuestID.Wave10);
+            }
+            if (wavesCompleted >= 20)
             {
                 scenario.TryCompleteQuest(QuestID.Wave20);
-            }
-            if (wavesCompleted >= 3)
-            {
-                scenario.TryCompleteQuest(QuestID.Wave40);
 
                 var usedAnimalTypes = TowerController.UsedAnimalTypes;
                 if (usedAnimalTypes.Count == 1 && usedAnimalTypes.Contains(AnimalType.WildAnimal)) scenario.TryCompleteQuest(QuestID.WildOnly);

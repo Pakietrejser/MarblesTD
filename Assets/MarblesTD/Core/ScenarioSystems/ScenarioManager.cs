@@ -13,7 +13,6 @@ namespace MarblesTD.Core.ScenarioSystems
     public class ScenarioManager : RequestHandler<PurchaseRequest, bool>, IUpdateState
     {
         public bool LostLifeThisScenario { get; private set; }
-        public static Action<int> HoneyChanged;
 
         int _lives;
         int _honey;

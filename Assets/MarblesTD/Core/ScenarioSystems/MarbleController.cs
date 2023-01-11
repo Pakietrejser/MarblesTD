@@ -15,7 +15,7 @@ namespace MarblesTD.Core.ScenarioSystems
     {
         public IEnumerable<Marble> Marbles => _marbleWaves.SelectMany(wave => wave.Marbles);
 
-        public int LastWave = 3;
+        const int LastWave = 20;
         public static int CurrentWave;
 
         readonly Marble.Pool _marblePool;

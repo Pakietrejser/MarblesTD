@@ -17,8 +17,8 @@ namespace MarblesTD.Core.MapSystems
             ID = id;
             _questsCompletion = new Dictionary<QuestID, bool>
             {
-                {QuestID.Wave20, questA},
-                {QuestID.Wave40, questB},
+                {QuestID.Wave10, questA},
+                {QuestID.Wave20, questB},
                 {GetLastQuestFor(id), questC},
             };
         }
@@ -34,8 +34,8 @@ namespace MarblesTD.Core.MapSystems
         {
             return index switch
             {
-                0 => _questsCompletion[QuestID.Wave20],
-                1 => _questsCompletion[QuestID.Wave40],
+                0 => _questsCompletion[QuestID.Wave10],
+                1 => _questsCompletion[QuestID.Wave20],
                 2 => _questsCompletion[GetLastQuestFor(ID)],
                 _ => throw new ArgumentException()
             };
