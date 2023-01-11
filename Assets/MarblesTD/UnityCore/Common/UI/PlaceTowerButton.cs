@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Common.Signals;
@@ -15,6 +16,9 @@ namespace MarblesTD.UnityCore.Common.UI
     [RequireComponent(typeof(Button))]
     public class PlaceTowerButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        [Header("Assigned after placing it in the world")]
+        [SerializeField] TMP_Text titleText;
+        
         [SerializeField] Image towerImage;
         [SerializeField] TMP_Text costText;
         [SerializeField] Image towerSetColor;
@@ -124,14 +128,32 @@ namespace MarblesTD.UnityCore.Common.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            string type = _currentTower.AnimalType switch
+            {
+                AnimalType.WildAnimal => "Dziki",
+                AnimalType.NobleAnimal => "Zacny",
+                AnimalType.NightAnimal => "Nocny",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+            
+            ShowText($"{type} {_currentTower.GetTranslatedName()}");
             if (lockedBox.activeSelf) return;
             highlight.enabled = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            ShowText("Sojusznicy");
             if (lockedBox.activeSelf) return;
             highlight.enabled = false;
+        }
+
+        public void ShowText(string text)
+        {
+            titleText.text = text;
+            titleText.ChangeAlpha(0);
+            titleText.DOKill();
+            titleText.DOFade(1f, 0.4f);
         }
     }
 }

@@ -112,7 +112,7 @@ namespace MarblesTD.UnityCore.Common.UI
         
         void SwitchTarget()
         {
-            throw new System.NotImplementedException();
+            //TODO: do
         }
 
         void SellTower()

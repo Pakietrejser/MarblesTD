@@ -70,7 +70,7 @@ namespace MarblesTD.Core.ScenarioSystems
             LostLifeThisScenario = false;
             RunEnded = false;
             Lives = 20;
-            Honey = 100;
+            Honey = 80;
 
             _view.SpawnScenario(CurrentScenario.ID);
             _view.ShowUI();
