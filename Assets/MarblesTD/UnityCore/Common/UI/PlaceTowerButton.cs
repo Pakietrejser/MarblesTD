@@ -11,16 +11,14 @@ using UnityEngine.UI;
 namespace MarblesTD.UnityCore.Common.UI
 {
     [RequireComponent(typeof(Button))]
-    public class PlaceTowerButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class PlaceTowerButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] Image towerImage;
         [SerializeField] TMP_Text costText;
         [SerializeField] Image towerSetColor;
+        [SerializeField] Image highlight;
         [Space]
-        [SerializeField] private GameObject towerPrefab;
-        [Space]
-        [SerializeField] private LayerMask groundMask;
-        [SerializeField] private float yPlacingHeight;
+        [SerializeField] GameObject towerPrefab;
 
         bool _draggedTowerOutOfPanel;
         bool _canPlaceTowerAtCurrentPosition;
@@ -31,9 +29,10 @@ namespace MarblesTD.UnityCore.Common.UI
         Tower.SettingsBase settings;
         GlobalTowerSettings global;
 
-        private void Awake()
+        void Awake()
         {
             towerButton = GetComponent<Button>();
+            highlight.enabled = false;
         }
 
         public void Init(Tower.SettingsBase settingsBase, GlobalTowerSettings globalTowerSettings)
@@ -109,6 +108,16 @@ namespace MarblesTD.UnityCore.Common.UI
                 Destroy(currentTower);
                 currentTower = null;
             }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            highlight.enabled = true;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            highlight.enabled = false;
         }
     }
 }

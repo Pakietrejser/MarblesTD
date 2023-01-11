@@ -20,7 +20,7 @@ namespace MarblesTD.Core.Common.Extensions
                 ScenarioID.BranchingOut => "Rosnące Gałązki",
                 ScenarioID.Garden => "Ogród",
                 ScenarioID.HelloWorld => "Witaj Świecie",
-                ScenarioID.Infinity => "Nieskończoność",
+                ScenarioID.Infinity => "Grand Prix",
                 ScenarioID.Intersection => "Skrzyżowanie",
                 ScenarioID.Labyrinth => "Labirynt",
                 ScenarioID.Lake => "Staw",

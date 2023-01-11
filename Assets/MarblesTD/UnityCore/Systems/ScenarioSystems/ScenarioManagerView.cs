@@ -1,9 +1,12 @@
 ﻿using DG.Tweening;
 using MarblesTD.Core.Common.Enums;
+using MarblesTD.Core.Common.Requests;
+using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MarblesTD.UnityCore.Systems.ScenarioSystems
 {
@@ -13,12 +16,14 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         [SerializeField] MarbleControllerView marbleControllerView;
         [SerializeField] TMP_Text livesText; 
         [SerializeField] TMP_Text honeyText;
+        [SerializeField] Button settingsButton;
 
         ScenarioView _currentScenarioView;
         
         void Awake()
         {
             scenarioCanvasGroup.alpha = 0;
+            settingsButton.onClick.AddListener(() => Mediator.Instance.SendAsync(new PauseScenarioRequest()));
         }
 
         public void ShowUI()
