@@ -82,6 +82,7 @@ namespace MarblesTD.Core.Entities.Marbles
 
         public void Destroy()
         {
+            if (IsDestroyed) return;
             _view.DestroySelf();
             IsDestroyed = true;
         }
