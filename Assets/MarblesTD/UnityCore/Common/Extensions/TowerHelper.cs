@@ -42,15 +42,15 @@ namespace MarblesTD.UnityCore.Common.Extensions
         {
             return tower switch
             {
-                QuickFox _ => "Lisek",
-                CannonBoar _ => "Dzik Machina",
-                StarStag _ => "Gwiezdy Daniel",
-                Mastiffteer _ => "Muszkieter",
-                HalberdBear _ => "Strażmiś",
-                Beehive _ => "Ul",
-                ShadowPaw _ => "Łapka",
-                MagicPot _ => "Kocioł",
-                WebWeaver _ => "Sieciarz",
+                QuickFox _ => "Lisek (dziki)",
+                CannonBoar _ => "Dzik Machina (dziki)",
+                StarStag _ => "Gwiezdy Daniel (dziki)",
+                Mastiffteer _ => "Muszkieter (zacny)",
+                HalberdBear _ => "Strażmiś (zacny)",
+                Beehive _ => "Ul (zacny)",
+                ShadowPaw _ => "Łapka (nocny)",
+                MagicPot _ => "Kocioł (nocny)",
+                WebWeaver _ => "Sieciarz (nocny)",
                 _ => "Coś poszło nie tak"
             };
         }

@@ -13969,6 +13969,7 @@ MonoBehaviour:
   marbleControllerView: {fileID: 768843688}
   timeControllerView: {fileID: 768843687}
   towerControllerView: {fileID: 768843686}
+  towerPanel: {fileID: 383929973}
 --- !u!114 &1474261866
 MonoBehaviour:
   m_ObjectHideFlags: 0

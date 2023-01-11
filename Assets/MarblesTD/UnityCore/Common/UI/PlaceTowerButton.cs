@@ -1,5 +1,8 @@
-﻿using MarblesTD.Core.Common.Requests;
+﻿using System;
+using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
+using MarblesTD.Core.Common.Signals;
+using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
@@ -27,6 +30,20 @@ namespace MarblesTD.UnityCore.Common.UI
         void Awake()
         {
             highlight.enabled = false;
+        }
+
+        void Start()
+        {
+            SignalBus.Instance.Subscribe<HoneyChangedSignal>(OnHoneyChanged);
+        }
+
+        void OnHoneyChanged(HoneyChangedSignal signal)
+        {
+            if (lockedBox.activeSelf) return;
+            if (_currentTower == null) return;
+            costText.color = signal.Honey >= _currentTower.Cost
+                ? Color.white
+                : new Color(0.87f, 0.23f, 0.28f);
         }
 
         public void Init(Tower tower, bool unlocked)
@@ -75,7 +92,6 @@ namespace MarblesTD.UnityCore.Common.UI
             }
             else
             {
-                Debug.Log("early exit");
                 Destroy(_currentTowerView);
                 _currentTowerView = null;
             }

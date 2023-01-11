@@ -93,7 +93,7 @@ namespace MarblesTD.UnityCore.Systems.MapSystems
                 targets.ForEach(button => button.lockedBox.SetActive(false));
             }
             
-            if (id == ScenarioID.HelloWorld)
+            if (ActiveScenarioButton == null && id == ScenarioID.HelloWorld)
             {
                 lockedBox.SetActive(false);
                 SetAsActive();

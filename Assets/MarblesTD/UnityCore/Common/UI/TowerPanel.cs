@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
-using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
+using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
 namespace MarblesTD.UnityCore.Common.UI
 {
@@ -29,6 +31,8 @@ namespace MarblesTD.UnityCore.Common.UI
         [Header("Upgrades")] 
         [SerializeField] List<TowerUpgrade> topUpgradesLeftToRight;
         [SerializeField] List<TowerUpgrade> botUpgradesLeftToRight;
+        
+        [Inject] ScenarioManager ScenarioManager { get; set; }
 
         Tower _activeTower;
         Tower ActiveTower
@@ -73,12 +77,12 @@ namespace MarblesTD.UnityCore.Common.UI
         {
             if (ActiveTower == null) return;
             var upgrades = ActiveTower.Upgrades;
-            botUpgradesLeftToRight[0].Init(ActiveTower, upgrades[UpgradePath.BotLeft]);
-            botUpgradesLeftToRight[1].Init(ActiveTower, upgrades[UpgradePath.BotMid]);
-            botUpgradesLeftToRight[2].Init(ActiveTower, upgrades[UpgradePath.BotRight]);
-            topUpgradesLeftToRight[0].Init(ActiveTower, upgrades[UpgradePath.TopLeft], upgrades[UpgradePath.BotLeft]);
-            topUpgradesLeftToRight[1].Init(ActiveTower, upgrades[UpgradePath.TopMid], upgrades[UpgradePath.BotMid]);
-            topUpgradesLeftToRight[2].Init(ActiveTower, upgrades[UpgradePath.TopRight], upgrades[UpgradePath.BotRight]);
+            botUpgradesLeftToRight[0].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.BotLeft]);
+            botUpgradesLeftToRight[1].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.BotMid]);
+            botUpgradesLeftToRight[2].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.BotRight]);
+            topUpgradesLeftToRight[0].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.TopLeft], upgrades[UpgradePath.BotLeft]);
+            topUpgradesLeftToRight[1].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.TopMid], upgrades[UpgradePath.BotMid]);
+            topUpgradesLeftToRight[2].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.TopRight], upgrades[UpgradePath.BotRight]);
         }
 
         public void Hide()

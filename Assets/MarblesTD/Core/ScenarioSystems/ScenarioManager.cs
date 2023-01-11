@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
@@ -12,12 +13,14 @@ namespace MarblesTD.Core.ScenarioSystems
     public class ScenarioManager : RequestHandler<PurchaseRequest, bool>, IUpdateState
     {
         public bool LostLifeThisScenario { get; private set; }
+        public static Action<int> HoneyChanged;
 
         int _lives;
         int _honey;
         public bool RunEnded { get; set; }
         readonly IView _view;
         readonly Mediator _mediator;
+        readonly SignalBus _signalBus;
 
         public Scenario CurrentScenario;
 
@@ -48,6 +51,7 @@ namespace MarblesTD.Core.ScenarioSystems
             set
             {
                 _honey = value;
+                _signalBus.Fire(new HoneyChangedSignal(_honey));
                 _view.UpdateHoneyText(_honey);
             }
         }
@@ -56,6 +60,7 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             _view = view;
             _mediator = mediator;
+            _signalBus = signalBus;
             mediator.AddHandler<PurchaseRequest, bool>(this);
             signalBus.Subscribe<TowerSoldSignal>(OnTowerSold);
         }

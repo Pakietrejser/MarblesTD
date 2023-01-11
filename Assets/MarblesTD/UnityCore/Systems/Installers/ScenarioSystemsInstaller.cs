@@ -1,4 +1,5 @@
 ﻿using MarblesTD.Core.ScenarioSystems;
+using MarblesTD.UnityCore.Common.UI;
 using MarblesTD.UnityCore.Systems.ScenarioSystems;
 using UnityEngine;
 using Zenject;
@@ -11,6 +12,7 @@ namespace MarblesTD.UnityCore.Systems.Installers
         [SerializeField] MarbleControllerView marbleControllerView;
         [SerializeField] TimeControllerView timeControllerView;
         [SerializeField] TowerControllerView towerControllerView;
+        [SerializeField] TowerPanel towerPanel;
         
         public override void InstallBindings()
         {
@@ -24,6 +26,8 @@ namespace MarblesTD.UnityCore.Systems.Installers
             Container.Bind<MarbleController>().AsSingle().NonLazy();
             Container.Bind<TimeController>().AsSingle().NonLazy();
             Container.Bind<TowerController>().AsSingle().NonLazy();
+
+            Container.Bind<TowerPanel>().FromInstance(towerPanel);
         }
     }
 }
