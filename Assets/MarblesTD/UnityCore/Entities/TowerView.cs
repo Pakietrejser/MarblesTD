@@ -19,11 +19,6 @@ namespace MarblesTD.UnityCore.Entities
         {
             towerRenderer.sprite = sprite;
         }
-        
-        public void Reset()
-        {
-            Clicked = null;
-        }
 
         public void Select()
         {

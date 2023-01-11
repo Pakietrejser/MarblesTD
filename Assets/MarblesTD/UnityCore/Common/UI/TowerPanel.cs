@@ -62,7 +62,7 @@ namespace MarblesTD.UnityCore.Common.UI
             }
             ActiveTower = tower;
             
-            towerName.text = ActiveTower.TranslatedName;
+            towerName.text = ActiveTower.GetTranslatedName();
             towerIcon.sprite = ActiveTower.GetIcon();
             RefreshTowerUpgrades();
 
@@ -81,7 +81,7 @@ namespace MarblesTD.UnityCore.Common.UI
             topUpgradesLeftToRight[2].Init(ActiveTower, upgrades[UpgradePath.TopRight], upgrades[UpgradePath.BotRight]);
         }
 
-        void Hide()
+        public void Hide()
         {
             gameObject.SetActive(false);
             ActiveTower = null;
@@ -92,7 +92,7 @@ namespace MarblesTD.UnityCore.Common.UI
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var hit = Physics2D.Raycast(position, Vector2.down, 100, towerMask);
+                var hit = Physics2D.Raycast(position, Vector2.down, 100, 1 << towerMask);
                 if (hit.collider == null)
                 {
                     Hide();

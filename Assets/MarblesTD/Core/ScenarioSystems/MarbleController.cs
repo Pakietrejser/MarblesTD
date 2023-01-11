@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Requests;
@@ -26,6 +27,7 @@ namespace MarblesTD.Core.ScenarioSystems
         readonly List<MarbleWave> _marbleWaves = new List<MarbleWave>();
 
         bool _processing;
+        CancellationTokenSource _cts;
         
         public MarbleController(Marble.Pool marblePool, TimeController timeController, ScenarioManager scenarioManager, IView view, Mediator mediator)
         {
@@ -42,12 +44,18 @@ namespace MarblesTD.Core.ScenarioSystems
             if (_processing) return;
             _processing = true;
             _view.ToggleWaveRequest(false);
-            int waveIndex = await SpawnMarbleWave();
-            if (waveIndex == -1) return;
-            CurrentWave = waveIndex;
-            if (waveIndex == LastWave) return;
-            _view.ToggleWaveRequest(true);
-            _processing = false;
+            try
+            {
+                int waveIndex = await SpawnMarbleWave();
+                CurrentWave = waveIndex;
+                if (waveIndex == LastWave) return;
+                _view.ToggleWaveRequest(true);
+                _processing = false;
+            }
+            catch (OperationCanceledException ex)
+            {
+                Debug.Log("Stop spawning waves...");
+            }
         }
 
         async UniTask<int> SpawnMarbleWave()
@@ -58,26 +66,19 @@ namespace MarblesTD.Core.ScenarioSystems
             _marbleWaves.Add(marbleWave);
             _view.SetWaveString(_waveProvider.CurrentWave, LastWave);
 
-            try
+            foreach (var waveGroup in wave.GetGroups())
             {
-                foreach (var waveGroup in wave.GetGroups())
+                for (var i = 0; i < waveGroup.MarbleCount; i++)
                 {
-                    for (var i = 0; i < waveGroup.MarbleCount; i++)
-                    {
-                        var go = UnityEngine.Object.Instantiate(prefab);
-                        var view = go.GetComponent<IMarbleView>();
-                        var marble = _marblePool.Spawn();
-                        marble.Init(view, _view.GetStartPosition(), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
-                        marbleWave.Add(marble);
+                    var go = UnityEngine.Object.Instantiate(prefab);
+                    var view = go.GetComponent<IMarbleView>();
+                    var marble = _marblePool.Spawn();
+                    marble.Init(view, _view.GetStartPosition(), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
+                    marbleWave.Add(marble);
 
-                        await UniTask.WaitUntil(() => _timeController.TimeScale != 0f);
-                        await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale));
-                    }
+                    await UniTask.WaitUntil(() => _timeController.TimeScale != 0f, default, _cts.Token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale), false, PlayerLoopTiming.Update, _cts.Token);
                 }
-            }
-            catch (Exception e)
-            {
-                return -1;
             }
 
             marbleWave.FinishedSpawning = true;
@@ -86,6 +87,8 @@ namespace MarblesTD.Core.ScenarioSystems
 
         public void EnterState()
         {
+            _cts = new CancellationTokenSource();
+            
             _waveProvider = new WaveProvider();
             _processing = false;
             _waveProvider.Reset();
@@ -139,6 +142,7 @@ namespace MarblesTD.Core.ScenarioSystems
 
         public void ExitState()
         {
+            _cts.Cancel();
             foreach (var marbleWave in _marbleWaves)
             foreach (var marble in marbleWave.Marbles)
             {

@@ -13,10 +13,9 @@ namespace MarblesTD.Core.Entities.Towers
     {
         const int MaxUpgrades = 3;
         
-        public event Action Selected;
+        public event Action<Tower> Selected;
 
         public string RawName => GetType().GetName();
-        public string TranslatedName => this.GetTranslatedName();
         public abstract int Cost { get; }
         public abstract AnimalType AnimalType { get; }
         public bool IsDestroyed { get; private set; }
@@ -49,7 +48,7 @@ namespace MarblesTD.Core.Entities.Towers
         {
             View = view;
             Position = position;
-            View.Clicked += () => Selected?.Invoke();
+            View.Clicked += () => Selected?.Invoke(this);
         }
 
         public abstract void UpdateTower(IEnumerable<Marble> marbles, float delta);
@@ -60,8 +59,8 @@ namespace MarblesTD.Core.Entities.Towers
             IsDestroyed = true;
         }
 
-        public void Select() => View.Select();
-        public void Deselect() => View.Deselect();
+        public void Select() => View?.Select();
+        public void Deselect() => View?.Deselect();
 
         public interface IView
         {

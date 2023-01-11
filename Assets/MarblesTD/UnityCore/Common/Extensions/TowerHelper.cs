@@ -1,5 +1,9 @@
 ﻿using System;
 using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Towers;
+using MarblesTD.Towers.CannonBoarTower;
+using MarblesTD.Towers.QuickFoxTower;
+using MarblesTD.Towers.StarStagTower;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore.Common.Extensions
@@ -32,6 +36,23 @@ namespace MarblesTD.UnityCore.Common.Extensions
             }
 
             throw new ArgumentException($"No prefab named {tower.RawName} in Resources/{PrefabPath}");
+        }
+        
+        public static string GetTranslatedName(this Tower tower)
+        {
+            return tower switch
+            {
+                QuickFox _ => "Lisek",
+                CannonBoar _ => "Dzik Machina",
+                StarStag _ => "Gwiezdy Daniel",
+                Mastiffteer _ => "Muszkieter",
+                HalberdBear _ => "Strażmiś",
+                Beehive _ => "Ul",
+                ShadowPaw _ => "Łapka",
+                MagicPot _ => "Kocioł",
+                WebWeaver _ => "Sieciarz",
+                _ => "Coś poszło nie tak"
+            };
         }
 
         public static Color GetColor(this Tower tower)

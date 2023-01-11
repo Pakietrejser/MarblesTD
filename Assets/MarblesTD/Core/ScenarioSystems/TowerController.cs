@@ -30,6 +30,19 @@ namespace MarblesTD.Core.ScenarioSystems
 
         public void ExitState()
         {
+            _view.Clear();
+            
+            for (int index = ActiveTowers.Count - 1; index >= 0; index--)
+            {
+                ActiveTowers[index].Destroy();
+            }
+            for (int index = ActiveProjectiles.Count - 1; index >= 0; index--)
+            {
+                ActiveProjectiles[index].Destroy();
+            }
+
+            ActiveTowers.Clear();
+            ActiveProjectiles.Clear();
         }
 
         public void UpdateState(float timeDelta)
@@ -59,6 +72,7 @@ namespace MarblesTD.Core.ScenarioSystems
         public interface IView
         {
             void Init();
+            void Clear();
         }
     }
 }

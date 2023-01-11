@@ -46,15 +46,25 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
                 placeTowerButtons[index++].Init(_towerCreate[pair.Key].Invoke(), pair.Value);
             }
         }
+
+        public void Clear()
+        {
+            towerPanel.Hide();
+        }
         
         protected async override UniTask<Tower> Execute(CreateTowerRequest request)
         {
             if (!_towerCreate.TryGetValue(request.Type, out var createTower)) throw new NullReferenceException();
             var tower = createTower.Invoke();
             tower.Init(request.View, request.Position);
-            tower.Selected += () => towerPanel.Show(tower);
+            tower.Selected += OnTowerSelected;
             TowerController.ActiveTowers.Add(tower);
             return tower;
+        }
+
+        void OnTowerSelected(Tower tower)
+        {
+            towerPanel.Show(tower);
         }
 
         public void Save(SaveData saveData, bool freshSave)

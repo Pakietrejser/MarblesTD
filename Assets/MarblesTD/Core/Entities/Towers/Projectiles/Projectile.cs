@@ -67,6 +67,8 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
                 _view.DestroySelf();
             }
         }
+
+        public void Destroy() => _view.DestroySelf();
     }
     
     public readonly struct ProjectileConfig

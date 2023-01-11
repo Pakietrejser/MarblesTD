@@ -63,7 +63,7 @@ namespace MarblesTD.UnityCore.Common.UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            highlight.enabled = true;
+            highlight.enabled = false;
             if (statusLock.enabled || _activeUpgrade.Applied) return;
             statusCheck.enabled = false;
             statusCheck.ChangeAlpha(1f);
