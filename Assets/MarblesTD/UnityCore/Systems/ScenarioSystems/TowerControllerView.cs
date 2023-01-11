@@ -75,8 +75,8 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
                 _towerUnlocks = new Dictionary<Type, bool>
                 {
                     {typeof(QuickFox), true},
-                    {typeof(CannonBoar), true},
-                    {typeof(StarStag), true},
+                    {typeof(CannonBoar), false},
+                    {typeof(StarStag), false},
                     
                     {typeof(Mastiffteer), true},
                     {typeof(HalberdBear), true},

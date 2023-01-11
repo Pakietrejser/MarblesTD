@@ -105,7 +105,7 @@ namespace MarblesTD.UnityCore.Common.UI
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var hit = Physics2D.Raycast(position, Vector2.down, 100, 1 << towerMask);
+                var hit = Physics2D.Raycast(position, Vector2.down, 0.01f, 1 << towerMask);
                 if (hit.collider == null)
                 {
                     Hide();
