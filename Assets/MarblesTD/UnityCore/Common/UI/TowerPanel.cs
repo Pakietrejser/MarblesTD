@@ -6,6 +6,7 @@ using MarblesTD.Core.Entities.Towers;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace MarblesTD.UnityCore.Common.UI
@@ -22,6 +23,8 @@ namespace MarblesTD.UnityCore.Common.UI
         [SerializeField] TMP_Text remainingUpgrades;
         [SerializeField] TMP_Text sellForText;
         [SerializeField] Button sellButton;
+        [Space]
+        [SerializeField] int towerMask;
 
         [Header("Upgrades")] 
         [SerializeField] List<TowerUpgrade> topUpgradesLeftToRight;
@@ -86,6 +89,16 @@ namespace MarblesTD.UnityCore.Common.UI
 
         public void Update()
         {
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var hit = Physics2D.Raycast(position, Vector2.down, 100, towerMask);
+                if (hit.collider == null)
+                {
+                    Hide();
+                }
+            }
+            
             if (ActiveTower == null) return;
 
             killedText.text = $"{ActiveTower.MarblesKilled}";

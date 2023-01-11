@@ -44,7 +44,6 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
             foreach (var pair in _towerUnlocks)
             {
                 placeTowerButtons[index++].Init(_towerCreate[pair.Key].Invoke(), pair.Value);
-                Debug.Log($"placing button {pair.Key.GetName()}, {pair.Value}");
             }
         }
         

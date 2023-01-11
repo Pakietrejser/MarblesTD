@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
@@ -19,6 +18,7 @@ namespace MarblesTD.UnityCore.Common.UI
         [SerializeField] Image statusCheck;
         [SerializeField] Image highlight;
         [SerializeField] Button upgradeButton;
+        [SerializeField] ButtonAudio buttonAudio;
 
         public event Action TowerUpgraded;
         
@@ -39,12 +39,14 @@ namespace MarblesTD.UnityCore.Common.UI
             description.text = _activeUpgrade.Description;
             statusCheck.enabled = _activeUpgrade.Applied;
             statusLock.enabled = requiredUpgrade is { Applied: false };
+            buttonAudio.IsActive = !statusLock.enabled;
             statusCheck.ChangeAlpha(1f);
         }
 
         async void UpgradeClicked()
         {
             if (statusLock.enabled) return;
+            if (_activeTower.RemainingUpgrades <= 0) return;
             bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(_activeUpgrade.Cost));
             if (!purchaseCompleted) return;
             _activeUpgrade.Apply(_activeTower);

@@ -10,12 +10,12 @@ namespace MarblesTD.Towers.QuickFoxTower
 {
     public class QuickFox : Tower
     {
-        public int Damage {get; set;}
-        public int Pierce {get; set;}
-        public float AttackSpeed {get; set;}
-        public int Range {get; set;}
-        public float ProjectileTravelDistance {get; set;}
-        public float ProjectileSpeed {get; set;}
+        public int Damage { get; set; } = 1;
+        public int Pierce { get; set; } = 2;
+        public float AttackSpeed { get; set; } = 0.95f;
+        public int Range { get; set; } = 5;
+        public float ProjectileTravelDistance { get; set; } = 30;
+        public float ProjectileSpeed { get; set; } = 20;
 
         float _floatTimeUntilNextAttack;
         
@@ -36,7 +36,6 @@ namespace MarblesTD.Towers.QuickFoxTower
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
         {
-
             _floatTimeUntilNextAttack -= delta;
             if (_floatTimeUntilNextAttack <= 0)
             {

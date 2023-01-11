@@ -14,7 +14,8 @@ namespace MarblesTD.UnityCore.Common.UI
         static readonly Color Pressed = new Color(0.58f, 0.58f, 0.58f);
         static readonly Color Highlighted = new Color(0.8f, 0.8f, 0.8f);
         static readonly Color Disabled = new Color(0.8f, 0.8f, 0.8f, 0.5f);
-        
+        public bool IsActive { get; set; } = true;
+
         void Awake()
         {
             if (!overrideButton) return;
@@ -34,11 +35,13 @@ namespace MarblesTD.UnityCore.Common.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (!IsActive) return;
             SignalBus.FireStatic(new ButtonHoverSignal());
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (!IsActive) return;
             SignalBus.FireStatic(new ButtonClickSignal());
         }
     }

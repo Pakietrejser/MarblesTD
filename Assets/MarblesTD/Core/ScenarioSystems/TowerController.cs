@@ -3,7 +3,6 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Projectiles;
-using UnityEngine;
 using Zenject;
 
 namespace MarblesTD.Core.ScenarioSystems
@@ -35,7 +34,6 @@ namespace MarblesTD.Core.ScenarioSystems
 
         public void UpdateState(float timeDelta)
         {
-            Debug.Log(ActiveTowers.Count);
             for (int i = ActiveTowers.Count - 1; i >= 0; i--)
             {
                 if (ActiveTowers[i].IsDestroyed)
@@ -51,17 +49,6 @@ namespace MarblesTD.Core.ScenarioSystems
             {
                 ActiveProjectiles[i].Update(timeDelta);
             }
-
-            //TODO: wtf
-            // if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-            // {
-            //     var position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //     var hit = Physics2D.Raycast(position, Vector2.down, 100, TowersMask);
-            //     if (hit.collider == null)
-            //     {
-            //         towerPanel.HidePanel();
-            //     }
-            // }
         }
         
         void OnMarbleCracked(Marble marble, int crackedAmount)

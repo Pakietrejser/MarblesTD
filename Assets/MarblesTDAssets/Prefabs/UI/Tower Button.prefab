@@ -143,6 +143,7 @@ MonoBehaviour:
   towerSetColor: {fileID: 417565935655696997}
   highlight: {fileID: 4083105040704498782}
   lockedBox: {fileID: 3019411623730539291}
+  buttonAudio: {fileID: 2796592757317569043}
 --- !u!114 &2796592757317569043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,10 +474,10 @@ RectTransform:
   m_Father: {fileID: 8937468226213294247}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 33.1}
+  m_SizeDelta: {x: 54, y: 54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4723764423771073628
 CanvasRenderer:

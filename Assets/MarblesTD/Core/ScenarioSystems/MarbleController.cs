@@ -43,6 +43,7 @@ namespace MarblesTD.Core.ScenarioSystems
             _processing = true;
             _view.ToggleWaveRequest(false);
             int waveIndex = await SpawnMarbleWave();
+            if (waveIndex == -1) return;
             CurrentWave = waveIndex;
             if (waveIndex == LastWave) return;
             _view.ToggleWaveRequest(true);
@@ -57,19 +58,26 @@ namespace MarblesTD.Core.ScenarioSystems
             _marbleWaves.Add(marbleWave);
             _view.SetWaveString(_waveProvider.CurrentWave, LastWave);
 
-            foreach (var waveGroup in wave.GetGroups())
+            try
             {
-                for (var i = 0; i < waveGroup.MarbleCount; i++)
+                foreach (var waveGroup in wave.GetGroups())
                 {
-                    var go = UnityEngine.Object.Instantiate(prefab);
-                    var view = go.GetComponent<IMarbleView>();
-                    var marble = _marblePool.Spawn();
-                    marble.Init(view, _view.GetStartPosition(), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
-                    marbleWave.Add(marble);
+                    for (var i = 0; i < waveGroup.MarbleCount; i++)
+                    {
+                        var go = UnityEngine.Object.Instantiate(prefab);
+                        var view = go.GetComponent<IMarbleView>();
+                        var marble = _marblePool.Spawn();
+                        marble.Init(view, _view.GetStartPosition(), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
+                        marbleWave.Add(marble);
 
-                    await UniTask.WaitUntil(() => _timeController.TimeScale != 0f);
-                    await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale));
+                        await UniTask.WaitUntil(() => _timeController.TimeScale != 0f);
+                        await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale));
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                return -1;
             }
 
             marbleWave.FinishedSpawning = true;
@@ -131,7 +139,13 @@ namespace MarblesTD.Core.ScenarioSystems
 
         public void ExitState()
         {
-            
+            foreach (var marbleWave in _marbleWaves)
+            foreach (var marble in marbleWave.Marbles)
+            {
+                marble.Destroy();
+                _marblePool.Despawn(marble);
+            }
+            _marbleWaves.Clear();
         }
         
         public interface IView

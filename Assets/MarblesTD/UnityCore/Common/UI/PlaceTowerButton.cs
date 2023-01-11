@@ -1,7 +1,6 @@
 ﻿using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
-using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
@@ -18,6 +17,7 @@ namespace MarblesTD.UnityCore.Common.UI
         [SerializeField] Image towerSetColor;
         [SerializeField] Image highlight;
         [SerializeField] GameObject lockedBox;
+        [SerializeField] ButtonAudio buttonAudio;
 
         bool _draggedTowerOutOfPanel;
         bool _canPlaceTowerAtCurrentPosition;
@@ -37,15 +37,18 @@ namespace MarblesTD.UnityCore.Common.UI
             costText.text = $"${_currentTower.Cost}";
             towerSetColor.color = _currentTower.GetColor();
             lockedBox.SetActive(!unlocked);
+            buttonAudio.IsActive = unlocked;
         }
         
         public void OnBeginDrag(PointerEventData data)
         {
+            if (lockedBox.activeSelf) return;
             _draggedTowerOutOfPanel = false;
         }
 
         public void OnDrag(PointerEventData data)
         {
+            if (lockedBox.activeSelf) return;
             if (EventSystem.current.IsPointerOverGameObject() && !_draggedTowerOutOfPanel)
             {
                 return;
@@ -80,6 +83,7 @@ namespace MarblesTD.UnityCore.Common.UI
 
         public async void OnEndDrag(PointerEventData data)
         {
+            if (lockedBox.activeSelf) return;
             if (_currentTowerView == null) return;
             if (!_canPlaceTowerAtCurrentPosition)
             {
@@ -104,11 +108,13 @@ namespace MarblesTD.UnityCore.Common.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (lockedBox.activeSelf) return;
             highlight.enabled = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (lockedBox.activeSelf) return;
             highlight.enabled = false;
         }
     }
