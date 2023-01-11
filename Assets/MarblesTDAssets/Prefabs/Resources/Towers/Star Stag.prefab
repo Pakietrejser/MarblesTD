@@ -129,7 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 8422161118259489185, guid: dbc6bae9914cc9541b15910facf9a81b, type: 3}
-  towerRenderer: {fileID: 8422161119800740975}
   selectRenderer: {fileID: 2192080711268765900}
   towerCollider: {fileID: 1471787730598849473}
 --- !u!58 &1471787730598849473
@@ -147,7 +146,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.65
+  m_Radius: 0.6
 --- !u!1 &8422161119800740961
 GameObject:
   m_ObjectHideFlags: 0
