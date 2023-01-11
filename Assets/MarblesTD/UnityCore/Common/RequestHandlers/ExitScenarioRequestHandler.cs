@@ -5,6 +5,8 @@ using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Common.Signals.List;
+using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.Extensions;
 using TMPro;
 using UnityEngine;
@@ -28,6 +30,8 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
         
         [Inject] SignalBus Bus { get; set; }
         [Inject] Mediator Mediator { get; set; }
+        [Inject] ScenarioManager ScenarioManager { get; set; }
+        [Inject] TowerController TowerController { get; set; }
         
         bool _receivedConfirmation;
         bool PlayerInteraction() => _receivedConfirmation;
@@ -51,6 +55,12 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             if (wavesCompleted >= 3)
             {
                 scenario.TryCompleteQuest(QuestID.Wave40);
+
+                var usedAnimalTypes = TowerController.UsedAnimalTypes;
+                if (usedAnimalTypes.Count == 1 && usedAnimalTypes.Contains(AnimalType.WildAnimal)) scenario.TryCompleteQuest(QuestID.WildOnly);
+                if (usedAnimalTypes.Count == 1 && usedAnimalTypes.Contains(AnimalType.NobleAnimal)) scenario.TryCompleteQuest(QuestID.NobleOnly);
+                if (usedAnimalTypes.Count == 1 && usedAnimalTypes.Contains(AnimalType.NightAnimal)) scenario.TryCompleteQuest(QuestID.NightOnly);
+                if (!ScenarioManager.LostLifeThisScenario) scenario.TryCompleteQuest(QuestID.NoDamage);
             }
 
             Debug.Log(playerWon ? "Player Won!" : "Player Lost!");

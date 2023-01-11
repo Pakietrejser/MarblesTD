@@ -22,6 +22,8 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         [SerializeField] TowerPanel towerPanel;
         [SerializeField] List<PlaceTowerButton> placeTowerButtons;
 
+        public event Action<Tower> TowerCreated;
+        
         Dictionary<Type, bool> _towerUnlocks;
         readonly Dictionary<Type, Func<Tower>> _towerCreate = new Dictionary<Type, Func<Tower>>()
         {
@@ -58,7 +60,7 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
             var tower = createTower.Invoke();
             tower.Init(request.View, request.Position);
             tower.Selected += OnTowerSelected;
-            TowerController.ActiveTowers.Add(tower);
+            TowerCreated?.Invoke(tower);
             return tower;
         }
 

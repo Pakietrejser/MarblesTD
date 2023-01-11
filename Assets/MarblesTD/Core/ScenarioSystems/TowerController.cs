@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
@@ -13,16 +14,25 @@ namespace MarblesTD.Core.ScenarioSystems
         [Inject] TimeController TimeController { get; }
         [Inject] ScenarioManager ScenarioManager { get; set; }
         
-        public static readonly List<Tower> ActiveTowers = new List<Tower>();
+        public HashSet<AnimalType> UsedAnimalTypes { get; } = new HashSet<AnimalType>();
+        
+        readonly List<Tower> _activeTowers = new List<Tower>();
         public static readonly List<Projectile> ActiveProjectiles = new List<Projectile>();
         readonly IView _view;
         
         public TowerController(IView view)
         {
             _view = view;
+            _view.TowerCreated += OnTowerCreated;
             Marble.Cracked += OnMarbleCracked;
         }
-        
+
+        void OnTowerCreated(Tower tower)
+        {
+            _activeTowers.Add(tower);
+            UsedAnimalTypes.Add(tower.AnimalType);
+        }
+
         public void EnterState()
         {
             _view.Init();
@@ -32,30 +42,30 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             _view.Clear();
             
-            for (int index = ActiveTowers.Count - 1; index >= 0; index--)
+            for (int index = _activeTowers.Count - 1; index >= 0; index--)
             {
-                ActiveTowers[index].Destroy();
+                _activeTowers[index].Destroy();
             }
             for (int index = ActiveProjectiles.Count - 1; index >= 0; index--)
             {
                 ActiveProjectiles[index].Destroy();
             }
 
-            ActiveTowers.Clear();
+            _activeTowers.Clear();
             ActiveProjectiles.Clear();
         }
 
         public void UpdateState(float timeDelta)
         {
-            for (int i = ActiveTowers.Count - 1; i >= 0; i--)
+            for (int i = _activeTowers.Count - 1; i >= 0; i--)
             {
-                if (ActiveTowers[i].IsDestroyed)
+                if (_activeTowers[i].IsDestroyed)
                 {
-                    ActiveTowers.Remove(ActiveTowers[i]);
+                    _activeTowers.Remove(_activeTowers[i]);
                     continue;
                 }
                 
-                ActiveTowers[i].UpdateTower(MarbleController.Marbles, timeDelta);
+                _activeTowers[i].UpdateTower(MarbleController.Marbles, timeDelta);
             }
 
             for (int i = ActiveProjectiles.Count - 1; i >= 0; i--)
@@ -71,6 +81,7 @@ namespace MarblesTD.Core.ScenarioSystems
         
         public interface IView
         {
+            event Action<Tower> TowerCreated;
             void Init();
             void Clear();
         }

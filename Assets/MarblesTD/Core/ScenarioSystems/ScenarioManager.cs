@@ -11,6 +11,8 @@ namespace MarblesTD.Core.ScenarioSystems
 {
     public class ScenarioManager : RequestHandler<PurchaseRequest, bool>, IUpdateState
     {
+        public bool LostLifeThisScenario { get; private set; }
+
         int _lives;
         int _honey;
         public bool RunEnded { get; set; }
@@ -26,6 +28,11 @@ namespace MarblesTD.Core.ScenarioSystems
             {
                 _lives = value;
                 _view.UpdateLivesText(_lives);
+
+                if (value < _lives)
+                {
+                    LostLifeThisScenario = true;
+                }
                 
                 if (Lives <= 0 && !RunEnded)
                 {
@@ -55,6 +62,7 @@ namespace MarblesTD.Core.ScenarioSystems
 
         public void EnterState()
         {
+            LostLifeThisScenario = false;
             RunEnded = false;
             Lives = 20;
             Honey = 100;
