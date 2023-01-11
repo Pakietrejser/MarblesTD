@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Towers;
@@ -27,6 +28,8 @@ namespace MarblesTD.UnityCore.Common.UI
         [SerializeField] Button sellButton;
         [Space]
         [SerializeField] int towerMask;
+        [SerializeField] CanvasGroup canvasGroup;
+        [SerializeField] Ease easeType = Ease.OutBounce;
 
         [Header("Upgrades")] 
         [SerializeField] List<TowerUpgrade> topUpgradesLeftToRight;
@@ -70,9 +73,21 @@ namespace MarblesTD.UnityCore.Common.UI
             towerIcon.sprite = ActiveTower.GetIcon();
             RefreshTowerUpgrades();
 
+            transform.localPosition = new Vector3(transform.localPosition.x, -(540+258), 0);
+            canvasGroup.alpha = 0;
             gameObject.SetActive(true);
+            transform.DOKill();
+            transform.DOLocalMoveY(-540, .8f).SetEase(easeType);
+            canvasGroup.DOFade(1f, 0.4f);
         }
         
+        public void Hide()
+        {
+            canvasGroup.DOKill();
+            canvasGroup.DOFade(0f, 0.2f).OnComplete(() => gameObject.SetActive(false));
+            ActiveTower = null;
+        }
+
         void RefreshTowerUpgrades()
         {
             if (ActiveTower == null) return;
@@ -83,12 +98,6 @@ namespace MarblesTD.UnityCore.Common.UI
             topUpgradesLeftToRight[0].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.TopLeft], upgrades[UpgradePath.BotLeft]);
             topUpgradesLeftToRight[1].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.TopMid], upgrades[UpgradePath.BotMid]);
             topUpgradesLeftToRight[2].Init(ScenarioManager.Honey, ActiveTower, upgrades[UpgradePath.TopRight], upgrades[UpgradePath.BotRight]);
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
-            ActiveTower = null;
         }
 
         public void Update()
