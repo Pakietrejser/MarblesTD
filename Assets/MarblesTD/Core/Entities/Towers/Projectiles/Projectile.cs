@@ -48,7 +48,7 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
 
             if (marble.IsDestroyed)
             {
-                _config.Owner.KIllCount++;
+                _config.Owner.MarblesKilled++;
             }
 
             if (_remainingHits == 0)

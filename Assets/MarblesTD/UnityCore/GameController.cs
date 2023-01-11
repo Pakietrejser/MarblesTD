@@ -23,6 +23,7 @@ namespace MarblesTD.UnityCore
         [Inject] ScenarioManager ScenarioManager { get; set; }
         [Inject] TimeController _timeController;
         [Inject] MarbleController _marbleController;
+        [Inject] TowerController TowerController { get; set; }
         
         [Inject] SignalBus Bus { get; set; }
         [Inject] Mediator Mediator { get; set; }
@@ -72,6 +73,7 @@ namespace MarblesTD.UnityCore
                 ScenarioManager,
                 _timeController,
                 _marbleController,
+                TowerController,
             });
          
             _gameStates.EnterState();

@@ -1,7 +1,6 @@
 ﻿using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Entities.Towers;
-using MarblesTD.UnityCore.Entities.Settings;
 using MarblesTD.UnityCore.Systems.ScenarioSystems;
 using TMPro;
 using UnityEngine;
@@ -23,7 +22,6 @@ namespace MarblesTD.UnityCore.Common.UI
         bool _draggedTowerOutOfPanel;
         bool _canPlaceTowerAtCurrentPosition;
         
-        Button towerButton;
         GameObject currentTower;
 
         Tower.SettingsBase settings;
@@ -31,7 +29,6 @@ namespace MarblesTD.UnityCore.Common.UI
 
         void Awake()
         {
-            towerButton = GetComponent<Button>();
             highlight.enabled = false;
         }
 
@@ -63,7 +60,7 @@ namespace MarblesTD.UnityCore.Common.UI
             if (!_draggedTowerOutOfPanel)
             {
                 currentTower = Instantiate(towerPrefab);
-                var view = currentTower.GetComponent<ITowerView>();
+                var view = currentTower.GetComponent<Tower.IView>();
                 view.Init(settings.Icon, settings.TowerType);
                 view.DisableCollider();
                 _draggedTowerOutOfPanel = true;
@@ -74,7 +71,7 @@ namespace MarblesTD.UnityCore.Common.UI
             if (hit.collider != null)
             {
                 _canPlaceTowerAtCurrentPosition = hit.collider.gameObject.name == "Battlefield Image";
-                var view = currentTower.GetComponent<ITowerView>();
+                var view = currentTower.GetComponent<Tower.IView>();
                 view.ShowAsPlaceable(_canPlaceTowerAtCurrentPosition);
                 currentTower.transform.position = new Vector3(position.x, position.y, 0);
             }
@@ -99,7 +96,7 @@ namespace MarblesTD.UnityCore.Common.UI
             bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(settings.Cost));
             if (purchaseCompleted)
             {
-                var view = currentTower.GetComponent<ITowerView>();
+                var view = currentTower.GetComponent<Tower.IView>();
                 view.EnableCollider();
                 TowerControllerView.Instance.Towers.Add(global.CreateTower(settings, view, new Vector2(currentTower.transform.position.x, currentTower.transform.position.y)));
             }

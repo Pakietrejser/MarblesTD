@@ -1,7 +1,7 @@
 ﻿using PathCreation;
 using UnityEngine;
 
-namespace MarblesTD.UnityCore.Systems.ScenarioSystems
+namespace MarblesTD.UnityCore.Entities
 {
     public class ScenarioView : MonoBehaviour
     {

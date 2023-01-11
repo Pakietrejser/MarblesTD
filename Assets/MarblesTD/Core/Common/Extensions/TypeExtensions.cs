@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using MarblesTD.Core.Common.Enums;
+using MarblesTD.Core.Entities.Towers;
 
 namespace MarblesTD.Core.Common.Extensions
 {
@@ -10,6 +11,12 @@ namespace MarblesTD.Core.Common.Extensions
         {
             return Regex.Replace(type.Name, "([a-z](?=[A-Z]|[0-9])|[A-Z](?=[A-Z][a-z]|[0-9])|[0-9](?=[^0-9]))", "$1 ");
         }
+
+        public static string GetTranslatedName(this Tower tower)
+        {
+            return "test";
+        }
+        
 
         public static string GetTranslatedName(this ScenarioID type)
         {

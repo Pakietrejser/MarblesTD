@@ -4,7 +4,6 @@ using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Projectiles;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.UI;
-using MarblesTD.UnityCore.Entities.Settings;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -20,7 +19,7 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         public Transform PlaceTowerButtonsParent;
         public GameObject PlaceTowerButtonPrefab;
         public GlobalTowerSettings GlobalTowerSettings;
-        public TowerPanelView TowerPanelView;
+        public TowerPanel towerPanel;
         public LayerMask TowersMask;
 
         public readonly List<Tower> Towers = new List<Tower>();
@@ -28,15 +27,12 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         
         public void SelectTower(Tower tower)
         {
-            TowerPanelView.ShowPanel(tower);
+            towerPanel.ShowPanel(tower);
         }
-
-        public static TowerControllerView Instance;
-
+        
         void Awake()
         {
-            Instance = this;
-            TowerPanelView.HidePanel();
+            towerPanel.HidePanel();
             GlobalTowerSettings.Init();
             GlobalTowerSettings.SettingsChanged += GlobalTowerSettingsOnSettingsChanged;
             
@@ -79,7 +75,7 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
                     continue;
                 }
                 
-                Towers[i].Update(MarbleController.Marbles, Time.deltaTime * TimeController.TimeScale);
+                Towers[i].UpdateTower(MarbleController.Marbles, Time.deltaTime * TimeController.TimeScale);
             }
 
             for (int i = Projectiles.Count - 1; i >= 0; i--)
@@ -93,11 +89,9 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
                 var hit = Physics2D.Raycast(position, Vector2.down, 100, TowersMask);
                 if (hit.collider == null)
                 {
-                    TowerPanelView.HidePanel();
+                    towerPanel.HidePanel();
                 }
             }
-
-            TowerPanelView.UpdatePanel();
         }
 
         public void CreateTower()

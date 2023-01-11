@@ -69,8 +69,6 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             }
             _processing = true;
             
-            var scenario = request.Scenario;
-
             TimeController.Pause();
             Show();
             _receivedConfirmation = false;

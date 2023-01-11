@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MarblesTD.UnityCore.Entities
 {
-    public class TowerView : MonoBehaviour, ITowerView
+    public class TowerView : MonoBehaviour, Tower.IView
     {
         [SerializeField] GameObject projectilePrefab;
         [SerializeField] SpriteRenderer towerRenderer;
@@ -25,7 +25,7 @@ namespace MarblesTD.UnityCore.Entities
             selectRenderer.enabled = true;
         }
 
-        public void Unselect()
+        public void Deselect()
         {
             selectRenderer.enabled = false;
         }

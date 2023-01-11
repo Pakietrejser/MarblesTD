@@ -4,6 +4,7 @@ using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.UnityCore.Common.Extensions;
+using MarblesTD.UnityCore.Entities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

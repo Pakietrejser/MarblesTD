@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 20365140}
   - component: {fileID: 20365139}
   - component: {fileID: 20365138}
+  - component: {fileID: 20365142}
+  - component: {fileID: 20365141}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -247,6 +249,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20365136}
   m_CullTransparentMesh: 1
+--- !u!114 &20365141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20365136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a66e1dc70f548cd83a62915814de56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideButton: 1
+--- !u!114 &20365142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20365136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c0a06ac13545ae9b7444e9c958210e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  latestOwnedUpgradeText: {fileID: 0}
+  ownedUpgradeGemImages: []
+  nextUpgradeName: {fileID: 0}
+  nextUpgradeButton: {fileID: 0}
+  nextUpgradePrice: {fileID: 0}
 --- !u!1 &80363313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1467,6 +1499,8 @@ GameObject:
   - component: {fileID: 249253617}
   - component: {fileID: 249253616}
   - component: {fileID: 249253615}
+  - component: {fileID: 249253619}
+  - component: {fileID: 249253618}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1579,6 +1613,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249253613}
   m_CullTransparentMesh: 1
+--- !u!114 &249253618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249253613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a66e1dc70f548cd83a62915814de56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideButton: 1
+--- !u!114 &249253619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249253613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c0a06ac13545ae9b7444e9c958210e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  latestOwnedUpgradeText: {fileID: 0}
+  ownedUpgradeGemImages: []
+  nextUpgradeName: {fileID: 0}
+  nextUpgradeButton: {fileID: 0}
+  nextUpgradePrice: {fileID: 0}
 --- !u!1 &250637110
 GameObject:
   m_ObjectHideFlags: 0
@@ -2265,7 +2329,7 @@ GameObject:
   - component: {fileID: 383929975}
   - component: {fileID: 383929974}
   m_Layer: 5
-  m_Name: Upgrade Panel
+  m_Name: Tower Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2304,6 +2368,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6080edb7e95449ea4f3394bd4e66622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerName: {fileID: 435447349}
+  towerIcon: {fileID: 869805081}
+  targetText: {fileID: 439009474}
+  killedText: {fileID: 447168619}
+  switchTargetButton: {fileID: 1270448779}
+  remainingUpgrades: {fileID: 1150313316}
+  sellButton: {fileID: 679191473}
+  topUpgradesLeftToRight:
+  - {fileID: 790023808}
+  - {fileID: 723370879}
+  - {fileID: 249253619}
+  botUpgradesLeftToRight:
+  - {fileID: 693179050}
+  - {fileID: 20365142}
+  - {fileID: 756146480}
   sellTowerButton: {fileID: 0}
   sellTowerText: {fileID: 0}
   towerNameText: {fileID: 435447349}
@@ -2728,7 +2807,7 @@ GameObject:
   - component: {fileID: 439009475}
   - component: {fileID: 439009474}
   m_Layer: 5
-  m_Name: text
+  m_Name: target text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2862,7 +2941,7 @@ GameObject:
   - component: {fileID: 447168620}
   - component: {fileID: 447168619}
   m_Layer: 5
-  m_Name: text
+  m_Name: killed text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5027,6 +5106,8 @@ GameObject:
   - component: {fileID: 693179048}
   - component: {fileID: 693179047}
   - component: {fileID: 693179046}
+  - component: {fileID: 693179050}
+  - component: {fileID: 693179049}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -5139,6 +5220,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693179044}
   m_CullTransparentMesh: 1
+--- !u!114 &693179049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693179044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a66e1dc70f548cd83a62915814de56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideButton: 1
+--- !u!114 &693179050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693179044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c0a06ac13545ae9b7444e9c958210e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  latestOwnedUpgradeText: {fileID: 0}
+  ownedUpgradeGemImages: []
+  nextUpgradeName: {fileID: 0}
+  nextUpgradeButton: {fileID: 0}
+  nextUpgradePrice: {fileID: 0}
 --- !u!1 &697351429
 GameObject:
   m_ObjectHideFlags: 0
@@ -5460,6 +5571,8 @@ GameObject:
   - component: {fileID: 723370877}
   - component: {fileID: 723370876}
   - component: {fileID: 723370875}
+  - component: {fileID: 723370879}
+  - component: {fileID: 723370878}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -5572,6 +5685,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723370873}
   m_CullTransparentMesh: 1
+--- !u!114 &723370878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723370873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a66e1dc70f548cd83a62915814de56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideButton: 1
+--- !u!114 &723370879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723370873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c0a06ac13545ae9b7444e9c958210e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  latestOwnedUpgradeText: {fileID: 0}
+  ownedUpgradeGemImages: []
+  nextUpgradeName: {fileID: 0}
+  nextUpgradeButton: {fileID: 0}
+  nextUpgradePrice: {fileID: 0}
 --- !u!1 &733600817
 GameObject:
   m_ObjectHideFlags: 0
@@ -5793,6 +5936,8 @@ GameObject:
   - component: {fileID: 756146478}
   - component: {fileID: 756146477}
   - component: {fileID: 756146476}
+  - component: {fileID: 756146480}
+  - component: {fileID: 756146479}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -5905,6 +6050,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756146474}
   m_CullTransparentMesh: 1
+--- !u!114 &756146479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756146474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a66e1dc70f548cd83a62915814de56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideButton: 1
+--- !u!114 &756146480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 756146474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c0a06ac13545ae9b7444e9c958210e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  latestOwnedUpgradeText: {fileID: 0}
+  ownedUpgradeGemImages: []
+  nextUpgradeName: {fileID: 0}
+  nextUpgradeButton: {fileID: 0}
+  nextUpgradePrice: {fileID: 0}
 --- !u!1 &765544498
 GameObject:
   m_ObjectHideFlags: 0
@@ -6106,7 +6281,7 @@ MonoBehaviour:
   PlaceTowerButtonsParent: {fileID: 1821116788}
   PlaceTowerButtonPrefab: {fileID: 417565935655696995, guid: 5e772fb2ba2b8f4459530a2b57e96f57, type: 3}
   GlobalTowerSettings: {fileID: 11400000, guid: 983042e1529d90549bf573e20d6412c6, type: 2}
-  TowerPanelView: {fileID: 383929973}
+  towerPanel: {fileID: 383929973}
   TowersMask:
     serializedVersion: 2
     m_Bits: 128
@@ -6322,6 +6497,8 @@ GameObject:
   - component: {fileID: 790023806}
   - component: {fileID: 790023805}
   - component: {fileID: 790023804}
+  - component: {fileID: 790023808}
+  - component: {fileID: 790023807}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -6434,6 +6611,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790023802}
   m_CullTransparentMesh: 1
+--- !u!114 &790023807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790023802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a66e1dc70f548cd83a62915814de56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overrideButton: 1
+--- !u!114 &790023808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790023802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c0a06ac13545ae9b7444e9c958210e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  latestOwnedUpgradeText: {fileID: 0}
+  ownedUpgradeGemImages: []
+  nextUpgradeName: {fileID: 0}
+  nextUpgradeButton: {fileID: 0}
+  nextUpgradePrice: {fileID: 0}
 --- !u!1001 &800396210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12552,7 +12759,7 @@ GameObject:
   - component: {fileID: 1457662661}
   - component: {fileID: 1457662664}
   m_Layer: 5
-  m_Name: panel-layout-group
+  m_Name: Layout Group
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20137,7 +20344,7 @@ GameObject:
   - component: {fileID: 2066535410}
   - component: {fileID: 2066535409}
   m_Layer: 5
-  m_Name: Menu Group
+  m_Name: Mini Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

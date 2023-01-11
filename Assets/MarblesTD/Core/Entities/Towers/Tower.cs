@@ -1,96 +1,81 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using MarblesTD.Core.Common.Enums;
+using MarblesTD.Core.Common.Extensions;
 using MarblesTD.Core.Entities.Marbles;
-using MarblesTD.Core.Entities.Towers.Upgrades;
+using MarblesTD.Core.Entities.Towers.Projectiles;
 using UnityEngine;
 
 namespace MarblesTD.Core.Entities.Towers
 {
     public abstract class Tower
     {
+        const int MaxUpgrades = 3;
+        
         public event Action Selected;
-        
-        public string Name;
-        public string Description;
-        public int Cost;
-        public TowerType TowerType;
-        public Sprite Icon;
-        
+
+        public string RawName => GetType().GetName();
+        public string TranslatedName => this.GetTranslatedName();
+        public abstract int Cost { get; }
+        public abstract AnimalType AnimalType { get; }
         public bool IsDestroyed { get; private set; }
+        public int MarblesKilled { get; set; }
+        public abstract Dictionary<UpgradePath, Upgrade> Upgrades { get; }
 
         public int SellValue
         {
             get
             {
-                int totalCost = Cost;
-                foreach (var upgrades in Upgrades.Values)
-                foreach (var upgrade in upgrades)
-                {
-                    if (upgrade.IsActive) totalCost += upgrade.Cost;
-                }
+                int totalCost = Cost + Upgrades
+                    .Where(upgrade => upgrade.Value.Applied)
+                    .Sum(upgrade => upgrade.Value.Cost);
                 return Convert.ToInt32(totalCost * .75f);
             }
         }
+
+        public int RemainingUpgrades
+        {
+            get
+            {
+                return MaxUpgrades - Upgrades.Count(upgrade => upgrade.Value.Applied);
+            }
+        }
         
-        public int KIllCount;
-        public IReadOnlyDictionary<Path, Upgrade[]> Upgrades => _upgrades;
+        protected Vector2 Position { get; }
+        protected IView View { get; }
 
-        protected readonly ITowerView _view;
-        protected Vector2 _position;
-        readonly Dictionary<Path, Upgrade[]> _upgrades;
-        
-        protected Tower(ITowerView view, Vector2 position, Dictionary<Path, Upgrade[]> upgrades)
+        protected Tower(IView view, Vector2 position)
         {
-            _view = view;
-            _position = position;
-            _upgrades = upgrades;
-            KIllCount = 0;
-            
-            _view.Clicked += SelectTower;
+            View = view;
+            Position = position;
+            View.Clicked += () => Selected?.Invoke();
         }
 
-        void SelectTower()
-        {
-            Selected?.Invoke();
-        }
-
-        public virtual void UpdateSettings(SettingsBase settingsBase)
-        {
-            Name = settingsBase.Name;
-            Description = settingsBase.Description;
-            Cost = settingsBase.Cost;
-            TowerType = settingsBase.TowerType;
-            Icon = settingsBase.Icon;
-            
-            _view.Init(Icon, TowerType);
-        }
-
-        public abstract void Update(IEnumerable<Marble> marbles, float delta);
-        
-        public void ApplyUpgrade(Upgrade upgrade)
-        {
-            upgrade.Apply(this);
-        }
+        public abstract void UpdateTower(IEnumerable<Marble> marbles, float delta);
 
         public void Destroy()
         {
-            _view.DestroySelf();
+            View.DestroySelf();
             IsDestroyed = true;
         }
 
-        public void Select() => _view.Select();
-        public void Unselect() => _view.Unselect();
-
-        [Serializable]
-        public abstract class SettingsBase
+        public void Select() => View.Select();
+        public void Deselect() => View.Deselect();
+        
+        public interface IView
         {
-            public string Name;
-            public string Description;
-            public int Cost;
-            public TowerType TowerType;
-            public Sprite Icon;
+            event Action Clicked;
 
-            public abstract Dictionary<Path, Upgrade[]> GetUpgrades();
+            void Init(Sprite sprite, AnimalType towerType);
+            void Select();
+            void Deselect();
+            Projectile SpawnProjectile(ProjectileConfig config);
+            void DestroySelf();
+            void EnableCollider();
+            void DisableCollider();
+            void ShowAsPlaceable(bool canBePlaced);
+            void UpdateRotation(Vector2 closestMarblePosition);
         }
     }
 }
