@@ -1,5 +1,4 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
@@ -62,6 +61,8 @@ namespace MarblesTD.Core.ScenarioSystems
             _signalBus = signalBus;
             mediator.AddHandler<PurchaseRequest, bool>(this);
             signalBus.Subscribe<TowerSoldSignal>(OnTowerSold);
+            signalBus.Subscribe<HoneyGeneratedSignal>(OnHoneyGenerated);
+            signalBus.Subscribe<LivesGeneratedSignal>(OnLivesGenerated);
         }
 
         public void EnterState()
@@ -69,7 +70,7 @@ namespace MarblesTD.Core.ScenarioSystems
             LostLifeThisScenario = false;
             RunEnded = false;
             Lives = 20;
-            Honey = 100;
+            Honey = 1000;
 
             _view.SpawnScenario(CurrentScenario.ID);
             _view.ShowUI();
@@ -96,6 +97,16 @@ namespace MarblesTD.Core.ScenarioSystems
         void OnTowerSold(TowerSoldSignal signal)
         {
             Honey += signal.Honey;
+        }
+        
+        void OnHoneyGenerated(HoneyGeneratedSignal signal)
+        {
+            Honey += signal.Honey;
+        }
+        
+        void OnLivesGenerated(LivesGeneratedSignal signal)
+        {
+            Lives += signal.Lives;
         }
         
         public interface IView

@@ -62,6 +62,4 @@ namespace MarblesTD.Towers
             tower.AllForOne = true;
         }
     }
-    
-    
 }

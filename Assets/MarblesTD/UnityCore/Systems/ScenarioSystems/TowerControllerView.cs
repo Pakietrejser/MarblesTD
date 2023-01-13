@@ -76,12 +76,12 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
                     {typeof(StarStag), false},
                     
                     {typeof(Mastiffteer), true},
-                    {typeof(HalberdBear), true},
+                    {typeof(HalberdBear), false},
                     {typeof(Beehive), true},
                     
-                    {typeof(ShadowPaw), true},
+                    {typeof(ShadowPaw), false},
                     {typeof(MagicPot), true},
-                    {typeof(WebWeaver), true},
+                    {typeof(WebWeaver), false},
                 };
             }
             saveData.TowerUnlocks = _towerUnlocks.Values.ToArray();
