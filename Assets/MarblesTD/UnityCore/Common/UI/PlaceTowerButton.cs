@@ -18,6 +18,7 @@ namespace MarblesTD.UnityCore.Common.UI
     {
         [Header("Assigned after placing it in the world")]
         [SerializeField] TMP_Text titleText;
+        [SerializeField] TowerInfoBox towerInfoBox;
         
         [SerializeField] Image towerImage;
         [SerializeField] TMP_Text costText;
@@ -134,15 +135,8 @@ namespace MarblesTD.UnityCore.Common.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            string type = _currentTower.AnimalType switch
-            {
-                AnimalType.WildAnimal => "Dziki",
-                AnimalType.NobleAnimal => "Zacny",
-                AnimalType.NightAnimal => "Nocny",
-                _ => throw new ArgumentOutOfRangeException()
-            };
-            
-            ShowText($"{type} {_currentTower.GetTranslatedName()}");
+            ShowText(_currentTower.GetTranslatedName());
+            towerInfoBox.Show(_currentTower);
             if (lockedBox.activeSelf) return;
             highlight.enabled = true;
         }
@@ -150,16 +144,17 @@ namespace MarblesTD.UnityCore.Common.UI
         public void OnPointerExit(PointerEventData eventData)
         {
             ShowText("Sojusznicy");
+            towerInfoBox.Hide();
             if (lockedBox.activeSelf) return;
             highlight.enabled = false;
         }
 
         public void ShowText(string text)
         {
-            titleText.text = text;
-            titleText.ChangeAlpha(0);
-            titleText.DOKill();
-            titleText.DOFade(1f, 0.4f);
+            // titleText.text = text;
+            // titleText.ChangeAlpha(0);
+            // titleText.DOKill();
+            // titleText.DOFade(1f, 0.4f);
         }
     }
 }

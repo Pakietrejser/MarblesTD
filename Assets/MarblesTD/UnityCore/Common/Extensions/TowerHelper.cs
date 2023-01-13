@@ -45,9 +45,26 @@ namespace MarblesTD.UnityCore.Common.Extensions
                 Mastiffteer _ => "Muszkieter",
                 HalberdBear _ => "Strażmiś",
                 Beehive _ => "Ul",
-                ShadowPaw _ => "Łapka",
+                ShadowPaw _ => "Łapka Cienia",
                 MagicPot _ => "Kocioł",
                 WebWeaver _ => "Sieciarz",
+                _ => "Coś poszło nie tak"
+            };
+        }
+        
+        public static string GetTranslatedDescription(this Tower tower)
+        {
+            return tower switch
+            {
+                QuickFox _ => "Strzela przebijającymi strzałami.",
+                CannonBoar _ => "Niszczy marble swoim potężnym działem.",
+                StarStag _ => "Wspiera najbliższego sojusznika.",
+                Mastiffteer _ => "Strzela na nieograniczony zasięg",
+                HalberdBear _ => "Używa halabardy by niszczyć najsilniejsze z marbli.",
+                Beehive _ => "Generuje więcej miodu dla ciebie",
+                ShadowPaw _ => "Jego ostrza mają krótki zasięg ale są zabójcze.",
+                MagicPot _ => "Podpala wszystkie marble w jego zasięgu.",
+                WebWeaver _ => "Spowalania marble przy użyciu sieci",
                 _ => "Coś poszło nie tak"
             };
         }

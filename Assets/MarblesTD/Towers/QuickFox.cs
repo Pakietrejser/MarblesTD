@@ -61,6 +61,7 @@ namespace MarblesTD.Towers
                 float distance = Vector2.Distance(Position, marble.Position);
                 if (distance > Range) continue;
                 if (!(distance < minDistance)) continue;
+                if (marble.IsDestroyed) continue;
                 
                 closestMarble = marble;
                 minDistance = distance;
