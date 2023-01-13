@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: zablokowane
+  m_text: "graj by odblokowa\u0107"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bfc4e494fc9128442bd9134282b773be, type: 2}
   m_sharedMaterial: {fileID: -897798486141159039, guid: bfc4e494fc9128442bd9134282b773be, type: 2}

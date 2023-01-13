@@ -59,12 +59,12 @@ namespace MarblesTD.UnityCore.Common.Extensions
                 QuickFox _ => "Strzela przebijającymi strzałami.",
                 CannonBoar _ => "Niszczy marble swoim potężnym działem.",
                 StarStag _ => "Wspiera najbliższego sojusznika.",
-                Mastiffteer _ => "Strzela na nieograniczony zasięg",
+                Mastiffteer _ => "Strzela na nieograniczony zasięg.",
                 HalberdBear _ => "Używa halabardy by niszczyć najsilniejsze z marbli.",
-                Beehive _ => "Generuje więcej miodu dla ciebie",
+                Beehive _ => "Generuje więcej funduszy dla ciebie.",
                 ShadowPaw _ => "Jego ostrza mają krótki zasięg ale są zabójcze.",
-                MagicPot _ => "Podpala wszystkie marble w jego zasięgu.",
-                WebWeaver _ => "Spowalania marble przy użyciu sieci",
+                MagicPot _ => "Podpala wszystkie marble wokół niego.",
+                WebWeaver _ => "Spowalania marble swoją siecią.",
                 _ => "Coś poszło nie tak"
             };
         }
