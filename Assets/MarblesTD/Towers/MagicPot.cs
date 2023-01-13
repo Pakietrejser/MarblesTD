@@ -26,6 +26,9 @@ namespace MarblesTD.Towers
         public int Damage { get; set; } = 1;
         public float Range { get; set; } = 2.2f;
         public float ReloadSpeed { get; set; } = 1.5f;
+
+        public bool Corrosion;
+        
         float _reloadTime;
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
@@ -44,14 +47,18 @@ namespace MarblesTD.Towers
                     if (marble.IsDestroyed) continue;
 
                     hitAtLeastOne = true;
-                    marble.TakeDamage(Damage, this);
+
+                    if (Corrosion && marble.Health > 6)
+                    {
+                        marble.TakeDamage(Damage * 5, this);
+                    }
+                    else
+                    {
+                        marble.TakeDamage(Damage, this);
+                    }
                 }
 
-                if (hitAtLeastOne)
-                {
-                    View.ShowBurn(Range);
-                }
-                else
+                if (!hitAtLeastOne)
                 {
                     _reloadTime = 0.1f;
                 }
@@ -71,9 +78,14 @@ namespace MarblesTD.Towers
         protected override void OnTowerPlaced()
         {
             View.HideRangeCircle();
+            View.ShowBurn(Range);
         }
 
-        public void Refresh() => View.ShowRangeCircle(Range);
+        public void Refresh()
+        {
+            View.ShowRangeCircle(Range);
+            View.ShowBurn(Range);
+        }
     }
     
     public interface IMagicPotView : Tower.IView

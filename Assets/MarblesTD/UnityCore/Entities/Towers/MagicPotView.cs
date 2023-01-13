@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.Towers;
 using UnityEngine;
 
@@ -22,16 +23,10 @@ namespace MarblesTD.UnityCore.Entities.Towers
             ShowRangeCircle(2f);
         }
 
-        public async void ShowBurn(float range)
+        public void ShowBurn(float range)
         {
-            fireRenderer.transform.localScale = Vector3.one * _originalScale;
             fireRenderer.enabled = true;
-
-            fireRenderer.transform.DOKill();
-            fireRenderer.transform.DOScale(Vector3.one * range * _originalScale, 0.15f).SetEase(Ease.Flash);
-            await UniTask.Delay(TimeSpan.FromSeconds(0.25f));
-            fireRenderer.transform.DOScale(Vector3.one * _originalScale, 0.05f).SetEase(Ease.Flash)
-                .OnComplete(() => fireRenderer.enabled = false);
+            fireRenderer.transform.localScale = Vector3.one * range * _originalScale;
         }
 
         public void ShowRangeCircle(float range)
