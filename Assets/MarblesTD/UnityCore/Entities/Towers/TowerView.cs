@@ -12,7 +12,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
         public Collider2D Collider => towerCollider;
 
         SpriteRenderer[] _renderers;
-        void Awake()
+        protected virtual void Awake()
         {
             _renderers = GetComponentsInChildren<SpriteRenderer>();
         }

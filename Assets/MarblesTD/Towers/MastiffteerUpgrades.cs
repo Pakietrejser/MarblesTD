@@ -5,7 +5,7 @@ namespace MarblesTD.Towers
     public class SilverBullet : Upgrade<Mastiffteer>
     {
         public override int Cost => 60;
-        public override string Description => "Zbija 5 warstw marbli jednym strzałem.";
+        public override string Description => "Zbija do 5 warstw marbli jednym strzałem.";
         protected override void ExplicitApply(Mastiffteer tower)
         {
             tower.Damage = 5;

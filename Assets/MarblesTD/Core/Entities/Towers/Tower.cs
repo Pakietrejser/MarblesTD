@@ -16,6 +16,7 @@ namespace MarblesTD.Core.Entities.Towers
         {
             if (!(view is TView actualView)) throw new ArgumentException();
 
+            base.Init(view, position);
             View = actualView;
             View.Clicked += SelectTower;
             OnTowerPlaced();
@@ -30,9 +31,25 @@ namespace MarblesTD.Core.Entities.Towers
 
         protected virtual void OnTowerPlaced(){}
         protected virtual void OnTowerRemoved(){}
+        
+        protected virtual void OnSelected(){}
+        protected virtual void OnDeselected(){}
 
-        public sealed override void Select() => View?.Select();
-        public sealed override void Deselect() => View?.Deselect();
+        public sealed override void Select()
+        {
+            if (View == null) return;
+            
+            View.Select();
+            OnSelected();
+        }
+
+        public sealed override void Deselect()
+        {
+            if (View == null) return;
+            
+            View.Deselect();
+            OnDeselected();
+        }
     }
     
     public abstract class Tower
