@@ -50,7 +50,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             _processing = true;
             
             TimeController.Pause();
-            await UniTask.DelayFrame(1);
+            await UniTask.Delay(TimeSpan.FromSeconds(.01f));
             ScenarioManager.RunEnded = true;
 
             var scenario = request.Scenario;
