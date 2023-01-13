@@ -86,7 +86,6 @@ namespace MarblesTD.Towers
                 if (distance > Range) continue;
                 if (!(distance < minDistance)) continue;
                 if (marble.IsDestroyed) continue;
-                Debug.Log(distance);
                 
                 closestMarble = marble;
                 minDistance = distance;

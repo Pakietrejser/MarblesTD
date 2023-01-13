@@ -4,13 +4,12 @@ namespace MarblesTD.Core.Entities.Marbles
 {
     public abstract class Wave
     {
-        public abstract int HoneyReward { get; }
+        public int HoneyReward => 50;
         public abstract IEnumerable<WaveGroup> GetGroups();
     }
 
     public class Wave1 : Wave
     {
-        public override int HoneyReward => 10;
 
         public override IEnumerable<WaveGroup> GetGroups()
         {
@@ -20,7 +19,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave2 : Wave
     {
-        public override int HoneyReward => 20;
         
         public override IEnumerable<WaveGroup> GetGroups()
         {
@@ -30,7 +28,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave3 : Wave
     {
-        public override int HoneyReward => 25;
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(1, 25);
@@ -40,7 +37,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave4 : Wave
     {
-        public override int HoneyReward => 30;
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(1, 35);
@@ -50,7 +46,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave5 : Wave
     {
-        public override int HoneyReward => 40;
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(1, 5);
@@ -60,7 +55,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave6 : Wave
     {
-        public override int HoneyReward => 45;
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(1, 15);
@@ -71,7 +65,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave7 : Wave
     {
-        public override int HoneyReward => 60;
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(3, 15);
@@ -82,7 +75,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave8 : Wave
     {
-        public override int HoneyReward => 90;
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(3, 10);
@@ -93,7 +85,6 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave9 : Wave
     {
-        public override int HoneyReward => 100;
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(10, 5, 3, 2);
@@ -102,61 +93,54 @@ namespace MarblesTD.Core.Entities.Marbles
     
     public class Wave10 : Wave
     {
-        public override int HoneyReward => 100;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 20, 3, 2);
+            yield return new WaveGroup(10, 30, 3, 2);
         }
     }
     
     public class Wave11 : Wave
     {
-        public override int HoneyReward => 110;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 30, 3, 1.2f);
+            yield return new WaveGroup(10, 40, 3, 1.2f);
         }
     }
     
     public class Wave12 : Wave
     {
-        public override int HoneyReward => 120;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 40, 3, .8f);
+            yield return new WaveGroup(10, 50, 3, .8f);
         }
     }
     
     public class Wave13 : Wave
     {
-        public override int HoneyReward => 130;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 40);
+            yield return new WaveGroup(12, 50);
         }
     }
     
     public class Wave14 : Wave
     {
-        public override int HoneyReward => 140;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 60);
+            yield return new WaveGroup(14, 55);
         }
     }
     
     public class Wave15 : Wave
     {
-        public override int HoneyReward => 150;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 100);
+            yield return new WaveGroup(16, 60);
         }
     }
 
     public class ModularWave : Wave
     {
-        public override int HoneyReward => _waveIndex * 10;
         readonly int _waveIndex;
 
         public ModularWave(int waveIndex)
@@ -166,7 +150,7 @@ namespace MarblesTD.Core.Entities.Marbles
         
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(1 * _waveIndex, 10 * _waveIndex);
+            yield return new WaveGroup(2 * _waveIndex, 3 * _waveIndex);
         }
     }
 }

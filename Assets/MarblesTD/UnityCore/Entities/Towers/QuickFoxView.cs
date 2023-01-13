@@ -18,7 +18,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
             base.Awake();
             _originalScale = rangeRenderer.transform.localScale.x;
             rangeRenderer.enabled = false;
-            ShowRangeCircle(4);
+            ShowRangeCircle(3.5f);
         }
 
         public Projectile SpawnProjectile(ArrowConfig config)

@@ -41,6 +41,7 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
         void OnMarbleHit(Marble marble)
         {
             if (_hitMarbles.Contains(marble)) return;
+            if (marble.IsDestroyed) return;
             _hitMarbles.Add(marble);
             
             marble.TakeDamage(_config.Damage, _config.Owner);

@@ -48,6 +48,7 @@ namespace MarblesTD.Core.ScenarioSystems
             {
                 int waveIndex = await SpawnMarbleWave();
                 CurrentWave = waveIndex;
+                Debug.Log($"Finished spawning wave {waveIndex}");
                 if (waveIndex == LastWave) return;
                 _view.ToggleWaveRequest(true);
                 _processing = false;
@@ -116,7 +117,7 @@ namespace MarblesTD.Core.ScenarioSystems
                         if (marbles.Count == 0 && marbleWave.FinishedSpawning)
                         {
                             _scenarioManager.Honey += marbleWave.HoneyReward;
-                            if (marbleWave.WaveIndex == LastWave)
+                            if (marbleWave.WaveIndex >= LastWave)
                             {
                                 _scenarioManager.RunEnded = true;
                                 await _mediator.SendAsync(new ExitScenarioRequest(_scenarioManager.CurrentScenario, true, CurrentWave));
