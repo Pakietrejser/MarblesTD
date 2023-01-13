@@ -7,7 +7,13 @@ namespace MarblesTD.UnityCore.Entities.Towers
     public class MastiffteerView : TowerView, IMastiffteerView
     {
         [SerializeField] SpriteRenderer gunShotRenderer;
-        
+
+        protected override void Awake()
+        {
+            base.Awake();
+            gunShotRenderer.DOFade(0, 0.001f);
+        }
+
         public void ShowGunShot()
         {
             gunShotRenderer.color = Color.white;

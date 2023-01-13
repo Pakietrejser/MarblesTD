@@ -121,7 +121,7 @@ namespace MarblesTD.Core.ScenarioSystems
 
                         if (marbles.Count == 0 && marbleWave.FinishedSpawning)
                         {
-                            _scenarioManager.Honey += marbleWave.HoneyReward;
+                            _signalBus.Fire(new HoneyGeneratedSignal(marbleWave.HoneyReward));
                             _signalBus.Fire(new RoundEndedSignal(marbleWave.HoneyReward));
                             
                             if (marbleWave.WaveIndex >= LastWave)

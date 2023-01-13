@@ -6,6 +6,7 @@ using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.MapSystems;
+using UnityEngine;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -46,7 +47,7 @@ namespace MarblesTD.Core.ScenarioSystems
         public int Honey
         {
             get => _honey;
-            set
+            private set
             {
                 _honey = value;
                 _signalBus.Fire(new HoneyChangedSignal(_honey));
@@ -70,7 +71,7 @@ namespace MarblesTD.Core.ScenarioSystems
             LostLifeThisScenario = false;
             RunEnded = false;
             Lives = 20;
-            Honey = 1000;
+            Honey = 100;
 
             _view.SpawnScenario(CurrentScenario.ID);
             _view.ShowUI();
@@ -101,6 +102,7 @@ namespace MarblesTD.Core.ScenarioSystems
         
         void OnHoneyGenerated(HoneyGeneratedSignal signal)
         {
+            // Debug.Log($"{Honey} -> {Honey + signal.Honey}");
             Honey += signal.Honey;
         }
         

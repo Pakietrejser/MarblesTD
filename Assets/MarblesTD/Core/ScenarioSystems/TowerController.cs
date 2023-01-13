@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
+using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Projectiles;
 using Zenject;
+using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -13,6 +15,7 @@ namespace MarblesTD.Core.ScenarioSystems
         [Inject] MarbleController MarbleController { get; }
         [Inject] TimeController TimeController { get; }
         [Inject] ScenarioManager ScenarioManager { get; set; }
+        [Inject] SignalBus SignalBus { get; set; }
         
         public HashSet<AnimalType> UsedAnimalTypes { get; } = new HashSet<AnimalType>();
         
@@ -76,7 +79,7 @@ namespace MarblesTD.Core.ScenarioSystems
         
         void OnMarbleCracked(Marble marble, int crackedAmount)
         {
-            ScenarioManager.Honey += crackedAmount;
+            SignalBus.Fire(new HoneyGeneratedSignal(crackedAmount));
         }
         
         public interface IView
