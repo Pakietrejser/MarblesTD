@@ -61,6 +61,7 @@ namespace MarblesTD.UnityCore.Common.UI
             towerSetColor.color = _currentTower.GetColor();
             lockedBox.SetActive(!unlocked);
             buttonAudio.IsActive = unlocked;
+            SignalBus.FireStatic(new HoneyGeneratedSignal(0));
         }
         
         public void OnBeginDrag(PointerEventData data)

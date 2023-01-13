@@ -126,7 +126,6 @@ namespace MarblesTD.Core.ScenarioSystems
                             
                             if (marbleWave.WaveIndex >= LastWave)
                             {
-                                _scenarioManager.RunEnded = true;
                                 await _mediator.SendAsync(new ExitScenarioRequest(_scenarioManager.CurrentScenario, true, CurrentWave));
                                 return;
                             }

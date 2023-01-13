@@ -34,6 +34,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
         [Inject] TowerController TowerController { get; set; }
         [Inject] TimeController TimeController { get; set; }
         
+        bool _processing;
         bool _receivedConfirmation;
         bool PlayerInteraction() => _receivedConfirmation;
         
@@ -45,6 +46,13 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
 
         protected override async UniTask<bool> Execute(ExitScenarioRequest request)
         {
+            if (_processing) return true;
+            _processing = true;
+            
+            TimeController.Pause();
+            await UniTask.DelayFrame(1);
+            ScenarioManager.RunEnded = true;
+
             var scenario = request.Scenario;
             bool playerWon = request.PlayerWon;
             int wavesCompleted = request.WavesCompleted;
@@ -65,7 +73,6 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             }
 
             Debug.Log(playerWon ? "Player Won!" : "Player Lost!");
-            TimeController.Pause();
             closeButton.interactable = false;
             titleText.text = playerWon ? "Wygrałeś!" : "Porażka";
             towerUnlock.SetActive(false);
@@ -92,6 +99,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             await UniTask.WaitUntil(PlayerInteraction);
             Hide();
 
+            _processing = false;
             Bus.Fire(new MapStartedSignal());
             return true;
         }

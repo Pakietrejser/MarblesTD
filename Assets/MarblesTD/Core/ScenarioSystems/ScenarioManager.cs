@@ -20,6 +20,7 @@ namespace MarblesTD.Core.ScenarioSystems
         readonly IView _view;
         readonly Mediator _mediator;
         readonly SignalBus _signalBus;
+        readonly TimeController _timeController;
 
         public Scenario CurrentScenario;
 
@@ -38,7 +39,6 @@ namespace MarblesTD.Core.ScenarioSystems
                 
                 if (Lives <= 0 && !RunEnded)
                 {
-                    RunEnded = true;
                     _mediator.SendAsync(new ExitScenarioRequest(CurrentScenario, false, MarbleController.CurrentWave));
                 }
             }
@@ -55,11 +55,12 @@ namespace MarblesTD.Core.ScenarioSystems
             }
         }
 
-        public ScenarioManager(IView view, Mediator mediator, SignalBus signalBus)
+        public ScenarioManager(IView view, Mediator mediator, SignalBus signalBus, TimeController timeController)
         {
             _view = view;
             _mediator = mediator;
             _signalBus = signalBus;
+            _timeController = timeController;
             mediator.AddHandler<PurchaseRequest, bool>(this);
             signalBus.Subscribe<TowerSoldSignal>(OnTowerSold);
             signalBus.Subscribe<HoneyGeneratedSignal>(OnHoneyGenerated);
