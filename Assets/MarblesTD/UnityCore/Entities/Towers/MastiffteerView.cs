@@ -1,8 +1,8 @@
 ﻿using DG.Tweening;
-using MarblesTD.Towers.MastiffteerTower;
+using MarblesTD.Towers;
 using UnityEngine;
 
-namespace MarblesTD.UnityCore.Entities
+namespace MarblesTD.UnityCore.Entities.Towers
 {
     public class MastiffteerView : TowerView, IMastiffteerView
     {

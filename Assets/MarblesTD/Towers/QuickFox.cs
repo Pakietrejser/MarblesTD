@@ -3,10 +3,9 @@ using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Projectiles;
-using MarblesTD.Towers.QuickFoxTower.Upgrades;
 using UnityEngine;
 
-namespace MarblesTD.Towers.QuickFoxTower
+namespace MarblesTD.Towers
 {
     public class QuickFox : Tower<IQuickFoxView>
     {

@@ -3,9 +3,9 @@ using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
 
-namespace MarblesTD.Towers.CannonBoarTower
+namespace MarblesTD.Towers
 {
-    public class CannonBoar : Tower<ICannonBoarView>
+    public class StarStag : Tower<IStarStagView>
     {
         public override int Cost => 1;
         public override AnimalType AnimalType => AnimalType.WildAnimal;
@@ -16,7 +16,7 @@ namespace MarblesTD.Towers.CannonBoarTower
         }
     }
     
-    public interface ICannonBoarView : Tower.IView
+    public interface IStarStagView : Tower.IView
     {
         
     }

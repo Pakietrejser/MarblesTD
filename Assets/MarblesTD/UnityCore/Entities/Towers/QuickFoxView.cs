@@ -1,9 +1,9 @@
 ﻿using MarblesTD.Core.Entities.Towers.Projectiles;
 using MarblesTD.Core.ScenarioSystems;
-using MarblesTD.Towers.QuickFoxTower;
+using MarblesTD.Towers;
 using UnityEngine;
 
-namespace MarblesTD.UnityCore.Entities
+namespace MarblesTD.UnityCore.Entities.Towers
 {
     public class QuickFoxView : TowerView, IQuickFoxView
     {

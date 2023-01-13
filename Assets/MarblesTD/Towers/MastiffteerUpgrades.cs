@@ -1,6 +1,6 @@
 ﻿using MarblesTD.Core.Entities.Towers;
 
-namespace MarblesTD.Towers.MastiffteerTower
+namespace MarblesTD.Towers
 {
     public class SilverBullet : Upgrade<Mastiffteer>
     {

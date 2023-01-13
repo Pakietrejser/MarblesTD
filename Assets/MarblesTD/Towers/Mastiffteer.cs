@@ -5,7 +5,7 @@ using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
 
-namespace MarblesTD.Towers.MastiffteerTower
+namespace MarblesTD.Towers
 {
     public class Mastiffteer : Tower<IMastiffteerView>
     {

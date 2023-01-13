@@ -2,7 +2,7 @@
 using MarblesTD.Core.Entities.Towers;
 using UnityEngine;
 
-namespace MarblesTD.UnityCore.Entities
+namespace MarblesTD.UnityCore.Entities.Towers
 {
     public abstract class TowerView : MonoBehaviour, Tower.IView
     {
