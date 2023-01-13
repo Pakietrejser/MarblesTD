@@ -37,7 +37,7 @@ namespace MarblesTD.Towers
             
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
         {
-            var marblesArray = marbles.ToArray();
+            var marblesArray = marbles.Where(x => !x.IsDestroyed).ToArray();
             _reloadTime -= delta;
             if (_reloadTime <= 0)
                 _reloadTime = Heroism 
