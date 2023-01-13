@@ -18,13 +18,18 @@ namespace MarblesTD.Core.Entities.Towers
 
             View = actualView;
             View.Clicked += SelectTower;
+            OnTowerPlaced();
         }
-        
+
         public sealed override void Destroy()
         {
+            OnTowerRemoved();
             View.DestroySelf();
             IsDestroyed = true;
         }
+
+        protected virtual void OnTowerPlaced(){}
+        protected virtual void OnTowerRemoved(){}
 
         public sealed override void Select() => View?.Select();
         public sealed override void Deselect() => View?.Deselect();

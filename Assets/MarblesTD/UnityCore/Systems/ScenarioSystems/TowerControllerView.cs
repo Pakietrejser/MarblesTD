@@ -7,6 +7,7 @@ using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.Towers;
 using MarblesTD.Towers.CannonBoarTower;
+using MarblesTD.Towers.MastiffteerTower;
 using MarblesTD.Towers.QuickFoxTower;
 using MarblesTD.Towers.StarStagTower;
 using MarblesTD.UnityCore.Common.RequestHandlers;

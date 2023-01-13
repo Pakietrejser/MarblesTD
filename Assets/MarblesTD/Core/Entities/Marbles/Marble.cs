@@ -1,5 +1,6 @@
 ﻿using System;
 using MarblesTD.Core.Common.Signals.List;
+using MarblesTD.Core.Entities.Towers;
 using UnityEngine;
 using Zenject;
 using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
@@ -39,7 +40,7 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.UpdateMarble(_health);
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int damage, Tower dealer)
         {
             int cappedDamage = Math.Min(damage, _health);
 
@@ -53,6 +54,7 @@ namespace MarblesTD.Core.Entities.Marbles
                 }
             }
             Cracked?.Invoke(this, cracks);
+            dealer.MarblesKilled += cracks;
             _signalBus.Fire(new MarbleDamagedSignal());
             
             if (_health == 0)

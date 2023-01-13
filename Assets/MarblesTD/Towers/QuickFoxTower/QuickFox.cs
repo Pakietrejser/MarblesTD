@@ -21,7 +21,6 @@ namespace MarblesTD.Towers.QuickFoxTower
         
         public override int Cost => 50;
         public override AnimalType AnimalType => AnimalType.WildAnimal;
-
         public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>()
         {
             {UpgradePath.BotLeft, new FasterAttackAndSeeHidden()},

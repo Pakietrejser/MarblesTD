@@ -33,6 +33,7 @@ namespace MarblesTD.Core.ScenarioSystems
         
         public void ExitState()
         {
+            Unpause();
             _currentTimeScaleIndex = 0;
         }
 

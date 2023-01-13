@@ -43,13 +43,8 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
             if (_hitMarbles.Contains(marble)) return;
             _hitMarbles.Add(marble);
             
-            marble.TakeDamage(_config.Damage);
+            marble.TakeDamage(_config.Damage, _config.Owner);
             _remainingHits--;
-
-            if (marble.IsDestroyed)
-            {
-                _config.Owner.MarblesKilled++;
-            }
 
             if (_remainingHits == 0)
             {

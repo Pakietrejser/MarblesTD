@@ -32,6 +32,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
         [Inject] Mediator Mediator { get; set; }
         [Inject] ScenarioManager ScenarioManager { get; set; }
         [Inject] TowerController TowerController { get; set; }
+        [Inject] TimeController TimeController { get; set; }
         
         bool _receivedConfirmation;
         bool PlayerInteraction() => _receivedConfirmation;
@@ -64,6 +65,7 @@ namespace MarblesTD.UnityCore.Common.RequestHandlers
             }
 
             Debug.Log(playerWon ? "Player Won!" : "Player Lost!");
+            TimeController.Pause();
             closeButton.interactable = false;
             titleText.text = playerWon ? "Wygrałeś!" : "Porażka";
             towerUnlock.SetActive(false);
