@@ -11,14 +11,14 @@ namespace MarblesTD.Towers
     {
         public int Damage { get; set; } = 1;
         public int Pierce { get; set; } = 2;
-        public float AttackSpeed { get; set; } = 0.95f;
+        public float ReloadSpeed { get; set; } = 0.95f;
         public float Range { get; set; } = 3.5f;
         public float ProjectileTravelDistance { get; set; } = 30;
         public float ProjectileSpeed { get; set; } = 20;
         
         public bool Hydra = false;
         public bool DoubleShot = false;
-        float _floatTimeUntilNextAttack;
+        float _reloadTime;
         
         public override int Cost => 50;
         public override AnimalType AnimalType => AnimalType.WildAnimal;
@@ -36,10 +36,10 @@ namespace MarblesTD.Towers
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
         {
-            _floatTimeUntilNextAttack -= delta;
-            if (!(_floatTimeUntilNextAttack <= 0) || !SeekClosestMarble(marbles, out var closestMarble)) return;
+            _reloadTime -= delta;
+            if (!(_reloadTime <= 0) || !SeekClosestMarble(marbles, out var closestMarble)) return;
             
-            _floatTimeUntilNextAttack = AttackSpeed;
+            _reloadTime = ReloadSpeed;
             View.UpdateRotation(closestMarble.Position);
 
             if (Hydra)

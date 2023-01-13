@@ -9,7 +9,7 @@ namespace MarblesTD.Towers
         
         protected override void ExplicitApply(QuickFox tower)
         {
-            tower.AttackSpeed = 0.65f;
+            tower.ReloadSpeed = 0.65f;
         }
     }
     

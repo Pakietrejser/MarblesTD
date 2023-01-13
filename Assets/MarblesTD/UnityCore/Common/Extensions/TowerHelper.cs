@@ -61,7 +61,7 @@ namespace MarblesTD.UnityCore.Common.Extensions
                 StarStag _ => "Wspiera najbliższego sojusznika.",
                 Mastiffteer _ => "Strzela na nieograniczony zasięg.",
                 HalberdBear _ => "Używa halabardy by niszczyć najsilniejsze z marbli.",
-                Beehive _ => "Generuje więcej funduszy dla ciebie.",
+                Beehive _ => "Generuje $30 miodu co rundę.",
                 ShadowPaw _ => "Jego ostrza mają krótki zasięg ale są zabójcze.",
                 MagicPot _ => "Podpala wszystkie marble wokół niego.",
                 WebWeaver _ => "Spowalania marble swoją siecią.",

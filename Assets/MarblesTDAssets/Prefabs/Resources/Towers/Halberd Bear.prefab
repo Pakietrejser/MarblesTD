@@ -355,7 +355,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8422161118259489184}
-  - component: {fileID: 1411520399839680534}
+  - component: {fileID: 5586539972372273957}
   - component: {fileID: 1471787730598849473}
   m_Layer: 7
   m_Name: Halberd Bear
@@ -382,7 +382,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1411520399839680534
+--- !u!114 &5586539972372273957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -391,10 +391,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8422161118259489185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7c52a2732d347aca73f0eb93f7174e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0df8286668af4bc48c53c90f8fad4640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 8422161118259489185, guid: dbc6bae9914cc9541b15910facf9a81b, type: 3}
   selectRenderer: {fileID: 2184438993393194741}
   towerCollider: {fileID: 1471787730598849473}
 --- !u!58 &1471787730598849473

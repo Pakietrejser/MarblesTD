@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8422161118259489184}
-  - component: {fileID: 1411520399839680534}
   - component: {fileID: 1471787730598849473}
+  - component: {fileID: 8698856796863553415}
   m_Layer: 7
   m_Name: Cannon Boar
   m_TagString: Untagged
@@ -34,21 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1411520399839680534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422161118259489185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7c52a2732d347aca73f0eb93f7174e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 8422161118259489185, guid: dbc6bae9914cc9541b15910facf9a81b, type: 3}
-  selectRenderer: {fileID: 346201756890386611}
-  towerCollider: {fileID: 1471787730598849473}
 --- !u!58 &1471787730598849473
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -65,6 +50,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.6
+--- !u!114 &8698856796863553415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8422161118259489185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984591b19bf940e7ac0ccbcebd0a1ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectRenderer: {fileID: 346201756890386611}
+  towerCollider: {fileID: 1471787730598849473}
 --- !u!1 &8422161119800740961
 GameObject:
   m_ObjectHideFlags: 0
