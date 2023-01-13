@@ -1,6 +1,7 @@
 ﻿using System;
 using MarblesTD.Core.Entities.Towers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace MarblesTD.UnityCore.Entities.Towers
 {
@@ -31,6 +32,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
 
         void OnMouseDown()
         {
+            if (EventSystem.current.IsPointerOverGameObject()) return;
             Clicked?.Invoke();
         }
         
