@@ -14,8 +14,6 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
 
         float _remainingHits;
         List<Marble> _hitMarbles;
-
-        bool _seeking;
         
         public Projectile(IProjectileView view, Vector2 position, ArrowConfig config)
         {
@@ -24,7 +22,6 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
             _config = config;
             _view.Projectile = this;
             _hitMarbles = new List<Marble>();
-            _seeking = config.Seeking;
             
             _remainingHits = config.Pierce;
             _view.UpdateRotation(config.TargetPosition);
@@ -77,9 +74,8 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
         public readonly float Speed;
         public readonly Vector2 TargetPosition;
         public readonly Tower Owner;
-        public readonly bool Seeking;
 
-        public ArrowConfig(int damage, int pierce, float maxDistance,  float speed, Vector2 targetPosition, Tower owner, bool seeking)
+        public ArrowConfig(int damage, int pierce, float maxDistance,  float speed, Vector2 targetPosition, Tower owner)
         {
             Damage = damage;
             Pierce = pierce;
@@ -87,7 +83,6 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
             Speed = speed;
             TargetPosition = targetPosition;
             Owner = owner;
-            Seeking = seeking;
         }
     }
 

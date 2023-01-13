@@ -15,10 +15,9 @@ namespace MarblesTD.Towers
         public float Range { get; set; } = 3.5f;
         public float ProjectileTravelDistance { get; set; } = 30;
         public float ProjectileSpeed { get; set; } = 20;
-
-
-        public bool SeekingArrows = false;
-        public bool TripleShot = false;
+        
+        public bool Hydra = false;
+        public bool DoubleShot = false;
         float _floatTimeUntilNextAttack;
         
         public override int Cost => 50;
@@ -31,8 +30,8 @@ namespace MarblesTD.Towers
             {UpgradePath.BotMid, new SharperArrows()},
             {UpgradePath.TopMid, new ExplosiveArrows()},
 
-            {UpgradePath.BotRight, new TripleShot()},
-            {UpgradePath.TopRight, new SeekingArrows()},
+            {UpgradePath.BotRight, new DoubleShot()},
+            {UpgradePath.TopRight, new Hydra()},
         };
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
@@ -42,21 +41,38 @@ namespace MarblesTD.Towers
             
             _floatTimeUntilNextAttack = AttackSpeed;
             View.UpdateRotation(closestMarble.Position);
-            
-            var projectileConfig = new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble.Position, this, SeekingArrows);
-            View.SpawnProjectile(projectileConfig);
 
-            
-            if (TripleShot)
+            if (Hydra)
             {
-                var leftArrow = Quaternion.Euler(Vector3.forward * 20) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
-                var leftConfig = new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, leftArrow, this, SeekingArrows);
-                View.SpawnProjectile(leftConfig);
+                View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble.Position, this));
                 
-                var rightArrow = Quaternion.Euler(Vector3.forward * -20) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
-                var rightConfig = new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, rightArrow, this, SeekingArrows);
-                View.SpawnProjectile(rightConfig);
+                var leftArrow = Quaternion.Euler(Vector3.forward * 15) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
+                View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, leftArrow, this));
+                
+                var rightArrow = Quaternion.Euler(Vector3.forward * -15) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
+                View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, rightArrow, this));
+                
+                var leftArrow2 = Quaternion.Euler(Vector3.forward * 30) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
+                View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, leftArrow2, this));
+                
+                var rightArrow2 = Quaternion.Euler(Vector3.forward * -30) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
+                View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, rightArrow2, this));
+                
+                return;
             }
+            
+            if (DoubleShot)
+            {
+                var leftArrow = Quaternion.Euler(Vector3.forward * 10) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
+                View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, leftArrow, this));
+                
+                var rightArrow = Quaternion.Euler(Vector3.forward * -10) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
+                View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, rightArrow, this));
+                
+                return;
+            }
+            
+            View.SpawnProjectile(new ArrowConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, closestMarble.Position, this));
         }
 
         bool SeekClosestMarble(IEnumerable<Marble> marbles, out Marble closestMarble)

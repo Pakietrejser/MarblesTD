@@ -36,7 +36,7 @@ namespace MarblesTD.Towers
     
     public class ExplosiveArrows : Upgrade<QuickFox>
     {
-        public override int Cost => 250;
+        public override int Cost => 150;
         public override string Description => "Strzała przebija do 10 warstw marbli.";
         protected override void ExplicitApply(QuickFox tower)
         {
@@ -44,24 +44,23 @@ namespace MarblesTD.Towers
         }
     }
 
-    public class TripleShot : Upgrade<QuickFox>
+    public class DoubleShot : Upgrade<QuickFox>
     {
-        public override int Cost => 1;
-        public override string Description => "Co trzy strzały to nie jedna.";
+        public override int Cost => 100;
+        public override string Description => "Wystrzeliwuje dwie strzały na raz.";
         protected override void ExplicitApply(QuickFox tower)
         {
-            tower.TripleShot = true;
+            tower.DoubleShot = true;
         }
     }
     
-    public class SeekingArrows : Upgrade<QuickFox>
+    public class Hydra : Upgrade<QuickFox>
     {
-        public override int Cost => 200;
-        public override string Description => "Strzały są bardziej wytrzymałę i szukają swojego celu.";
+        public override int Cost => 250;
+        public override string Description => "Co pięć strzał to nie jedna.";
         protected override void ExplicitApply(QuickFox tower)
         {
-            tower.SeekingArrows = true;
-            tower.Pierce += 4;
+            tower.Hydra = true;
         }
     }
 }
