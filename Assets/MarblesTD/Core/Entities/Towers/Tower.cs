@@ -4,11 +4,32 @@ using System.Linq;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Extensions;
 using MarblesTD.Core.Entities.Marbles;
-using MarblesTD.Core.Entities.Towers.Projectiles;
 using UnityEngine;
 
 namespace MarblesTD.Core.Entities.Towers
 {
+    public abstract class Tower<TView> : Tower where TView : Tower.IView
+    {
+        protected TView View { get; private set; }
+        
+        public sealed override void Init(IView view, Vector2 position)
+        {
+            if (!(view is TView actualView)) throw new ArgumentException();
+
+            View = actualView;
+            View.Clicked += SelectTower;
+        }
+        
+        public sealed override void Destroy()
+        {
+            View.DestroySelf();
+            IsDestroyed = true;
+        }
+
+        public sealed override void Select() => View?.Select();
+        public sealed override void Deselect() => View?.Deselect();
+    }
+    
     public abstract class Tower
     {
         const int MaxUpgrades = 3;
@@ -18,7 +39,7 @@ namespace MarblesTD.Core.Entities.Towers
         public string RawName => GetType().GetName();
         public abstract int Cost { get; }
         public abstract AnimalType AnimalType { get; }
-        public bool IsDestroyed { get; private set; }
+        public bool IsDestroyed { get; protected set; }
         public int MarblesKilled { get; set; }
         public abstract Dictionary<UpgradePath, Upgrade> Upgrades { get; }
 
@@ -42,25 +63,18 @@ namespace MarblesTD.Core.Entities.Towers
         }
         
         protected Vector2 Position { get; private set; }
-        protected IView View { get; private set; }
 
-        public void Init(IView view, Vector2 position)
+        public virtual void Init(IView view, Vector2 position)
         {
-            View = view;
             Position = position;
-            View.Clicked += () => Selected?.Invoke(this);
         }
-
+        
         public abstract void UpdateTower(IEnumerable<Marble> marbles, float delta);
 
-        public void Destroy()
-        {
-            View.DestroySelf();
-            IsDestroyed = true;
-        }
-
-        public void Select() => View?.Select();
-        public void Deselect() => View?.Deselect();
+        protected void SelectTower() => Selected?.Invoke(this);
+        public abstract void Select();
+        public abstract void Deselect();
+        public abstract void Destroy();
 
         public interface IView
         {
@@ -68,12 +82,11 @@ namespace MarblesTD.Core.Entities.Towers
             Collider2D Collider { get; }
             void Select();
             void Deselect();
-            Projectile SpawnProjectile(ProjectileConfig config);
             void DestroySelf();
             void EnableCollider();
             void DisableCollider();
             void ShowAsPlaceable(bool canBePlaced);
-            void UpdateRotation(Vector2 closestMarblePosition);
+            void UpdateRotation(Vector2 target);
         }
     }
 }

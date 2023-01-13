@@ -5,7 +5,7 @@ using MarblesTD.Core.Entities.Towers;
 
 namespace MarblesTD.Towers.CannonBoarTower
 {
-    public class CannonBoar : Tower
+    public class CannonBoar : Tower<ICannonBoarView>
     {
         public override int Cost => 1;
         public override AnimalType AnimalType => AnimalType.WildAnimal;
@@ -14,5 +14,10 @@ namespace MarblesTD.Towers.CannonBoarTower
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
         {
         }
+    }
+    
+    public interface ICannonBoarView : Tower.IView
+    {
+        
     }
 }

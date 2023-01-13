@@ -5,7 +5,7 @@ using MarblesTD.Core.Entities.Towers;
 
 namespace MarblesTD.Towers.StarStagTower
 {
-    public class StarStag : Tower
+    public class StarStag : Tower<IStarStagView>
     {
         public override int Cost => 1;
         public override AnimalType AnimalType => AnimalType.WildAnimal;
@@ -14,5 +14,10 @@ namespace MarblesTD.Towers.StarStagTower
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
         {
         }
+    }
+    
+    public interface IStarStagView : Tower.IView
+    {
+        
     }
 }

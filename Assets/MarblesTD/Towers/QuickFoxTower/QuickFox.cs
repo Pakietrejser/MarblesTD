@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MarblesTD.Towers.QuickFoxTower
 {
-    public class QuickFox : Tower
+    public class QuickFox : Tower<IQuickFoxView>
     {
         public int Damage { get; set; } = 1;
         public int Pierce { get; set; } = 2;
@@ -70,5 +70,10 @@ namespace MarblesTD.Towers.QuickFoxTower
         
             return closestMarble != null;
         }
+    }
+    
+    public interface IQuickFoxView : Tower.IView
+    {
+        Projectile SpawnProjectile(ProjectileConfig config);
     }
 }
