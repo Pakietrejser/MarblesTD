@@ -1,5 +1,4 @@
-﻿using System;
-using MarblesTD.Core.Entities.Towers.Projectiles;
+﻿using MarblesTD.Core.Entities.Towers.Projectiles;
 using MarblesTD.Core.ScenarioSystems;
 using MarblesTD.Towers;
 using UnityEngine;
@@ -21,7 +20,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
             ShowRangeCircle(3.5f);
         }
 
-        public Projectile SpawnProjectile(ArrowConfig config)
+        public Projectile SpawnProjectile(ProjectileConfig config)
         {
             var go = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
             var projectileView = go.GetComponent<IProjectileView>();

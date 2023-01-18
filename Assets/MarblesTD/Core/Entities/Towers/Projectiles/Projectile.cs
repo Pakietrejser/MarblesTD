@@ -9,13 +9,13 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
     {
         IProjectileView _view;
         Vector2 _position;
-        ArrowConfig _config;
+        ProjectileConfig _config;
         Vector2 _targetPosition;
 
         float _remainingHits;
         List<Marble> _hitMarbles;
         
-        public Projectile(IProjectileView view, Vector2 position, ArrowConfig config)
+        public Projectile(IProjectileView view, Vector2 position, ProjectileConfig config)
         {
             _view = view;
             _position = position;
@@ -67,7 +67,7 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
         public void Destroy() => _view.DestroySelf();
     }
     
-    public readonly struct ArrowConfig
+    public readonly struct ProjectileConfig
     {
         public readonly int Damage;
         public readonly int Pierce;
@@ -76,7 +76,7 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
         public readonly Vector2 TargetPosition;
         public readonly Tower Owner;
 
-        public ArrowConfig(int damage, int pierce, float maxDistance,  float speed, Vector2 targetPosition, Tower owner)
+        public ProjectileConfig(int damage, int pierce, float maxDistance,  float speed, Vector2 targetPosition, Tower owner)
         {
             Damage = damage;
             Pierce = pierce;
