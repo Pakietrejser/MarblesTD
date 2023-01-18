@@ -11,7 +11,7 @@ namespace MarblesTD.Towers
         public override AnimalType AnimalType => AnimalType.NightAnimal;
         public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>();
             
-        public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
+        public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
         }
     }

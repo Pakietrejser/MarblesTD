@@ -62,7 +62,7 @@ namespace MarblesTD.Core.Entities.Towers
         public abstract int Cost { get; }
         public abstract AnimalType AnimalType { get; }
         public bool IsDestroyed { get; protected set; }
-        public int MarblesKilled { get; set; }
+        public virtual int MarblesKilled { get; set; }
         public abstract Dictionary<UpgradePath, Upgrade> Upgrades { get; }
 
         public int SellValue
@@ -91,7 +91,7 @@ namespace MarblesTD.Core.Entities.Towers
             Position = position;
         }
         
-        public abstract void UpdateTower(IEnumerable<Marble> marbles, float delta);
+        public abstract void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale);
 
         protected void SelectTower() => Selected?.Invoke(this);
         public abstract void Select();

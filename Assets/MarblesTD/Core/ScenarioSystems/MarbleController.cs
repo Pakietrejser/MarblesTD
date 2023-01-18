@@ -137,7 +137,7 @@ namespace MarblesTD.Core.ScenarioSystems
                         var position = _view.GetPositionAtDistance(distanceTravelled);
                         var rotation = _view.GetRotationAtDistance(distanceTravelled);
                         bool reachedDestination = position == _view.GetEndPosition();
-                        marble.Update(distanceTravelled, position, rotation, reachedDestination, _timeController.TimeScale);
+                        marble.Update(distanceTravelled, position, rotation, reachedDestination, timeDelta, _timeController.TimeScale);
                         if (reachedDestination)
                         {
                             _scenarioManager.Lives -= marble.Health;

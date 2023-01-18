@@ -34,7 +34,7 @@ namespace MarblesTD.Towers
             {UpgradePath.TopRight, new BigLove()},
         };
             
-        public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
+        public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
             _reloadTime -= delta;
 

@@ -1,10 +1,13 @@
-﻿using MarblesTD.Core.Entities.Marbles;
+﻿using System;
+using MarblesTD.Core.Entities.Marbles;
 using UnityEngine;
 
 namespace MarblesTD.UnityCore.Entities
 {
     public class MarbleView : MonoBehaviour, IMarbleView
     {
+        [SerializeField] GameObject poisoned;
+        
         [Header("Renderer")] 
         [SerializeField] SpriteRenderer marbleRenderer;
 
@@ -15,7 +18,12 @@ namespace MarblesTD.UnityCore.Entities
         string _currentAnimation;
         
         public Marble Marble { get; set; }
-        
+
+        void Awake()
+        {
+            poisoned.SetActive(false);
+        }
+
         public void DestroySelf()
         {
             Destroy(gameObject);
@@ -51,6 +59,11 @@ namespace MarblesTD.UnityCore.Entities
         public void UpdateAnimationSpeed(float speed)
         {
             animator.speed = speed;
+        }
+
+        public void ShowAsPoisoned()
+        {
+            poisoned.SetActive(true);
         }
 
         void OnCollisionEnter2D(Collision2D col)

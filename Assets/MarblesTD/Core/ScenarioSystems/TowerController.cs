@@ -68,7 +68,7 @@ namespace MarblesTD.Core.ScenarioSystems
                     continue;
                 }
                 
-                _activeTowers[i].UpdateTower(MarbleController.Marbles, timeDelta);
+                _activeTowers[i].UpdateTower(MarbleController.Marbles, timeDelta, TimeController.TimeScale);
             }
 
             for (int i = ActiveProjectiles.Count - 1; i >= 0; i--)

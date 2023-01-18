@@ -24,6 +24,10 @@ namespace MarblesTD.Core.Entities.Marbles
         public bool IsDestroyed { get; private set; }
         public float DistanceTravelled { get; private set; }
 
+        const float PoisonTick = 1f;
+        float _currentPoisonTick;
+        public int PoisonStacks { get; set; }
+
         public Marble(SignalBus signalBus)
         {
             _signalBus = signalBus;
@@ -65,7 +69,7 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.UpdateMarble(_health);
         }
 
-        public void Update(float distanceTravelled, Vector2 position, Quaternion rotation, bool stop, float animationSpeed)
+        public void Update(float distanceTravelled, Vector2 position, Quaternion rotation, bool stop, float timeDelta, float timeScale)
         {
             DistanceTravelled = distanceTravelled;
             
@@ -74,11 +78,33 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.UpdatePosition(_position);
             _view.UpdateRotation(rotation);
             _view.UpdateSorting(distanceTravelled);
-            _view.UpdateAnimationSpeed(animationSpeed);
+            _view.UpdateAnimationSpeed(timeScale);
+
+            if (PoisonStacks > 0)
+            {
+                HandlePoison(timeDelta);
+            }
             
             if (stop)
             {
                 Destroy();
+            }
+        }
+
+        void HandlePoison(float deltaSpeed)
+        {
+            if (IsDestroyed) return;
+
+            _view.ShowAsPoisoned();
+            _currentPoisonTick -= deltaSpeed;
+            if (_currentPoisonTick <= 0)
+            {
+                _currentPoisonTick = PoisonTick;
+                _health -= PoisonStacks;
+                if (_health == 0)
+                {
+                    Destroy();
+                }
             }
         }
 
@@ -97,6 +123,8 @@ namespace MarblesTD.Core.Entities.Marbles
                 marble._position = Vector2.zero;
                 marble._health = 999;
                 marble.DistanceTravelled = 0;
+                marble.PoisonStacks = 0;
+                marble._currentPoisonTick = PoisonTick;
             }
         }
     }
@@ -110,5 +138,6 @@ namespace MarblesTD.Core.Entities.Marbles
         void UpdateMarble(int health);
         void UpdateSorting(float distanceTravelled);
         void UpdateAnimationSpeed(float speed);
+        void ShowAsPoisoned();
     }
 }

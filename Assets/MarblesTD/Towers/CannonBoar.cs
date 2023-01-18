@@ -35,7 +35,7 @@ namespace MarblesTD.Towers
             
         float _reloadTime;
         
-        public override void UpdateTower(IEnumerable<Marble> marbles, float delta)
+        public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
             _reloadTime -= delta;
             if (!(_reloadTime <= 0) || !SeekClosestMarble(marbles, out var closestMarble)) return;
