@@ -8,14 +8,14 @@ namespace MarblesTD.UnityCore.Entities.Towers
     {
         [SerializeField] SpriteRenderer gunShotRenderer;
 
-        protected override void Awake()
+        void Start()
         {
-            base.Awake();
-            gunShotRenderer.DOFade(0, 0.001f);
+            gunShotRenderer.enabled = false;
         }
 
         public void ShowGunShot()
         {
+            gunShotRenderer.enabled = true;
             gunShotRenderer.color = Color.white;
             gunShotRenderer.DOKill();
             gunShotRenderer.DOFade(0f, 0.2f).SetEase(Ease.OutFlash);
