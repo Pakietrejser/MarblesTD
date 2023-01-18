@@ -41,7 +41,6 @@ namespace MarblesTD.Towers
             if (!(_reloadTime <= 0) || !SeekClosestMarble(marbles, out var closestMarble)) return;
             
             _reloadTime = ReloadSpeed;
-            View.UpdateRotation(closestMarble.Position);
 
             if (Crazy)
             {
@@ -51,9 +50,11 @@ namespace MarblesTD.Towers
 
                 var randomDirection = Quaternion.Euler(Vector3.forward * randomAngleRange) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
                 View.SpawnProjectile(new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, randomDirection, this));
+                View.UpdateRotation(randomDirection);
             }
             else
             {
+                View.UpdateRotation(closestMarble.Position);
                 float randomAngleRange = Random.Range(-MissAngle, MissAngle);
                 var randomDirection = Quaternion.Euler(Vector3.forward * randomAngleRange) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
                 View.SpawnProjectile(new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, randomDirection, this));

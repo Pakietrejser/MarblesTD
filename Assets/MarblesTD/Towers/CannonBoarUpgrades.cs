@@ -67,8 +67,8 @@ namespace MarblesTD.Towers
         protected override void ExplicitApply(CannonBoar tower)
         {
             tower.Crazy = true;
-            tower.ReloadSpeed -= 0.05f;
-            tower.Damage += 4;
+            tower.ReloadSpeed -= 0.07f;
+            tower.Damage += 6;
         }
     }
 }
