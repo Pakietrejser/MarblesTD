@@ -58,7 +58,7 @@ namespace MarblesTD.Towers
     public class SweetDeath : Upgrade<ShadowPaw>
     {
         public override int Cost => 0;
-        public override string Description => "Zużywa miód by atakować. UWAGA - ostrożnie z tym.";
+        public override string Description => "Zużywa miód by atakować, UWAGA - ostrożnie z tym.";
         protected override void ExplicitApply(ShadowPaw tower)
         {
             tower.UtilizeHoney = true;
