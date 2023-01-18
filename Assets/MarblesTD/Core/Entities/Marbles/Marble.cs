@@ -24,7 +24,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public bool IsDestroyed { get; private set; }
         public float DistanceTravelled { get; private set; }
 
-        const float PoisonTick = 1f;
+        const float PoisonTick = 1.4f;
         float _currentPoisonTick;
         public int PoisonStacks { get; set; }
 
@@ -61,7 +61,7 @@ namespace MarblesTD.Core.Entities.Marbles
             dealer.MarblesKilled += cracks;
             _signalBus.Fire(new MarbleDamagedSignal());
             
-            if (_health == 0)
+            if (_health <= 0)
             {
                 Destroy();
                 return;
@@ -100,8 +100,20 @@ namespace MarblesTD.Core.Entities.Marbles
             if (_currentPoisonTick <= 0)
             {
                 _currentPoisonTick = PoisonTick;
-                _health -= PoisonStacks;
-                if (_health == 0)
+                
+                var cracks = 0;
+                for (var i = 0; i < PoisonStacks; i++)
+                {
+                    _health--;
+                    if (_health < 6)
+                    {
+                        cracks++;
+                    }
+                }
+                Cracked?.Invoke(this, cracks);
+                _signalBus.Fire(new MarbleDamagedSignal());
+
+                if (_health <= 0)
                 {
                     Destroy();
                 }

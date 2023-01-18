@@ -4,7 +4,7 @@ namespace MarblesTD.Towers
 {
     public class SharpBlades : Upgrade<ShadowPaw>
     {
-        public override int Cost => 60;
+        public override int Cost => 120;
         public override string Description => "Zwiększa moc swoich ostrzy.";
         
         protected override void ExplicitApply(ShadowPaw tower)
@@ -16,7 +16,7 @@ namespace MarblesTD.Towers
     
     public class PoisonousBlades : Upgrade<ShadowPaw>
     {
-        public override int Cost => 150;
+        public override int Cost => 300;
         public override string Description => "Ostrza ZATRUWAJĄ marble.";
         protected override void ExplicitApply(ShadowPaw tower)
         {
