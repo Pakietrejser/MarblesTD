@@ -22,7 +22,9 @@ namespace MarblesTD.Core.Entities.Marbles
         Vector2 _position;
         int _health;
 
-        public float Speed;
+        public float Speed => Math.Max(_speed + SpeedModifier, 1);
+        float _speed;
+        public float SpeedModifier { get; set; }
         public bool IsDestroyed { get; private set; }
         public float DistanceTravelled { get; private set; }
 
@@ -39,7 +41,7 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.Marble = this;
             _position = position;
             _health = health;
-            Speed = speed;
+            _speed = speed;
 
             _view.UpdateMarble(_health);
         }
@@ -100,18 +102,22 @@ namespace MarblesTD.Core.Entities.Marbles
             }
         }
 
-        public void ApplyModifier(Modifier modifier)
+        public bool ApplyModifier(Modifier modifier)
         {
             var modifierOfType = Modifiers.FirstOrDefault(x => x.GetType() == modifier.GetType());
-            if (modifierOfType != null && modifier.TryMerge(modifier)) return;
+            if (modifierOfType != null && modifierOfType.TryMerge(modifier)) return false;
             
             modifier.OnApplied();
             Modifiers.Add(modifier);
+            return true;
         }
-        
-        public void RemoveModifier<T>(Tower tower)
+
+        public bool RemoveModifier<T>(Tower tower)
         {
-            Modifiers.FirstOrDefault(x => x is T)?.TryRemove(tower);
+            var modifier = Modifiers.FirstOrDefault(x => x is T);
+            if (modifier == null) return false;
+            
+            return modifier.TryRemove(tower);
         }
 
         public void TogglePoisonView(bool show) => _view.TogglePoisonView(show);
@@ -132,6 +138,7 @@ namespace MarblesTD.Core.Entities.Marbles
                 marble._health = 999;
                 marble.DistanceTravelled = 0;
                 marble.Modifiers.Clear();
+                marble.SpeedModifier = 0;
             }
         }
     }

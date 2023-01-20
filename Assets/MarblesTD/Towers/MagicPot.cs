@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
@@ -58,10 +57,7 @@ namespace MarblesTD.Towers
                     }
                 }
 
-                if (!hitAtLeastOne)
-                {
-                    _reloadTime = 0.1f;
-                }
+                if (!hitAtLeastOne) _reloadTime = 0.1f;
             }
         }
 

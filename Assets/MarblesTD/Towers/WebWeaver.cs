@@ -9,36 +9,60 @@ namespace MarblesTD.Towers
 {
     public class WebWeaver : Tower<IWebWeaverView>
     {
-        public override int Cost => 1;
-        public override AnimalType AnimalType => AnimalType.NightAnimal;
-        public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>();
-            
-        
-        public int Damage { get; set; } = 1;
+        public override int Cost => 60;
         public float Range { get; set; } = 2.4f;
-        public float ReloadSpeed { get; set; } = 1.5f;
+        public override AnimalType AnimalType => AnimalType.NightAnimal;
+        public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>()
+        {
+            {UpgradePath.BotLeft, new PoisonousWeb()},
+            {UpgradePath.TopLeft, new DeadlyPoison()},
+
+            {UpgradePath.BotMid, new StrongerSlow()},
+            {UpgradePath.TopMid, new BiggerWeb()},
+
+            {UpgradePath.BotRight, new Sticky()},
+            {UpgradePath.TopRight, new WebWorld()},
+        };
 
         public bool Poisonous;
-        
-        float _reloadTime;
+        public bool EvenSlower;
+        public bool SuperPoisonous;
+        public bool Sticky;
+        public bool SlowAllOnNextUpdate;
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
-            var hitAtLeastOne = false;
+            float slowPotency = EvenSlower ? 1.75f : 1f;
+            
             foreach (var marble in marbles)
             {
                 if (marble.IsDestroyed) continue;
-                float distance = Vector2.Distance(Position, marble.Position);
-                if (distance > Range)
-                {
-                    marble.RemoveModifier<Slow>(this);
-                    continue;
-                }
-
-                hitAtLeastOne = true;
                 
-                marble.ApplyModifier(new Slow(this, marble));
+                if (SlowAllOnNextUpdate)
+                {
+                    marble.ApplyModifier(new TimedSlow(this, marble, slowPotency, 3f));
+                }
+                
+                float distance = Vector2.Distance(Position, marble.Position);
+                if (distance <= Range)
+                {
+                    bool applied = marble.ApplyModifier(new Slow(this, marble, slowPotency));
+                    if (applied && Poisonous)
+                    {
+                        marble.ApplyModifier(new Poison(this, marble, SuperPoisonous ? 3 : 1));
+                    }
+                }
+                else
+                {
+                    bool removed = marble.RemoveModifier<Slow>(this);
+                    if (removed && Sticky)
+                    {
+                        marble.ApplyModifier(new TimedSlow(this, marble, slowPotency, 3f));
+                    }
+                }
             }
+
+            SlowAllOnNextUpdate = false;
         }
         
         protected override void OnSelected()

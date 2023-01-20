@@ -34,8 +34,6 @@ namespace MarblesTD.Core.Entities.Towers.Projectiles
                 position.x +(targetPos.x - position.x) * distanceToAdjust,
                 position.y +(targetPos.y - position.y) * distanceToAdjust
                 );
-            
-            // Debug.Log($"Creating {GetType()} at position {_position}, target position {_targetPosition}");
         }
 
         void OnMarbleHit(Marble marble)

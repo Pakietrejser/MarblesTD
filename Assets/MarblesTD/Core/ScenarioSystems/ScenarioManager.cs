@@ -6,7 +6,6 @@ using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.MapSystems;
-using UnityEngine;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -72,7 +71,7 @@ namespace MarblesTD.Core.ScenarioSystems
             LostLifeThisScenario = false;
             RunEnded = false;
             Lives = 20;
-            Honey = 100;
+            Honey = 1000;
 
             _view.SpawnScenario(CurrentScenario.ID);
             _view.ShowUI();
