@@ -4,7 +4,7 @@ namespace MarblesTD.Towers
 {
     public class MorePower : Upgrade<StarStag>
     {
-        public override int Cost => 200;
+        public override int Cost => 110;
         public override string Description => "Zwiększa szybkość najbliższego sojusznika.";
         
         protected override void ExplicitApply(StarStag tower)
@@ -14,7 +14,7 @@ namespace MarblesTD.Towers
     
     public class EvenMorePower : Upgrade<StarStag>
     {
-        public override int Cost => 500;
+        public override int Cost => 250;
         public override string Description => "ZNACZNIE zwiększa szybkość najbliższego sojusznika.";
         protected override void ExplicitApply(StarStag tower)
         {
@@ -33,7 +33,7 @@ namespace MarblesTD.Towers
     
     public class Eden : Upgrade<StarStag>
     {
-        public override int Cost => 500;
+        public override int Cost => 800;
         public override string Description => "Wspiera WSZYSTKICH sojuszników.";
         protected override void ExplicitApply(StarStag tower)
         {
@@ -46,6 +46,7 @@ namespace MarblesTD.Towers
         public override string Description => "NATYCHMIAST zbija 1 warstę każdej marbli.";
         protected override void ExplicitApply(StarStag tower)
         {
+            tower.BoomOnNextUpdate = true;
         }
     }
     
@@ -55,6 +56,7 @@ namespace MarblesTD.Towers
         public override string Description => "NATYCHMIAST niszczy wszystkie marble.";
         protected override void ExplicitApply(StarStag tower)
         {
+            tower.GloomOnNextUpdate = true;
         }
     }
 }

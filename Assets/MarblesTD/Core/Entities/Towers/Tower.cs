@@ -64,6 +64,9 @@ namespace MarblesTD.Core.Entities.Towers
         public bool IsDestroyed { get; protected set; }
         public virtual int MarblesKilled { get; set; }
         public abstract Dictionary<UpgradePath, Upgrade> Upgrades { get; }
+        
+        public StagBuff StagBuff = StagBuff.None;
+        public virtual bool CanBeStagBuffed => true;
 
         public int SellValue
         {
