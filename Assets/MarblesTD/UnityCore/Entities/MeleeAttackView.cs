@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using MarblesTD.Core.Entities.Marbles;
+using MarblesTD.Core.Entities.Marbles.Modifiers;
 using MarblesTD.Core.Entities.Towers;
 using UnityEngine;
 
@@ -72,7 +73,7 @@ namespace MarblesTD.UnityCore.Entities
             if (marble.IsDestroyed) return;
             _hitMarbles.Add(marble);
 
-            if (_poisonous) marble.PoisonStacks++;
+            if (_poisonous) marble.ApplyModifier(new Poison(_owner, marble));
             marble.TakeDamage(_damage, _owner);
             _hits--;
 

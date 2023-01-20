@@ -16,7 +16,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
             _originalScale = rangeRenderer.transform.localScale.x;
             rangeRenderer.enabled = false;
             fireRenderer.enabled = false;
-            ShowRangeCircle(2f);
+            ShowRangeCircle(2.2f);
         }
 
         public void ShowBurn(float range)

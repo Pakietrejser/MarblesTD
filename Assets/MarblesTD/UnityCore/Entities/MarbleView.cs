@@ -61,9 +61,9 @@ namespace MarblesTD.UnityCore.Entities
             animator.speed = speed;
         }
 
-        public void ShowAsPoisoned()
+        public void TogglePoisonView(bool show)
         {
-            poisoned.SetActive(true);
+            poisoned.SetActive(show);
         }
 
         void OnCollisionEnter2D(Collision2D col)

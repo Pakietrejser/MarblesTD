@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MarblesTD.Core.Common.Signals.List;
+using MarblesTD.Core.Entities.Marbles.Modifiers;
 using MarblesTD.Core.Entities.Towers;
 using UnityEngine;
 using Zenject;
@@ -18,15 +21,12 @@ namespace MarblesTD.Core.Entities.Marbles
         IMarbleView _view;
         Vector2 _position;
         int _health;
-        float _speed;
 
-        public float Speed => _speed;
+        public float Speed;
         public bool IsDestroyed { get; private set; }
         public float DistanceTravelled { get; private set; }
 
-        const float PoisonTick = 1.4f;
-        float _currentPoisonTick;
-        public int PoisonStacks { get; set; }
+        public readonly List<Modifier> Modifiers = new List<Modifier>();
 
         public Marble(SignalBus signalBus)
         {
@@ -39,7 +39,7 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.Marble = this;
             _position = position;
             _health = health;
-            _speed = speed;
+            Speed = speed;
 
             _view.UpdateMarble(_health);
         }
@@ -79,10 +79,19 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.UpdateRotation(rotation);
             _view.UpdateSorting(distanceTravelled);
             _view.UpdateAnimationSpeed(timeScale);
-
-            if (PoisonStacks > 0)
+            
+            for (int i = Modifiers.Count - 1; i >= 0; i--)
             {
-                HandlePoison(timeDelta);
+                var modifier = Modifiers[i];
+                if (modifier.IsActive)
+                {
+                    modifier.Update(timeDelta);
+                }
+                else
+                {
+                    modifier.OnRemoved();
+                    Modifiers.RemoveAt(i);
+                }
             }
             
             if (stop)
@@ -91,34 +100,21 @@ namespace MarblesTD.Core.Entities.Marbles
             }
         }
 
-        void HandlePoison(float deltaSpeed)
+        public void ApplyModifier(Modifier modifier)
         {
-            if (IsDestroyed) return;
-
-            _view.ShowAsPoisoned();
-            _currentPoisonTick -= deltaSpeed;
-            if (_currentPoisonTick <= 0)
-            {
-                _currentPoisonTick = PoisonTick;
-                
-                var cracks = 0;
-                for (var i = 0; i < PoisonStacks; i++)
-                {
-                    _health--;
-                    if (_health < 6)
-                    {
-                        cracks++;
-                    }
-                }
-                Cracked?.Invoke(this, cracks);
-                _signalBus.Fire(new MarbleDamagedSignal());
-
-                if (_health <= 0)
-                {
-                    Destroy();
-                }
-            }
+            var modifierOfType = Modifiers.FirstOrDefault(x => x.GetType() == modifier.GetType());
+            if (modifierOfType != null && modifier.TryMerge(modifier)) return;
+            
+            modifier.OnApplied();
+            Modifiers.Add(modifier);
         }
+        
+        public void RemoveModifier<T>(Tower tower)
+        {
+            Modifiers.FirstOrDefault(x => x is T)?.TryRemove(tower);
+        }
+
+        public void TogglePoisonView(bool show) => _view.TogglePoisonView(show);
 
         public void Destroy()
         {
@@ -135,8 +131,7 @@ namespace MarblesTD.Core.Entities.Marbles
                 marble._position = Vector2.zero;
                 marble._health = 999;
                 marble.DistanceTravelled = 0;
-                marble.PoisonStacks = 0;
-                marble._currentPoisonTick = PoisonTick;
+                marble.Modifiers.Clear();
             }
         }
     }
@@ -150,6 +145,6 @@ namespace MarblesTD.Core.Entities.Marbles
         void UpdateMarble(int health);
         void UpdateSorting(float distanceTravelled);
         void UpdateAnimationSpeed(float speed);
-        void ShowAsPoisoned();
+        void TogglePoisonView(bool show);
     }
 }
