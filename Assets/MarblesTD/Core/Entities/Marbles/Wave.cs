@@ -13,8 +13,8 @@ namespace MarblesTD.Core.Entities.Marbles
 
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            // yield return new WaveGroup(1, 20);
-            yield return new WaveGroup(50, 1);
+            yield return new WaveGroup(1, 20);
+            // yield return new WaveGroup(50, 1);
         }
     }
     
