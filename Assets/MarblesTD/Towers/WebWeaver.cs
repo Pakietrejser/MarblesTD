@@ -32,7 +32,7 @@ namespace MarblesTD.Towers
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
-            float slowPotency = EvenSlower ? 1.75f : 1f;
+            float slowPotency = EvenSlower ? 1f : 0.65f;
             
             foreach (var marble in marbles)
             {

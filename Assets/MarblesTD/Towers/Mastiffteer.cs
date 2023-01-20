@@ -9,7 +9,7 @@ namespace MarblesTD.Towers
 {
     public class Mastiffteer : Tower<IMastiffteerView>
     {
-        public override int Cost => 50;
+        public override int Cost => 60;
         public override AnimalType AnimalType => AnimalType.NobleAnimal;
         public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>()
         {

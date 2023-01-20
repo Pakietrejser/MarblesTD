@@ -111,7 +111,7 @@ namespace MarblesTD.UnityCore.Common.UI
         {
             if (lockedBox.activeSelf) return;
             if (_currentTowerView == null) return;
-            if (!_canPlaceTowerAtCurrentPosition)
+            if (!_canPlaceTowerAtCurrentPosition || EventSystem.current.IsPointerOverGameObject())
             {
                 Destroy(_currentTowerView);
                 _currentTowerView = null;

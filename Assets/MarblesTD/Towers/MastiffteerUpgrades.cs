@@ -4,7 +4,7 @@ namespace MarblesTD.Towers
 {
     public class SilverBullet : Upgrade<Mastiffteer>
     {
-        public override int Cost => 60;
+        public override int Cost => 80;
         public override string Description => "Zbija do 5 warstw marbli jednym strzałem.";
         protected override void ExplicitApply(Mastiffteer tower)
         {
@@ -24,7 +24,7 @@ namespace MarblesTD.Towers
 
     public class QuickReload : Upgrade<Mastiffteer>
     {
-        public override int Cost => 60;
+        public override int Cost => 100;
         public override string Description => "Przeładuje broń 2x szybciej.";
         protected override void ExplicitApply(Mastiffteer tower)
         {
@@ -44,7 +44,7 @@ namespace MarblesTD.Towers
     
     public class OneForAll : Upgrade<Mastiffteer>
     {
-        public override int Cost => 40;
+        public override int Cost => 60;
         public override string Description => "Zwiększa obrażenia WSZYSTKICH muszkieterów.";
         protected override void ExplicitApply(Mastiffteer tower)
         {
@@ -55,7 +55,7 @@ namespace MarblesTD.Towers
     
     public class AllForOne : Upgrade<Mastiffteer>
     {
-        public override int Cost => 400;
+        public override int Cost => 300;
         public override string Description => "Zwiększa obrażenia za KAŻDEGO muszkietera.";
         protected override void ExplicitApply(Mastiffteer tower)
         {

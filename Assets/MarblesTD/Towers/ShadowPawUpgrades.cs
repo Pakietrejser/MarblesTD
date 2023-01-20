@@ -10,7 +10,7 @@ namespace MarblesTD.Towers
         protected override void ExplicitApply(ShadowPaw tower)
         {
             tower.Damage = 2;
-            tower.Hits = 5;
+            tower.Hits = 4;
         }
     }
     
