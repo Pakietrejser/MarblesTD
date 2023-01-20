@@ -84,7 +84,7 @@ namespace MarblesTD.Core.Entities.Towers
             }
         }
         
-        protected Vector2 Position { get; private set; }
+        public Vector2 Position { get; private set; }
 
         public virtual void Init(IView view, Vector2 position)
         {
