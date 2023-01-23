@@ -72,7 +72,7 @@ namespace MarblesTD.Towers
 
         protected override void OnStagBuffed(StagBuff stagBuff)
         {
-            Debug.Log("unreachable");
+            
         }
 
         protected override void OnTowerPlaced()
