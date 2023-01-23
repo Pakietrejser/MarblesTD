@@ -1,4 +1,5 @@
-﻿using MarblesTD.Core.Entities.Towers;
+﻿using MarblesTD.Core.Common.Enums;
+using MarblesTD.Core.Entities.Towers;
 
 namespace MarblesTD.Towers
 {
@@ -9,6 +10,9 @@ namespace MarblesTD.Towers
         
         protected override void ExplicitApply(StarStag tower)
         {
+            tower.DistributedBuff = StagBuff.Tier2;
+            tower.RefreshSignal();
+            tower.RefreshStagBuffs();
         }
     }
     
@@ -18,6 +22,9 @@ namespace MarblesTD.Towers
         public override string Description => "ZNACZNIE zwiększa szybkość najbliższego sojusznika.";
         protected override void ExplicitApply(StarStag tower)
         {
+            tower.DistributedBuff = StagBuff.Tier3;
+            tower.RefreshSignal();
+            tower.RefreshStagBuffs();
         }
     }
     
@@ -28,6 +35,8 @@ namespace MarblesTD.Towers
         
         protected override void ExplicitApply(StarStag tower)
         {
+            tower.SupportedTowers = 2;
+            tower.RefreshStagBuffs();
         }
     }
     
@@ -37,6 +46,8 @@ namespace MarblesTD.Towers
         public override string Description => "Wspiera WSZYSTKICH sojuszników.";
         protected override void ExplicitApply(StarStag tower)
         {
+            tower.SupportedTowers = 200;
+            tower.RefreshStagBuffs();
         }
     }
 

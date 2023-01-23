@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MarblesTD.Core.Common.Automatons;
+using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
@@ -34,6 +35,11 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             _activeTowers.Add(tower);
             UsedAnimalTypes.Add(tower.AnimalType);
+            
+            _activeTowers.ForEach(x => x.StagBuff = StagBuff.None);
+            SignalBus.FireId(StagBuff.Tier3, new TowerCountChangedSignal(_activeTowers));
+            SignalBus.FireId(StagBuff.Tier2, new TowerCountChangedSignal(_activeTowers));
+            SignalBus.FireId(StagBuff.Tier1, new TowerCountChangedSignal(_activeTowers));
         }
 
         public void EnterState()
@@ -65,6 +71,11 @@ namespace MarblesTD.Core.ScenarioSystems
                 if (_activeTowers[i].IsDestroyed)
                 {
                     _activeTowers.Remove(_activeTowers[i]);
+                    
+                    _activeTowers.ForEach(x => x.StagBuff = StagBuff.None);
+                    SignalBus.FireId(StagBuff.Tier3, new TowerCountChangedSignal(_activeTowers));
+                    SignalBus.FireId(StagBuff.Tier2, new TowerCountChangedSignal(_activeTowers));
+                    SignalBus.FireId(StagBuff.Tier1, new TowerCountChangedSignal(_activeTowers));
                     continue;
                 }
                 

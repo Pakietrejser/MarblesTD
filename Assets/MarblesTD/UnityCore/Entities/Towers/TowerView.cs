@@ -1,4 +1,6 @@
 ﻿using System;
+using DG.Tweening;
+using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Towers;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,6 +11,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
     {
         [SerializeField] SpriteRenderer selectRenderer;
         [SerializeField] Collider2D towerCollider;
+        [SerializeField] Transform stagBuffStar;
 
         public Collider2D Collider => towerCollider;
 
@@ -16,6 +19,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
         protected virtual void Awake()
         {
             _renderers = GetComponentsInChildren<SpriteRenderer>();
+            stagBuffStar.gameObject.SetActive(false);
         }
 
         public event Action Clicked;
@@ -63,6 +67,26 @@ namespace MarblesTD.UnityCore.Entities.Towers
             float y = target.y - current.y;
             var rotation = (float) (Math.Atan2(y, x) * 180 / Math.PI);
             transform.rotation = Quaternion.Euler(0, 0, rotation + 90);
+        }
+
+        public void ShowStagBuff(StagBuff stagBuff)
+        {
+            float rotationSpeed = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => 24f,
+                StagBuff.Tier2 => 10f,
+                StagBuff.Tier3 => 2f,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+            
+            stagBuffStar.gameObject.SetActive(stagBuff != StagBuff.None);
+            stagBuffStar.DOKill();
+            
+            if (stagBuff == StagBuff.None) return;
+            stagBuffStar.DORotate(new Vector3(0, 0, transform.rotation.y - 360), rotationSpeed, RotateMode.LocalAxisAdd)
+                .SetEase(Ease.Linear)
+                .SetLoops(-1);
         }
     }
 }

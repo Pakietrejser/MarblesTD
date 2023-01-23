@@ -22,6 +22,13 @@ namespace MarblesTD.Core.Entities.Towers
             OnTowerPlaced();
         }
 
+        protected sealed override void HandleStagBuff(StagBuff stagBuff)
+        {
+            View.ShowStagBuff(stagBuff);
+            OnStagBuffed(stagBuff);
+        }
+        
+
         public sealed override void Destroy()
         {
             OnTowerRemoved();
@@ -29,6 +36,7 @@ namespace MarblesTD.Core.Entities.Towers
             IsDestroyed = true;
         }
 
+        protected virtual void OnStagBuffed(StagBuff stagBuff){}
         protected virtual void OnTowerPlaced(){}
         protected virtual void OnTowerRemoved(){}
         
@@ -64,9 +72,18 @@ namespace MarblesTD.Core.Entities.Towers
         public bool IsDestroyed { get; protected set; }
         public virtual int MarblesKilled { get; set; }
         public abstract Dictionary<UpgradePath, Upgrade> Upgrades { get; }
-        
-        public StagBuff StagBuff = StagBuff.None;
-        public virtual bool CanBeStagBuffed => true;
+
+        StagBuff _stagBuff = StagBuff.None;
+        public StagBuff StagBuff
+        {
+            get => _stagBuff;
+            set
+            {
+                _stagBuff = value;
+                HandleStagBuff(_stagBuff);
+            }
+        }
+        protected abstract void HandleStagBuff(StagBuff stagBuff);
 
         public int SellValue
         {
@@ -112,6 +129,7 @@ namespace MarblesTD.Core.Entities.Towers
             void DisableCollider();
             void ShowAsPlaceable(bool canBePlaced);
             void UpdateRotation(Vector2 target);
+            void ShowStagBuff(StagBuff stagBuff);
         }
     }
 }

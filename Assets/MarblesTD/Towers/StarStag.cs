@@ -1,13 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MarblesTD.Core.Common.Enums;
+using MarblesTD.Core.Common.Signals;
+using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
+using UnityEngine;
 
 namespace MarblesTD.Towers
 {
     public class StarStag : Tower<IStarStagView>
     {
-        public override bool CanBeStagBuffed => false;
         public override int Cost => 90;
         public override AnimalType AnimalType => AnimalType.WildAnimal;
         public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>()
@@ -21,9 +25,38 @@ namespace MarblesTD.Towers
             {UpgradePath.BotRight, new Boom()},
             {UpgradePath.TopRight, new Gloom()},
         };
-        
+
+        public int SupportedTowers = 1;
+        public StagBuff DistributedBuff = StagBuff.Tier1;
         public bool BoomOnNextUpdate;
         public bool GloomOnNextUpdate;
+        
+        IReadOnlyList<Tower> _towers;
+
+        public void RefreshStagBuffs()
+        {
+            var availableTowers = _towers.Where(tower => !(tower is StarStag) && (int)tower.StagBuff < (int)DistributedBuff).ToArray();
+            SortTowersByDistance(ref availableTowers);
+
+            int count = Math.Min(SupportedTowers, availableTowers.Length);
+            for (var i = 0; i < count; i++)
+            {
+                var tower = availableTowers[i];
+                tower.StagBuff = DistributedBuff;
+            }
+        }
+        
+        void SortTowersByDistance(ref Tower[] arr)
+        {
+            for (var i = 0; i < arr.Length; i++) 
+            for (var j = 0; j < arr.Length - 1; j++)
+            {
+                float distanceA = Vector2.Distance(Position, arr[j].Position);
+                float distanceB = Vector2.Distance(Position, arr[j + 1].Position);
+                if (!(distanceA > distanceB)) continue;
+                (arr[j + 1], arr[j]) = (arr[j], arr[j + 1]);
+            }
+        }
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
@@ -42,6 +75,32 @@ namespace MarblesTD.Towers
             
             GloomOnNextUpdate = false;
             BoomOnNextUpdate = false;
+        }
+
+        protected override void OnTowerPlaced()
+        {
+            SignalBus.Instance.SubscribeId<TowerCountChangedSignal>(DistributedBuff, OnTowerCountChanged);
+        }
+
+        protected override void OnTowerRemoved()
+        {
+            SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier1, OnTowerCountChanged);
+            SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier2, OnTowerCountChanged);
+            SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier3, OnTowerCountChanged);
+        }
+        
+        void OnTowerCountChanged(TowerCountChangedSignal signal)
+        {
+            _towers = signal.Towers;
+            RefreshStagBuffs();
+        }
+
+        public void RefreshSignal()
+        {
+            SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier1, OnTowerCountChanged);
+            SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier2, OnTowerCountChanged);
+            SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier3, OnTowerCountChanged);
+            SignalBus.Instance.SubscribeId<TowerCountChangedSignal>(DistributedBuff, OnTowerCountChanged);
         }
     }
     
