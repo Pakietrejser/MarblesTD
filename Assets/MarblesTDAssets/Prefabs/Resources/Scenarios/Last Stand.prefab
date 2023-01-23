@@ -325,6 +325,10 @@ MonoBehaviour:
   - {fileID: 9052782007783655893}
   - {fileID: 8303108902975446310}
   - {fileID: 7485102207777933761}
+  distribution:
+  - 1
+  - 1
+  - 1
 --- !u!1 &5031646418749797275
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +587,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 0
+    vertexPathUpToDate: 1
     vertexPathMaxAngleError: 9
     vertexPathMinVertexSpacing: 0.2
     showTransformTool: 1

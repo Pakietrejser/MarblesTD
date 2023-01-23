@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using MarblesTD.Core.Common.Automatons;
+using MarblesTD.Core.Common.Extensions;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Marbles;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -72,6 +74,13 @@ namespace MarblesTD.Core.ScenarioSystems
             _marbleWaves.Add(marbleWave);
             _view.SetWaveString(_waveProvider.CurrentWave, LastWave);
 
+            float[] pathDistributions = _view.PathDistributions;
+            var pathWeights = new (int, float)[pathDistributions.Length];
+            for (var i = 0; i < pathDistributions.Length; i++)
+            {
+                pathWeights[i] = (i, pathDistributions[i]);
+            }
+
             foreach (var waveGroup in wave.GetGroups())
             {
                 for (var i = 0; i < waveGroup.MarbleCount; i++)
@@ -79,7 +88,9 @@ namespace MarblesTD.Core.ScenarioSystems
                     var go = UnityEngine.Object.Instantiate(prefab);
                     var view = go.GetComponent<IMarbleView>();
                     var marble = _marblePool.Spawn();
-                    marble.Init(view, _view.GetStartPosition(), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
+                    
+                    marble.Path = new WeightedChance<int>(pathWeights).Random();
+                    marble.Init(view, _view.GetStartPosition(marble.Path), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
                     marbleWave.Add(marble);
 
                     await UniTask.WaitUntil(() => _timeController.TimeScale != 0f, default, _cts.Token);
@@ -134,9 +145,9 @@ namespace MarblesTD.Core.ScenarioSystems
                     else
                     {
                         float distanceTravelled = marble.DistanceTravelled + marble.Speed * timeDelta;
-                        var position = _view.GetPositionAtDistance(distanceTravelled);
-                        var rotation = _view.GetRotationAtDistance(distanceTravelled);
-                        bool reachedDestination = position == _view.GetEndPosition();
+                        var position = _view.GetPositionAtDistance(marble.Path, distanceTravelled);
+                        var rotation = _view.GetRotationAtDistance(marble.Path, distanceTravelled);
+                        bool reachedDestination = position == _view.GetEndPosition(marble.Path);
                         marble.Update(distanceTravelled, position, rotation, reachedDestination, timeDelta, _timeController.TimeScale);
                         if (reachedDestination)
                         {
@@ -161,14 +172,15 @@ namespace MarblesTD.Core.ScenarioSystems
         
         public interface IView
         {
+            float[] PathDistributions { get; }
             event Action NextWaveRequested;
             void SetWaveString(int currentWave, int lastWave);
-            void ToggleWaveRequest(bool enable); 
+            void ToggleWaveRequest(bool enable);
             GameObject GetMarblePrefab();
-            Vector2 GetStartPosition();
-            Vector2 GetEndPosition();
-            Vector2 GetPositionAtDistance(float distance);
-            Quaternion GetRotationAtDistance(float distance);
+            Vector2 GetStartPosition(int pathIndex);
+            Vector2 GetEndPosition(int pathIndex);
+            Vector2 GetPositionAtDistance(int pathIndex, float distance);
+            Quaternion GetRotationAtDistance(int pathIndex, float distance);
         }
     }
 }

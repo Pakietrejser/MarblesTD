@@ -16,6 +16,7 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         
         [Header("Runtime")]
         public PathCreator[] PathCreators;
+        public float[] PathDistributions { get; set; }
         
         public event Action NextWaveRequested;
 
@@ -38,24 +39,24 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
             roundText.text = $"{currentWave}/{lastWave}";
         }
 
-        public Vector2 GetStartPosition()
+        public Vector2 GetStartPosition(int pathIndex)
         {
-            return PathCreators[0].path.GetPointAtTime(0, EndOfPathInstruction.Stop);
+            return PathCreators[pathIndex].path.GetPointAtTime(0, EndOfPathInstruction.Stop);
         }
 
-        public Vector2 GetEndPosition()
+        public Vector2 GetEndPosition(int pathIndex)
         {
-            return PathCreators[0].path.GetPointAtTime(1, EndOfPathInstruction.Stop);
+            return PathCreators[pathIndex].path.GetPointAtTime(1, EndOfPathInstruction.Stop);
         }
 
-        public Vector2 GetPositionAtDistance(float distance)
+        public Vector2 GetPositionAtDistance(int pathIndex, float distance)
         {
-            return PathCreators[0].path.GetPointAtDistance(distance, EndOfPathInstruction.Stop);
+            return PathCreators[pathIndex].path.GetPointAtDistance(distance, EndOfPathInstruction.Stop);
         }
 
-        public Quaternion GetRotationAtDistance(float distance)
+        public Quaternion GetRotationAtDistance(int pathIndex, float distance)
         {
-            return PathCreators[0].path.GetRotationAtDistance(distance, EndOfPathInstruction.Stop);
+            return PathCreators[pathIndex].path.GetRotationAtDistance(distance, EndOfPathInstruction.Stop);
         }
     }
 }

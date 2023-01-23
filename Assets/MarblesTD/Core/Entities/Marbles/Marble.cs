@@ -27,6 +27,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public float SpeedModifier { get; set; }
         public bool IsDestroyed { get; private set; }
         public float DistanceTravelled { get; private set; }
+        public int Path { get; set; }
 
         public readonly List<Modifier> Modifiers = new List<Modifier>();
 
@@ -139,6 +140,7 @@ namespace MarblesTD.Core.Entities.Marbles
                 marble.DistanceTravelled = 0;
                 marble.Modifiers.Clear();
                 marble.SpeedModifier = 0;
+                marble.Path = 0;
             }
         }
     }

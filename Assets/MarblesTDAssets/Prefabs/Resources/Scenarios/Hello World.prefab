@@ -130,6 +130,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paths:
   - {fileID: 9052782007783655893}
+  distribution:
+  - 1
 --- !u!1 &5031646418749797275
 GameObject:
   m_ObjectHideFlags: 0

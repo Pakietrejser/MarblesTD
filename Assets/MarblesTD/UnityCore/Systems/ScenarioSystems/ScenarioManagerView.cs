@@ -47,6 +47,7 @@ namespace MarblesTD.UnityCore.Systems.ScenarioSystems
         {
             _currentScenarioView = Instantiate(id.GetPrefab(), transform).GetComponent<ScenarioView>();
             marbleControllerView.PathCreators = _currentScenarioView.Paths;
+            marbleControllerView.PathDistributions = _currentScenarioView.PathDistributions;
         }
 
         public void DestroyScenario()
