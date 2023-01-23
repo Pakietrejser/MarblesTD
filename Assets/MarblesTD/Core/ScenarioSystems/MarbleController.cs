@@ -18,7 +18,8 @@ namespace MarblesTD.Core.ScenarioSystems
     public class MarbleController : IUpdateState
     {
         public IEnumerable<Marble> Marbles => _marbleWaves.SelectMany(wave => wave.Marbles);
-
+        public int Paths => _view.PathDistributions.Length;
+        
         const int LastWave = 20;
         public static int CurrentWave;
 

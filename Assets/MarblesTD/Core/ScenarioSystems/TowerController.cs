@@ -23,9 +23,11 @@ namespace MarblesTD.Core.ScenarioSystems
         readonly List<Tower> _activeTowers = new List<Tower>();
         public static readonly List<Projectile> ActiveProjectiles = new List<Projectile>();
         readonly IView _view;
+        static TowerController Instance;
         
         public TowerController(IView view)
         {
+            Instance = this;
             _view = view;
             _view.TowerCreated += OnTowerCreated;
             Marble.Cracked += OnMarbleCracked;
@@ -35,7 +37,12 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             _activeTowers.Add(tower);
             UsedAnimalTypes.Add(tower.AnimalType);
-            
+            RefreshTowerCount();
+        }
+
+        public static void RefreshTowerCountStatic() => Instance.RefreshTowerCount();
+        void RefreshTowerCount()
+        {
             _activeTowers.ForEach(x => x.StagBuff = StagBuff.None);
             SignalBus.FireId(StagBuff.Tier3, new TowerCountChangedSignal(_activeTowers));
             SignalBus.FireId(StagBuff.Tier2, new TowerCountChangedSignal(_activeTowers));
@@ -72,10 +79,7 @@ namespace MarblesTD.Core.ScenarioSystems
                 {
                     _activeTowers.Remove(_activeTowers[i]);
                     
-                    _activeTowers.ForEach(x => x.StagBuff = StagBuff.None);
-                    SignalBus.FireId(StagBuff.Tier3, new TowerCountChangedSignal(_activeTowers));
-                    SignalBus.FireId(StagBuff.Tier2, new TowerCountChangedSignal(_activeTowers));
-                    SignalBus.FireId(StagBuff.Tier1, new TowerCountChangedSignal(_activeTowers));
+                    RefreshTowerCount();
                     continue;
                 }
                 

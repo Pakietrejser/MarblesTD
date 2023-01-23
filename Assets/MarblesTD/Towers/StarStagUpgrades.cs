@@ -1,30 +1,31 @@
 ﻿using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Towers;
+using MarblesTD.Core.ScenarioSystems;
 
 namespace MarblesTD.Towers
 {
     public class MorePower : Upgrade<StarStag>
     {
-        public override int Cost => 110;
+        public override int Cost => 150;
         public override string Description => "Zwiększa szybkość najbliższego sojusznika.";
         
         protected override void ExplicitApply(StarStag tower)
         {
             tower.DistributedBuff = StagBuff.Tier2;
             tower.RefreshSignal();
-            tower.RefreshStagBuffs();
+            TowerController.RefreshTowerCountStatic();
         }
     }
     
     public class EvenMorePower : Upgrade<StarStag>
     {
-        public override int Cost => 250;
+        public override int Cost => 400;
         public override string Description => "ZNACZNIE zwiększa szybkość najbliższego sojusznika.";
         protected override void ExplicitApply(StarStag tower)
         {
             tower.DistributedBuff = StagBuff.Tier3;
             tower.RefreshSignal();
-            tower.RefreshStagBuffs();
+            TowerController.RefreshTowerCountStatic();
         }
     }
     
@@ -36,18 +37,18 @@ namespace MarblesTD.Towers
         protected override void ExplicitApply(StarStag tower)
         {
             tower.SupportedTowers = 2;
-            tower.RefreshStagBuffs();
+            TowerController.RefreshTowerCountStatic();
         }
     }
     
     public class Eden : Upgrade<StarStag>
     {
-        public override int Cost => 800;
+        public override int Cost => 600;
         public override string Description => "Wspiera WSZYSTKICH sojuszników.";
         protected override void ExplicitApply(StarStag tower)
         {
             tower.SupportedTowers = 200;
-            tower.RefreshStagBuffs();
+            TowerController.RefreshTowerCountStatic();
         }
     }
 

@@ -31,11 +31,10 @@ namespace MarblesTD.Towers
         public bool BoomOnNextUpdate;
         public bool SuperBoomOnNextUpdate;
         
-        IReadOnlyList<Tower> _towers;
-
-        public void RefreshStagBuffs()
+        
+        void OnTowerCountChanged(TowerCountChangedSignal signal)
         {
-            var availableTowers = _towers.Where(tower => !(tower is StarStag) && (int)tower.StagBuff < (int)DistributedBuff).ToArray();
+            var availableTowers = signal.Towers.Where(tower => !(tower is StarStag) && (int)tower.StagBuff < (int)DistributedBuff).ToArray();
             SortTowersByDistance(ref availableTowers);
 
             int count = Math.Min(SupportedTowers, availableTowers.Length);
@@ -45,7 +44,7 @@ namespace MarblesTD.Towers
                 tower.StagBuff = DistributedBuff;
             }
         }
-        
+
         void SortTowersByDistance(ref Tower[] arr)
         {
             for (var i = 0; i < arr.Length; i++) 
@@ -86,12 +85,6 @@ namespace MarblesTD.Towers
             SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier1, OnTowerCountChanged);
             SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier2, OnTowerCountChanged);
             SignalBus.Instance.UnsubscribeId<TowerCountChangedSignal>(StagBuff.Tier3, OnTowerCountChanged);
-        }
-        
-        void OnTowerCountChanged(TowerCountChangedSignal signal)
-        {
-            _towers = signal.Towers;
-            RefreshStagBuffs();
         }
 
         public void RefreshSignal()

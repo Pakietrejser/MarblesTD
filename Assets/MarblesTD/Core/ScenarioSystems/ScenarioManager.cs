@@ -3,9 +3,10 @@ using MarblesTD.Core.Common.Automatons;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
-using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.MapSystems;
+using Zenject;
+using SignalBus = MarblesTD.Core.Common.Signals.SignalBus;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -20,6 +21,8 @@ namespace MarblesTD.Core.ScenarioSystems
         readonly Mediator _mediator;
         readonly SignalBus _signalBus;
         readonly TimeController _timeController;
+
+        [Inject] MarbleController MarbleController;
 
         public Scenario CurrentScenario;
 
@@ -70,11 +73,12 @@ namespace MarblesTD.Core.ScenarioSystems
         {
             LostLifeThisScenario = false;
             RunEnded = false;
-            Lives = 20;
-            Honey = 100;
 
             _view.SpawnScenario(CurrentScenario.ID);
             _view.ShowUI();
+            
+            Lives = 20;
+            Honey = 100 + (MarbleController.Paths - 1) * 50;
         }
 
         public void ExitState()
