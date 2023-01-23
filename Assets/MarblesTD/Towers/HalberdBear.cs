@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
@@ -26,6 +27,20 @@ namespace MarblesTD.Towers
             {UpgradePath.BotRight, new Sweep()},
             {UpgradePath.TopRight, new Whirlwind()},
         };
+        
+        int _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => 2,
+                StagBuff.Tier2 => 4,
+                StagBuff.Tier3 => 8,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
             
         public int Angle = 45;
         public bool FasterSwing;
@@ -44,7 +59,7 @@ namespace MarblesTD.Towers
             _reloadTime = AutoSwing ? attackDuration : FasterSwing ? ReloadSpeed - .6f : ReloadSpeed;
             _reloadTime += ReloadErrorMargin;
             
-            View.Attack(this, Damage, closestMarble.Position, Angle, attackDuration);
+            View.Attack(this, Damage + _buffModifier, closestMarble.Position, Angle, attackDuration);
         }
         
         bool SeekClosestFirstMarble(IEnumerable<Marble> marbles, out Marble closestMarble)

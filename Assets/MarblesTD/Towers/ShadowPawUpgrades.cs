@@ -31,7 +31,7 @@ namespace MarblesTD.Towers
         
         protected override void ExplicitApply(ShadowPaw tower)
         {
-            tower.ReloadSpeed = 0.6f;
+            tower.ReloadSpeed = 0.65f;
         }
     }
     
@@ -41,7 +41,7 @@ namespace MarblesTD.Towers
         public override string Description => "Wymachuje cztery razy szybciej!";
         protected override void ExplicitApply(ShadowPaw tower)
         {
-            tower.ReloadSpeed = 0.3f;
+            tower.ReloadSpeed = 0.4f;
         }
     }
 

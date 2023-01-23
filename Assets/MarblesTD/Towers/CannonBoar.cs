@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
 using MarblesTD.Core.Entities.Towers.Projectiles;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace MarblesTD.Towers
 {
@@ -34,6 +36,19 @@ namespace MarblesTD.Towers
         };
             
         float _reloadTime;
+        int _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => 1,
+                StagBuff.Tier2 => 2,
+                StagBuff.Tier3 => 5,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
@@ -49,7 +64,7 @@ namespace MarblesTD.Towers
                     : Random.Range(-90, 90);
 
                 var randomDirection = Quaternion.Euler(Vector3.forward * randomAngleRange) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
-                View.SpawnProjectile(new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, randomDirection, this));
+                View.SpawnProjectile(new ProjectileConfig(Damage, Pierce + _buffModifier, ProjectileTravelDistance, ProjectileSpeed, randomDirection, this));
                 View.UpdateRotation(randomDirection);
             }
             else
@@ -57,7 +72,7 @@ namespace MarblesTD.Towers
                 View.UpdateRotation(closestMarble.Position);
                 float randomAngleRange = Random.Range(-MissAngle, MissAngle);
                 var randomDirection = Quaternion.Euler(Vector3.forward * randomAngleRange) * (closestMarble.Position - Position) + new Vector3(Position.x, Position.y);
-                View.SpawnProjectile(new ProjectileConfig(Damage, Pierce, ProjectileTravelDistance, ProjectileSpeed, randomDirection, this));
+                View.SpawnProjectile(new ProjectileConfig(Damage, Pierce + _buffModifier, ProjectileTravelDistance, ProjectileSpeed, randomDirection, this));
             }
         }
         

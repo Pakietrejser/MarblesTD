@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
@@ -34,13 +35,26 @@ namespace MarblesTD.Towers
         };
         
         float _reloadTime;
+        float _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => .08f,
+                StagBuff.Tier2 => .12f,
+                StagBuff.Tier3 => .25f,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
             _reloadTime -= delta;
             if (!(_reloadTime <= 0) || !SeekClosestMarble(marbles, out var closestMarble)) return;
             
-            _reloadTime = ReloadSpeed;
+            _reloadTime = ReloadSpeed - _buffModifier;
             View.UpdateRotation(closestMarble.Position);
 
             if (Hydra)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Requests;
 using MarblesTD.Core.Common.Requests.List;
@@ -51,6 +52,19 @@ namespace MarblesTD.Towers
         public bool UtilizeHoney;
         
         float _reloadTime;
+        float _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => .1f,
+                StagBuff.Tier2 => .15f,
+                StagBuff.Tier3 => .3f,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
         
         public override async void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
@@ -62,14 +76,14 @@ namespace MarblesTD.Towers
                 bool purchaseCompleted = await Mediator.Instance.SendAsync(new PurchaseRequest(10));
                 if (purchaseCompleted)
                 {
-                    _reloadTime = ReloadSpeed / 2f;
+                    _reloadTime = (ReloadSpeed - _buffModifier ) / 2f;
                     View.UpdateRotation(closestMarble.Position);
                     View.Strike(this, Damage * 4, Hits * 4, AttackDuration / timeScale, Poisonous);
                     return;
                 }
             }
            
-            _reloadTime = ReloadSpeed;
+            _reloadTime = ReloadSpeed - _buffModifier;
             View.UpdateRotation(closestMarble.Position);
             View.Strike(this, Damage, Hits, AttackDuration / timeScale, Poisonous);
         }

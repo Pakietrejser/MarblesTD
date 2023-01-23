@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Towers;
@@ -29,6 +30,19 @@ namespace MarblesTD.Towers
         public bool Corrosion;
         
         float _reloadTime;
+        float _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => .13f,
+                StagBuff.Tier2 => .25f,
+                StagBuff.Tier3 => .25f,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
@@ -36,7 +50,7 @@ namespace MarblesTD.Towers
 
             if (_reloadTime <= 0)
             {
-                _reloadTime = ReloadSpeed;
+                _reloadTime = ReloadSpeed - _buffModifier;
 
                 var hitAtLeastOne = false;
                 foreach (var marble in marbles)
@@ -49,11 +63,11 @@ namespace MarblesTD.Towers
 
                     if (Corrosion && marble.Health > 6)
                     {
-                        marble.TakeDamage(Damage * 5, this);
+                        marble.TakeDamage((Damage + StagBuff == StagBuff.Tier3 ? 1 : 0) * 5, this);
                     }
                     else
                     {
-                        marble.TakeDamage(Damage, this);
+                        marble.TakeDamage(Damage + StagBuff == StagBuff.Tier3 ? 1 : 0 , this);
                     }
                 }
 

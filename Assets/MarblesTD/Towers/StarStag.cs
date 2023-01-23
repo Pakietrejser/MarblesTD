@@ -29,7 +29,7 @@ namespace MarblesTD.Towers
         public int SupportedTowers = 1;
         public StagBuff DistributedBuff = StagBuff.Tier1;
         public bool BoomOnNextUpdate;
-        public bool GloomOnNextUpdate;
+        public bool SuperBoomOnNextUpdate;
         
         IReadOnlyList<Tower> _towers;
 
@@ -60,21 +60,20 @@ namespace MarblesTD.Towers
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
+            if (!SuperBoomOnNextUpdate && !BoomOnNextUpdate) return;
+            
             foreach (var marble in marbles)
             {
-                if (GloomOnNextUpdate)
-                {
-                    marble.TakeDamage(1, this);
-                }
-
-                if (BoomOnNextUpdate)
-                {
-                    marble.TakeDamage(1000, this);
-                }
+                marble.TakeDamage(BoomOnNextUpdate ? 1 : 1000, this);
             }
             
-            GloomOnNextUpdate = false;
+            SuperBoomOnNextUpdate = false;
             BoomOnNextUpdate = false;
+        }
+
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            Debug.Log("unreachable");
         }
 
         protected override void OnTowerPlaced()

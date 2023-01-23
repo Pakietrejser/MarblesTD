@@ -22,7 +22,7 @@ namespace MarblesTD.Core.Entities.Marbles
         Vector2 _position;
         int _health;
 
-        public float Speed => Math.Max(_speed + SpeedModifier, 1);
+        public float Speed => Math.Max(_speed + SpeedModifier, .5f);
         float _speed;
         public float SpeedModifier { get; set; }
         public bool IsDestroyed { get; private set; }

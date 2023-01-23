@@ -67,7 +67,7 @@ namespace MarblesTD.Towers
         public override string Description => "NATYCHMIAST niszczy wszystkie marble.";
         protected override void ExplicitApply(StarStag tower)
         {
-            tower.GloomOnNextUpdate = true;
+            tower.SuperBoomOnNextUpdate = true;
         }
     }
 }

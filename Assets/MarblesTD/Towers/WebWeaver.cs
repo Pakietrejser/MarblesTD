@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Entities.Marbles;
 using MarblesTD.Core.Entities.Marbles.Modifiers;
@@ -29,10 +30,24 @@ namespace MarblesTD.Towers
         public bool SuperPoisonous;
         public bool Sticky;
         public bool SlowAllOnNextUpdate;
+        float _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => 0.15f,
+                StagBuff.Tier2 => 0.3f,
+                StagBuff.Tier3 => 1f,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
         
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
             float slowPotency = EvenSlower ? 1.4f : 0.85f;
+            slowPotency += _buffModifier;
             
             foreach (var marble in marbles)
             {

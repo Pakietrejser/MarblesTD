@@ -34,6 +34,19 @@ namespace MarblesTD.Towers
         static int Mastiffteers = 0;
 
         float _reloadTime;
+        int _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => 1,
+                StagBuff.Tier2 => 2,
+                StagBuff.Tier3 => 5,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
             
         public override void UpdateTower(IEnumerable<Marble> marbles, float delta, float timeScale)
         {
@@ -48,7 +61,7 @@ namespace MarblesTD.Towers
             
             if (marblesArray.Length == 0) return;
 
-            int totalDamage = Damage;
+            int totalDamage = Damage + _buffModifier;
             
             totalDamage += (int)(OneForAllBuffs * 0.5f);
             if (AllForOne) totalDamage += Mastiffteers * 2;

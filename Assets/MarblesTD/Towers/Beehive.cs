@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MarblesTD.Core.Common.Enums;
 using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
@@ -21,6 +22,19 @@ namespace MarblesTD.Towers
 
         float _honeyGeneratedThisRound;
         float _reloadTime;
+        int _buffModifier;
+        
+        protected override void OnStagBuffed(StagBuff stagBuff)
+        {
+            _buffModifier = stagBuff switch
+            {
+                StagBuff.None => 0,
+                StagBuff.Tier1 => 20,
+                StagBuff.Tier2 => 40,
+                StagBuff.Tier3 => 120,
+                _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
+            };
+        }
         
         public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>()
         {
@@ -38,7 +52,7 @@ namespace MarblesTD.Towers
         {
             _reloadTime -= delta;
 
-            if (_reloadTime <= 0 && _honeyGeneratedThisRound < HoneyCapPerRound)
+            if (_reloadTime <= 0 && _honeyGeneratedThisRound < HoneyCapPerRound + _buffModifier)
             {
                 _reloadTime = ReloadSpeed;
                 _honeyGeneratedThisRound += HoneyGeneratedEveryReload;

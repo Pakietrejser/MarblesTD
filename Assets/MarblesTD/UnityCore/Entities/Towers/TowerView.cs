@@ -75,7 +75,7 @@ namespace MarblesTD.UnityCore.Entities.Towers
             {
                 StagBuff.None => 0,
                 StagBuff.Tier1 => 24f,
-                StagBuff.Tier2 => 10f,
+                StagBuff.Tier2 => 7f,
                 StagBuff.Tier3 => 2f,
                 _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
             };

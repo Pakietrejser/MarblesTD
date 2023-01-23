@@ -36,7 +36,7 @@ namespace MarblesTD.Core.Entities.Towers
             IsDestroyed = true;
         }
 
-        protected virtual void OnStagBuffed(StagBuff stagBuff){}
+        protected abstract void OnStagBuffed(StagBuff stagBuff);
         protected virtual void OnTowerPlaced(){}
         protected virtual void OnTowerRemoved(){}
         
