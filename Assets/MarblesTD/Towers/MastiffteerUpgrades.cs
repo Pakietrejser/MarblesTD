@@ -34,7 +34,7 @@ namespace MarblesTD.Towers
     
     public class Heroism : Upgrade<Mastiffteer>
     {
-        public override int Cost => 300;
+        public override int Cost => 250;
         public override string Description => "Im więcej marbli tym szybciej strzela.";
         protected override void ExplicitApply(Mastiffteer tower)
         {
@@ -55,7 +55,7 @@ namespace MarblesTD.Towers
     
     public class AllForOne : Upgrade<Mastiffteer>
     {
-        public override int Cost => 300;
+        public override int Cost => 200;
         public override string Description => "Zwiększa obrażenia za KAŻDEGO muszkietera.";
         protected override void ExplicitApply(Mastiffteer tower)
         {

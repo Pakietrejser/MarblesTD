@@ -30,7 +30,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public float DistanceTravelled { get; set; }
         public int Path { get; set; }
 
-        public readonly List<Modifier> Modifiers = new List<Modifier>();
+        readonly List<Modifier> _modifiers = new List<Modifier>();
 
         public Marble(SignalBus signalBus)
         {
@@ -68,9 +68,6 @@ namespace MarblesTD.Core.Entities.Marbles
             
             if (Health <= 0)
             {
-                Modifiers.ForEach(modifier => modifier.OnRemoved());
-                Modifiers.Clear();
-                
                 Destroy();
                 return;
             }
@@ -87,18 +84,10 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.UpdateRotation(rotation);
             _view.UpdateSorting(distanceTravelled);
             _view.UpdateAnimationSpeed(timeScale);
-            
-            if (IsDestroyed) return;
-            
-            if (stop)
+
+            for (int i = _modifiers.Count - 1; i >= 0; i--)
             {
-                Destroy();
-                return;
-            }
-            
-            for (int i = Modifiers.Count - 1; i >= 0; i--)
-            {
-                var modifier = Modifiers[i];
+                var modifier = _modifiers[i];
                 if (modifier.IsActive)
                 {
                     modifier.Update(timeDelta);
@@ -106,8 +95,14 @@ namespace MarblesTD.Core.Entities.Marbles
                 else
                 {
                     modifier.OnRemoved();
-                    Modifiers.RemoveAt(i);
+                    _modifiers.RemoveAt(i);
                 }
+            }
+            
+            if (stop)
+            {
+                Destroy();
+                return;
             }
         }
 
@@ -116,17 +111,17 @@ namespace MarblesTD.Core.Entities.Marbles
             modifier.Owner = this;
             modifier.Dealer = tower;
             
-            var modifierOfType = Modifiers.FirstOrDefault(x => x.GetType() == modifier.GetType());
+            var modifierOfType = _modifiers.FirstOrDefault(x => x.GetType() == modifier.GetType());
             if (modifierOfType != null && modifierOfType.TryMerge(modifier)) return false;
             
             modifier.OnApplied();
-            Modifiers.Add(modifier);
+            _modifiers.Add(modifier);
             return true;
         }
 
         public bool RemoveModifier<T>(Tower tower)
         {
-            var modifier = Modifiers.FirstOrDefault(x => x is T);
+            var modifier = _modifiers.FirstOrDefault(x => x is T);
             if (modifier == null) return false;
             
             return modifier.TryRemove(tower);
@@ -141,8 +136,10 @@ namespace MarblesTD.Core.Entities.Marbles
         {
             if (IsDestroyed) return;
             
-            _view.DestroySelf();
             IsDestroyed = true;
+            _modifiers.ForEach(modifier => modifier.OnRemoved());
+            // _modifiers.Clear();
+            _view.DestroySelf();
         }
         
         public class Pool : MemoryPool<Marble>
@@ -153,7 +150,7 @@ namespace MarblesTD.Core.Entities.Marbles
                 marble._position = Vector2.zero;
                 marble.Health = 999;
                 marble.DistanceTravelled = 0;
-                marble.Modifiers.Clear();
+                marble._modifiers.Clear();
                 marble.SpeedModifier = 0;
                 marble.Path = 0;
             }

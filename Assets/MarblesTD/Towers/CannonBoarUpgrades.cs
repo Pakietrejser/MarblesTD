@@ -40,7 +40,7 @@ namespace MarblesTD.Towers
     
     public class BulletStream : Upgrade<CannonBoar>
     {
-        public override int Cost => 300;
+        public override int Cost => 250;
         public override string Description => "Tworzy strumień kul w linii prostej.";
         protected override void ExplicitApply(CannonBoar tower)
         {
@@ -62,7 +62,7 @@ namespace MarblesTD.Towers
     
     public class Crazy : Upgrade<CannonBoar>
     {
-        public override int Cost => 400;
+        public override int Cost => 300;
         public override string Description => "DZIKA FURIA!!!";
         protected override void ExplicitApply(CannonBoar tower)
         {

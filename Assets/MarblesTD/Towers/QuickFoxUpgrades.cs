@@ -40,7 +40,7 @@ namespace MarblesTD.Towers
         public override string Description => "Strzała przebija do 10 warstw marbli.";
         protected override void ExplicitApply(QuickFox tower)
         {
-            
+            tower.Damage = 10;
         }
     }
 

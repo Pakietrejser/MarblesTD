@@ -78,6 +78,7 @@ namespace MarblesTD.Core.ScenarioSystems
             var position = signal.Position;
             float distanceTravelled = signal.DistanceTravelled;
             
+            await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale), false, PlayerLoopTiming.Update, _cts.Token);
             for (var i = 0; i < waveGroup.MarbleCount; i++)
             {
                 var go = UnityEngine.Object.Instantiate(prefab);
@@ -114,6 +115,7 @@ namespace MarblesTD.Core.ScenarioSystems
 
             foreach (var waveGroup in wave.GetGroups())
             {
+                await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale), false, PlayerLoopTiming.Update, _cts.Token);
                 for (var i = 0; i < waveGroup.MarbleCount; i++)
                 {
                     var go = UnityEngine.Object.Instantiate(prefab);

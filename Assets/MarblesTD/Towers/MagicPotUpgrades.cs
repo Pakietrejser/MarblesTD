@@ -4,7 +4,7 @@ namespace MarblesTD.Towers
 {
     public class HotPot : Upgrade<MagicPot>
     {
-        public override int Cost => 200;
+        public override int Cost => 150;
         public override string Description => "Bucha dwa razy częściej.";
         
         protected override void ExplicitApply(MagicPot tower)
@@ -15,7 +15,7 @@ namespace MarblesTD.Towers
     
     public class LavaPot : Upgrade<MagicPot>
     {
-        public override int Cost => 400;
+        public override int Cost => 300;
         public override string Description => "Bucha praktycznie cały czas.";
         protected override void ExplicitApply(MagicPot tower)
         {
@@ -25,7 +25,7 @@ namespace MarblesTD.Towers
     
     public class ToxicFumes : Upgrade<MagicPot>
     {
-        public override int Cost => 250;
+        public override int Cost => 100;
         public override string Description => "Zbija do 2 warst marbli jednym buchem.";
         
         protected override void ExplicitApply(MagicPot tower)
@@ -36,7 +36,7 @@ namespace MarblesTD.Towers
     
     public class Corrosion : Upgrade<MagicPot>
     {
-        public override int Cost => 500;
+        public override int Cost => 300;
         public override string Description => "Buch zadaje OKRUTNE obrażenia Łamiszczękom.";
         protected override void ExplicitApply(MagicPot tower)
         {
@@ -57,7 +57,7 @@ namespace MarblesTD.Towers
     
     public class GiganticRange : Upgrade<MagicPot>
     {
-        public override int Cost => 350;
+        public override int Cost => 200;
         public override string Description => "ZNACZNIE większe pole rażenia.";
         protected override void ExplicitApply(MagicPot tower)
         {

@@ -19,7 +19,7 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
             Owner.Health += _bonusHealth;
             Owner.SpeedModifier -= 2;
             Owner.MinSpeed = .2f;
-            Owner.ToggleXLView(true);
+            Owner.ToggleXXLView(true);
         }
 
         public override void OnRemoved()

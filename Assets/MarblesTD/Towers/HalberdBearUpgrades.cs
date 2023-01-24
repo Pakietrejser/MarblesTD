@@ -15,17 +15,17 @@ namespace MarblesTD.Towers
     
     public class MarbleCrusher : Upgrade<HalberdBear>
     {
-        public override int Cost => 500;
+        public override int Cost => 350;
         public override string Description => "Halabarda zadaję OGROMNE obrażenia.";
         protected override void ExplicitApply(HalberdBear tower)
         {
-            tower.Damage = 25;
+            tower.Damage = 20;
         }
     }
     
     public class FasterSwing : Upgrade<HalberdBear>
     {
-        public override int Cost => 300;
+        public override int Cost => 250;
         public override string Description => "Wymachuję szybciej.";
         
         protected override void ExplicitApply(HalberdBear tower)
@@ -46,7 +46,7 @@ namespace MarblesTD.Towers
 
     public class Sweep : Upgrade<HalberdBear>
     {
-        public override int Cost => 200;
+        public override int Cost => 100;
         public override string Description => "Zwiększa kąt ataku do 90 stopni.";
         protected override void ExplicitApply(HalberdBear tower)
         {
@@ -56,7 +56,7 @@ namespace MarblesTD.Towers
     
     public class Whirlwind : Upgrade<HalberdBear>
     {
-        public override int Cost => 500;
+        public override int Cost => 400;
         public override string Description => "Kręci się w kółko podczas ataku.";
         protected override void ExplicitApply(HalberdBear tower)
         {

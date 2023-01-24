@@ -14,7 +14,7 @@ namespace MarblesTD.Towers
     
     public class DeadlyPoison : Upgrade<WebWeaver>
     {
-        public override int Cost => 600;
+        public override int Cost => 400;
         public override string Description => "Sieć ZATRUWA marble z potrójną siłą.";
         
         protected override void ExplicitApply(WebWeaver tower)
@@ -48,7 +48,7 @@ namespace MarblesTD.Towers
 
     public class Sticky : Upgrade<WebWeaver>
     {
-        public override int Cost => 50;
+        public override int Cost => 100;
         public override string Description => "Spowolnienie działa dodatkowe 3 sekundy po wyjściu z sieci.";
         protected override void ExplicitApply(WebWeaver tower)
         {
@@ -58,7 +58,7 @@ namespace MarblesTD.Towers
     
     public class WebWorld : Upgrade<WebWeaver>
     {
-        public override int Cost => 50;
+        public override int Cost => 10;
         public override string Description => "NATYCHMIAST spowalnia wszystkie marble.";
         protected override void ExplicitApply(WebWeaver tower)
         {

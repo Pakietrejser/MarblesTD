@@ -9,7 +9,7 @@ namespace MarblesTD.Towers
 {
     public class MagicPot : Tower<IMagicPotView>
     {
-        public override int Cost => 200;
+        public override int Cost => 180;
         public override AnimalType AnimalType => AnimalType.NightAnimal;
         public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>()
         {
