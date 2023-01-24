@@ -11,11 +11,11 @@ namespace MarblesTD.Core.Entities.Marbles
         public readonly float MarbleDelay;
         public readonly List<Modifier> Modifiers;
 
-        public WaveGroup(int marbleHealth, int marbleCount, float marbleSpeed = 2.5f, float marbleDelay = .4f, params Modifier[] modifiers)
+        public WaveGroup(int marbleHealth, int marbleCount, float marbleDelay = .4f, params Modifier[] modifiers)
         {
             MarbleHealth = marbleHealth;
             MarbleCount = marbleCount;
-            MarbleSpeed = marbleSpeed;
+            MarbleSpeed = 2.5f;
             MarbleDelay = marbleDelay;
             Modifiers = new List<Modifier>(modifiers);
         }

@@ -12,7 +12,7 @@ namespace MarblesTD.Towers
 {
     public class StarStag : Tower<IStarStagView>
     {
-        public override int Cost => 90;
+        public override int Cost => 140;
         public override AnimalType AnimalType => AnimalType.WildAnimal;
         public override Dictionary<UpgradePath, Upgrade> Upgrades { get; } = new Dictionary<UpgradePath, Upgrade>()
         {

@@ -10,8 +10,8 @@ namespace MarblesTD.Towers
 {
     public class HalberdBear : Tower<IHalberdBearView>
     {
-        public int Damage { get; set; } = 4;
-        public float ReloadSpeed { get; set; } = 2f;
+        public int Damage { get; set; } = 3;
+        public float ReloadSpeed { get; set; } = 3f;
         public float Range { get; set; } = 2.5f;
         
         public override int Cost => 300;
@@ -35,9 +35,9 @@ namespace MarblesTD.Towers
             _buffModifier = stagBuff switch
             {
                 StagBuff.None => 0,
-                StagBuff.Tier1 => 2,
-                StagBuff.Tier2 => 4,
-                StagBuff.Tier3 => 8,
+                StagBuff.Tier1 => 1,
+                StagBuff.Tier2 => 1,
+                StagBuff.Tier3 => 3,
                 _ => throw new ArgumentOutOfRangeException(nameof(stagBuff), stagBuff, null)
             };
         }
@@ -55,8 +55,8 @@ namespace MarblesTD.Towers
             if (!(_reloadTime <= 0) || !SeekClosestFirstMarble(marbles, out var closestMarble)) return;
 
             float attackDuration = ReloadSpeed / timeScale * (Angle / 360f);
-            if (FasterSwing && Angle == 360) attackDuration = (ReloadSpeed - .6f) / timeScale * (Angle / 360f);
-            _reloadTime = AutoSwing ? attackDuration : FasterSwing ? ReloadSpeed - .6f : ReloadSpeed;
+            if (FasterSwing && Angle == 360) attackDuration = (ReloadSpeed - 1) / timeScale * (Angle / 360f);
+            _reloadTime = AutoSwing ? attackDuration : FasterSwing ? ReloadSpeed - 1 : ReloadSpeed;
             _reloadTime += ReloadErrorMargin;
             
             View.Attack(this, Damage + _buffModifier, closestMarble.Position, Angle, attackDuration);

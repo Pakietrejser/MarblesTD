@@ -153,6 +153,8 @@ namespace MarblesTD.Core.Entities.Marbles
                 marble._modifiers.Clear();
                 marble.SpeedModifier = 0;
                 marble.Path = 0;
+                marble.Armor = 0;
+                marble.MinSpeed = .5f;
             }
         }
     }

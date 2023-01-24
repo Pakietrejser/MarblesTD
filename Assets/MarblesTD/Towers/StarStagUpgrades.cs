@@ -6,7 +6,7 @@ namespace MarblesTD.Towers
 {
     public class MorePower : Upgrade<StarStag>
     {
-        public override int Cost => 150;
+        public override int Cost => 200;
         public override string Description => "Zwiększa szybkość najbliższego sojusznika.";
         
         protected override void ExplicitApply(StarStag tower)
@@ -19,7 +19,7 @@ namespace MarblesTD.Towers
     
     public class EvenMorePower : Upgrade<StarStag>
     {
-        public override int Cost => 300;
+        public override int Cost => 500;
         public override string Description => "ZNACZNIE zwiększa szybkość najbliższego sojusznika.";
         protected override void ExplicitApply(StarStag tower)
         {
@@ -31,7 +31,7 @@ namespace MarblesTD.Towers
     
     public class Twins : Upgrade<StarStag>
     {
-        public override int Cost => 200;
+        public override int Cost => 400;
         public override string Description => "Wspiera do dwóch najbliższych sojuszników.";
         
         protected override void ExplicitApply(StarStag tower)
@@ -43,7 +43,7 @@ namespace MarblesTD.Towers
     
     public class Eden : Upgrade<StarStag>
     {
-        public override int Cost => 400;
+        public override int Cost => 500;
         public override string Description => "Wspiera WSZYSTKICH sojuszników.";
         protected override void ExplicitApply(StarStag tower)
         {

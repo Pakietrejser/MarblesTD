@@ -121,9 +121,9 @@ namespace MarblesTD.Core.Entities.Marbles
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(10, 5);
-            yield return new WaveGroup(10, 1, 2.5f, 8f,  new XL());
+            yield return new WaveGroup(10, 1, 2f,  new XL());
             yield return new WaveGroup(10, 5);
-            yield return new WaveGroup(10, 1, 2.5f, 8f,  new XL());
+            yield return new WaveGroup(10, 1, 2f,  new XL());
         }
     }
     
@@ -141,7 +141,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 115;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 30, new Armored());
+            yield return new WaveGroup(10, 25, new Armored());
         }
     }
     
@@ -150,7 +150,10 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 120;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 3, 2.5f, 8f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 10, new Armored());
+            yield return new WaveGroup(10, 1, 2f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 10, new Armored());
+            yield return new WaveGroup(10, 1, 2f,  new XL(), new Armored());
         }
     }
 
@@ -168,7 +171,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 130;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 6, 2.5f, 8f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 8, 2f,  new XL(), new Faster());
         }
     }
 
@@ -177,10 +180,10 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 135;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 10, new Armored());
-            yield return new WaveGroup(10, 2, 2.5f, 8f,  new XL(), new Armored());
-            yield return new WaveGroup(10, 10, new Armored());
-            yield return new WaveGroup(10, 2, 2.5f, 8f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 15, new Armored());
+            yield return new WaveGroup(10, 3, 2f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 15, new Armored());
+            yield return new WaveGroup(10, 3, 2f,  new XL(), new Armored());
         }
     }
 
@@ -189,7 +192,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 140;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 1,  new XXL());
+            yield return new WaveGroup(10, 1,  new XXL(), new Armored());
         }
     }
 
@@ -198,7 +201,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 145;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 2, 2.5f, 16f,  new XXL());
+            yield return new WaveGroup(10, 2, 4f,  new XXL(), new Armored());
         }
     }
 

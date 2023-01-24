@@ -5,11 +5,11 @@ namespace MarblesTD.Towers
     public class StrongerBullets : Upgrade<CannonBoar>
     {
         public override int Cost => 70;
-        public override string Description => "Kulę przebijają do 3 warstw marbli.";
+        public override string Description => "Kulę przebijają do 2 warstw marbli.";
         
         protected override void ExplicitApply(CannonBoar tower)
         {
-            tower.Damage += 2;
+            tower.Damage += 1;
         }
     }
     
@@ -19,7 +19,7 @@ namespace MarblesTD.Towers
         public override string Description => "Po prostu lepszy pod każdym względem.";
         protected override void ExplicitApply(CannonBoar tower)
         {
-            tower.Damage += 2;
+            tower.Damage += 1;
             tower.Range = 5f;
             tower.ReloadSpeed -= 0.05f;
             tower.MissAngle = 25f;

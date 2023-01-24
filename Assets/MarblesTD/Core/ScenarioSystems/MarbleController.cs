@@ -90,8 +90,9 @@ namespace MarblesTD.Core.ScenarioSystems
                 waveGroup.Modifiers.ForEach(modifier => marble.ApplyModifier(modifier, null));
                 CurrentWave.Add(marble);
 
-                await UniTask.WaitUntil(() => _timeController.TimeScale != 0f, default, _cts.Token);
-                await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale), false, PlayerLoopTiming.Update, _cts.Token);
+                await UniTask.WaitUntil(() => _timeController.TimeScale != 0f, default);
+                await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale));
+                CurrentWave.FinishedSpawning = false;
             }
             CurrentWave.FinishedSpawning = true;
         }
@@ -162,7 +163,7 @@ namespace MarblesTD.Core.ScenarioSystems
                         _marblePool.Despawn(marble);
                         marbles.Remove(marble);
                         
-                        if (marbles.Count == 0 && marbleWave.FinishedSpawning)
+                        if (marbles.Count == 0 && marbleWave.FinishedSpawning && CurrentWave.FinishedSpawning)
                         {
                             _signalBus.Fire(new HoneyGeneratedSignal(marbleWave.HoneyReward));
                             _signalBus.Fire(new RoundEndedSignal(marbleWave.HoneyReward));
