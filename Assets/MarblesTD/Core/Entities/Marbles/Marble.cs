@@ -88,6 +88,14 @@ namespace MarblesTD.Core.Entities.Marbles
             _view.UpdateSorting(distanceTravelled);
             _view.UpdateAnimationSpeed(timeScale);
             
+            if (IsDestroyed) return;
+            
+            if (stop)
+            {
+                Destroy();
+                return;
+            }
+            
             for (int i = Modifiers.Count - 1; i >= 0; i--)
             {
                 var modifier = Modifiers[i];
@@ -100,11 +108,6 @@ namespace MarblesTD.Core.Entities.Marbles
                     modifier.OnRemoved();
                     Modifiers.RemoveAt(i);
                 }
-            }
-            
-            if (stop)
-            {
-                Destroy();
             }
         }
 

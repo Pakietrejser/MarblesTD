@@ -24,7 +24,6 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
 
         public override void OnRemoved()
         {
-            Owner.TogglePoisonView(false);
         }
 
         public override void Update(float delta)

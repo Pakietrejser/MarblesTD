@@ -19,7 +19,6 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
 
         public override void OnRemoved()
         {
-            Owner.SpeedModifier -= _potency;
         }
 
         public override void Update(float delta) {}

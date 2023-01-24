@@ -120,9 +120,9 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 105;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 10);
+            yield return new WaveGroup(10, 5);
             yield return new WaveGroup(10, 1, 2.5f, 1f,  new XL());
-            yield return new WaveGroup(10, 10);
+            yield return new WaveGroup(10, 5);
             yield return new WaveGroup(10, 1, 2.5f, 1f,  new XL());
         }
     }

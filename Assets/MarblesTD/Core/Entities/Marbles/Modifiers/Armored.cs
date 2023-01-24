@@ -20,8 +20,6 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
 
         public override void OnRemoved()
         {
-            Owner.Armor -= _armorGain;
-            Owner.ToggleArmorView(false);
         }
 
         public override void Update(float delta) {}

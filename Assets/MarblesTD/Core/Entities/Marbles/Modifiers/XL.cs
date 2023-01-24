@@ -25,7 +25,6 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
         public override void OnRemoved()
         {
             SignalBus.FireStatic(new SpawnBonusMarblesSignal(new WaveGroup(10, 10), Owner.Position, Owner.Path, Owner.DistanceTravelled));
-            Owner.ToggleXLView(false);
         }
 
         public override void Update(float delta) {}
