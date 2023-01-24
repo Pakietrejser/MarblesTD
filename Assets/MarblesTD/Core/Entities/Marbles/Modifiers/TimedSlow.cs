@@ -11,15 +11,15 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
 
         readonly List<Tower> _towers = new List<Tower>();
 
-        public TimedSlow(Tower dealer, Marble owner, float potency, float duration) : base(dealer, owner)
+        public TimedSlow(float potency, float duration)
         {
             _potency = potency;
             _duration = duration;
-            _towers.Add(dealer);
         }
         
         public override void OnApplied()
         {
+            _towers.Add(Dealer);
             Owner.SpeedModifier -= _potency;
         }
 

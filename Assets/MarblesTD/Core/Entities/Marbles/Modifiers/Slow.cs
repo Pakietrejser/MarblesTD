@@ -5,19 +5,18 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
 {
     public class Slow : Modifier<Slow>
     {
-        float _potency;
         public override bool IsActive => _towers.Count != 0;
-
+        float _potency;
         readonly List<Tower> _towers = new List<Tower>();
 
-        public Slow(Tower dealer, Marble owner, float potency) : base(dealer, owner)
+        public Slow(float potency)
         {
             _potency = potency;
-            _towers.Add(dealer);
         }
         
         public override void OnApplied()
         {
+            _towers.Add(Dealer);
             Owner.SpeedModifier -= _potency;
         }
 

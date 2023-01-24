@@ -25,6 +25,11 @@
                 13 => new Wave13(),
                 14 => new Wave14(),
                 15 => new Wave15(),
+                16 => new Wave16(),
+                17 => new Wave17(),
+                18 => new Wave18(),
+                19 => new Wave19(),
+                20 => new Wave20(),
                 _ => new ModularWave(CurrentWave)
             };
         }

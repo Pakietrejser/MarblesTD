@@ -11,7 +11,6 @@ using MarblesTD.Core.Common.Signals;
 using MarblesTD.Core.Common.Signals.List;
 using MarblesTD.Core.Entities.Marbles;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace MarblesTD.Core.ScenarioSystems
 {
@@ -21,7 +20,8 @@ namespace MarblesTD.Core.ScenarioSystems
         public int Paths => _view.PathDistributions.Length;
         
         const int LastWave = 20;
-        public static int CurrentWave;
+        public static int CurrentWaveIndex;
+        public MarbleWave CurrentWave;
 
         readonly Marble.Pool _marblePool;
         readonly TimeController _timeController;
@@ -43,6 +43,7 @@ namespace MarblesTD.Core.ScenarioSystems
             _view = view;
             _mediator = mediator;
             _signalBus = signalBus;
+            _signalBus.Subscribe<SpawnBonusMarblesSignal>(SpawnBonusMarbles);
             _view.NextWaveRequested += OnNextWaveRequested;
         }
 
@@ -54,10 +55,11 @@ namespace MarblesTD.Core.ScenarioSystems
             try
             {
                 _signalBus.Fire(new RoundStartedSignal());
+                
                 var marbleWave = await SpawnMarbleWave();
-                CurrentWave = marbleWave.WaveIndex;
-                Debug.Log($"Finished spawning wave {CurrentWave}");
-                if (CurrentWave == LastWave) return;
+                CurrentWaveIndex = marbleWave.WaveIndex;
+                Debug.Log($"Finished spawning wave {CurrentWaveIndex}");
+                if (CurrentWaveIndex == LastWave) return;
                 _view.ToggleWaveRequest(true);
                 ProcessingRound = false;
             }
@@ -66,11 +68,39 @@ namespace MarblesTD.Core.ScenarioSystems
                 Debug.Log("Stop spawning waves...");
             }
         }
+        
+        async void SpawnBonusMarbles(SpawnBonusMarblesSignal signal)
+        {
+            CurrentWave.FinishedSpawning = false;
+            var prefab = _view.GetMarblePrefab();
+            var waveGroup = signal.WaveGroup;
+            int path = signal.PathIndex;
+            var position = signal.Position;
+            float distanceTravelled = signal.DistanceTravelled;
+            
+            for (var i = 0; i < waveGroup.MarbleCount; i++)
+            {
+                var go = UnityEngine.Object.Instantiate(prefab);
+                var view = go.GetComponent<IMarbleView>();
+                var marble = _marblePool.Spawn();
+
+                marble.Path = path;
+                marble.DistanceTravelled = distanceTravelled;
+                marble.Init(view, position, waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
+                waveGroup.Modifiers.ForEach(modifier => marble.ApplyModifier(modifier, null));
+                CurrentWave.Add(marble);
+
+                await UniTask.WaitUntil(() => _timeController.TimeScale != 0f, default, _cts.Token);
+                await UniTask.Delay(TimeSpan.FromSeconds(waveGroup.MarbleDelay / _timeController.TimeScale), false, PlayerLoopTiming.Update, _cts.Token);
+            }
+            CurrentWave.FinishedSpawning = true;
+        }
 
         async UniTask<MarbleWave> SpawnMarbleWave()
         {
             var wave = _waveProvider.Next();
             var marbleWave = new MarbleWave(wave.HoneyReward, _waveProvider.CurrentWave);
+            CurrentWave = marbleWave;
             var prefab = _view.GetMarblePrefab();
             _marbleWaves.Add(marbleWave);
             _view.SetWaveString(_waveProvider.CurrentWave, LastWave);
@@ -92,6 +122,7 @@ namespace MarblesTD.Core.ScenarioSystems
                     
                     marble.Path = new WeightedChance<int>(pathWeights).Random();
                     marble.Init(view, _view.GetStartPosition(marble.Path), waveGroup.MarbleHealth, waveGroup.MarbleSpeed);
+                    waveGroup.Modifiers.ForEach(modifier => marble.ApplyModifier(modifier, null));
                     marbleWave.Add(marble);
 
                     await UniTask.WaitUntil(() => _timeController.TimeScale != 0f, default, _cts.Token);
@@ -130,7 +161,7 @@ namespace MarblesTD.Core.ScenarioSystems
                     {
                         _marblePool.Despawn(marble);
                         marbles.Remove(marble);
-
+                        
                         if (marbles.Count == 0 && marbleWave.FinishedSpawning)
                         {
                             _signalBus.Fire(new HoneyGeneratedSignal(marbleWave.HoneyReward));
@@ -138,7 +169,7 @@ namespace MarblesTD.Core.ScenarioSystems
                             
                             if (marbleWave.WaveIndex >= LastWave)
                             {
-                                await _mediator.SendAsync(new ExitScenarioRequest(_scenarioManager.CurrentScenario, true, CurrentWave));
+                                await _mediator.SendAsync(new ExitScenarioRequest(_scenarioManager.CurrentScenario, true, CurrentWaveIndex));
                                 return;
                             }
                         }

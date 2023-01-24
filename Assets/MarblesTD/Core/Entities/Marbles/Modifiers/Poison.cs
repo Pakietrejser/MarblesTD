@@ -1,5 +1,4 @@
 ﻿using MarblesTD.Core.Entities.Towers;
-using UnityEngine;
 
 namespace MarblesTD.Core.Entities.Marbles.Modifiers
 {
@@ -12,7 +11,7 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
         
         int _stacks;
 
-        public Poison(Tower dealer, Marble owner, int stacks = 1) : base(dealer, owner)
+        public Poison(int stacks = 1)
         {
             _stacks = stacks;
         }

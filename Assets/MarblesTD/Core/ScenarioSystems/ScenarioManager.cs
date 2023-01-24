@@ -41,7 +41,7 @@ namespace MarblesTD.Core.ScenarioSystems
                 
                 if (Lives <= 0 && !RunEnded)
                 {
-                    _mediator.SendAsync(new ExitScenarioRequest(CurrentScenario, false, MarbleController.CurrentWave));
+                    _mediator.SendAsync(new ExitScenarioRequest(CurrentScenario, false, MarbleController.CurrentWaveIndex));
                 }
             }
         }

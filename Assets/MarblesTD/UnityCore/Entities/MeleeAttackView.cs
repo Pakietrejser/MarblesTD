@@ -73,7 +73,7 @@ namespace MarblesTD.UnityCore.Entities
             if (marble.IsDestroyed) return;
             _hitMarbles.Add(marble);
 
-            if (_poisonous) marble.ApplyModifier(new Poison(_owner, marble));
+            if (_poisonous) marble.ApplyModifier(new Poison(), _owner);
             marble.TakeDamage(_damage, _owner);
             _hits--;
 

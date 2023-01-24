@@ -5,8 +5,6 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
 {
     public abstract class Modifier<T> : Modifier where T : Modifier
     {
-        protected Modifier(Tower dealer, Marble owner) : base(dealer, owner){}
-        
         public sealed override bool TryMerge(Modifier other)
         {
             if (!(other is T actualOther)) throw new ArgumentException();
@@ -18,8 +16,8 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
 
     public abstract class Modifier
     {
-        protected Tower Dealer { get; }
-        protected Marble Owner { get; }
+        public Tower Dealer { protected get; set; }
+        public Marble Owner { protected get; set; }
         
         public abstract bool IsActive { get; }
 
@@ -28,11 +26,5 @@ namespace MarblesTD.Core.Entities.Marbles.Modifiers
         public abstract void Update(float delta);
         public abstract bool TryMerge(Modifier other);
         public abstract bool TryRemove(Tower tower);
-
-        protected Modifier(Tower dealer, Marble owner)
-        {
-            Dealer = dealer;
-            Owner = owner;
-        }
     }
 }

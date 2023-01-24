@@ -55,16 +55,16 @@ namespace MarblesTD.Towers
                 
                 if (SlowAllOnNextUpdate)
                 {
-                    marble.ApplyModifier(new TimedSlow(this, marble, slowPotency, 3f));
+                    marble.ApplyModifier(new TimedSlow(slowPotency, 3f), this);
                 }
                 
                 float distance = Vector2.Distance(Position, marble.Position);
                 if (distance <= Range)
                 {
-                    bool applied = marble.ApplyModifier(new Slow(this, marble, slowPotency));
+                    bool applied = marble.ApplyModifier(new Slow(slowPotency), this);
                     if (applied && Poisonous)
                     {
-                        marble.ApplyModifier(new Poison(this, marble, SuperPoisonous ? 3 : 1));
+                        marble.ApplyModifier(new Poison(SuperPoisonous ? 3 : 1), this);
                     }
                 }
                 else
@@ -72,7 +72,7 @@ namespace MarblesTD.Towers
                     bool removed = marble.RemoveModifier<Slow>(this);
                     if (removed && Sticky)
                     {
-                        marble.ApplyModifier(new TimedSlow(this, marble, slowPotency, 3f));
+                        marble.ApplyModifier(new TimedSlow(slowPotency, 3f), this);
                     }
                 }
             }
