@@ -121,9 +121,9 @@ namespace MarblesTD.Core.Entities.Marbles
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(10, 5);
-            yield return new WaveGroup(10, 1, 2.5f, 4f,  new XL());
+            yield return new WaveGroup(10, 1, 2.5f, 8f,  new XL());
             yield return new WaveGroup(10, 5);
-            yield return new WaveGroup(10, 1, 2.5f, 4f,  new XL());
+            yield return new WaveGroup(10, 1, 2.5f, 8f,  new XL());
         }
     }
     
@@ -150,7 +150,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 120;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 3, 2.5f, 4f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 3, 2.5f, 8f,  new XL(), new Armored());
         }
     }
 
@@ -168,7 +168,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 130;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 6, 2.5f, 4f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 6, 2.5f, 8f,  new XL(), new Armored());
         }
     }
 
@@ -178,9 +178,9 @@ namespace MarblesTD.Core.Entities.Marbles
         public override IEnumerable<WaveGroup> GetGroups()
         {
             yield return new WaveGroup(10, 10, new Armored());
-            yield return new WaveGroup(10, 2, 2.5f, 4f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 2, 2.5f, 8f,  new XL(), new Armored());
             yield return new WaveGroup(10, 10, new Armored());
-            yield return new WaveGroup(10, 2, 2.5f, 4f,  new XL(), new Armored());
+            yield return new WaveGroup(10, 2, 2.5f, 8f,  new XL(), new Armored());
         }
     }
 
@@ -198,7 +198,7 @@ namespace MarblesTD.Core.Entities.Marbles
         public override int HoneyReward => 145;
         public override IEnumerable<WaveGroup> GetGroups()
         {
-            yield return new WaveGroup(10, 2, 2.5f, 6f,  new XXL());
+            yield return new WaveGroup(10, 2, 2.5f, 16f,  new XXL());
         }
     }
 
