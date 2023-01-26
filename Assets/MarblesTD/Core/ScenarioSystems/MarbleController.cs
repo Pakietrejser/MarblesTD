@@ -163,7 +163,8 @@ namespace MarblesTD.Core.ScenarioSystems
                         _marblePool.Despawn(marble);
                         marbles.Remove(marble);
                         
-                        if (marbles.Count == 0 && marbleWave.FinishedSpawning && CurrentWave.FinishedSpawning)
+                        // if (marbles.Count == 0 && marbleWave.FinishedSpawning && CurrentWave.FinishedSpawning)
+                        if (marbles.Count == 0 && marbleWave.FinishedSpawning)
                         {
                             _signalBus.Fire(new HoneyGeneratedSignal(marbleWave.HoneyReward));
                             _signalBus.Fire(new RoundEndedSignal(marbleWave.HoneyReward));
