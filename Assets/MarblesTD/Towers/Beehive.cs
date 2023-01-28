@@ -82,7 +82,7 @@ namespace MarblesTD.Towers
 
         protected override void OnTowerPlaced()
         {
-            _honeyGeneratedThisRound = MarbleController.ProcessingRound ? 0 : HoneyCapPerRound;
+            _honeyGeneratedThisRound = MarbleController.ProcessingRound ? 0 : 99999;
             SignalBus.Instance.Subscribe<RoundStartedSignal>(OnRoundStarted);
             SignalBus.Instance.Subscribe<RoundEndedSignal>(OnRoundEnded);
         }
