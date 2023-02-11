@@ -15,7 +15,6 @@ namespace MarblesTD.UnityCore.Common.Audio
 
             signalBus.Subscribe<ButtonClickSignal>(() => Play(AudioName.ButtonClick));
             signalBus.Subscribe<ButtonHoverSignal>(() => Play(AudioName.ButtonHover));
-            
             signalBus.Subscribe<MarbleDamagedSignal>(() => Play(AudioName.MarbleDamaged));
         }
 
